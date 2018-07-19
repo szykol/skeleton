@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "text.h"
 #include <unordered_map>
+#include "Box.h"
 #include "Managers/ResourceManager.h"
 
 int main()
@@ -10,7 +11,6 @@ int main()
 	window.setFramerateLimit(20);
 	sen::text tekst("Dziendoberek");
 	tekst.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
-	window.setMouseCursorVisible(false);
 
 	sf::Texture blurred = ResourceManager::get("background.jpeg");
 	sf::Sprite sprajtBlurred(blurred);
@@ -28,9 +28,12 @@ int main()
 
 	float temp = 0.0f;
 	shader.setUniform("blur_radius", temp);
-	//shader.setUniform("blurSize", 0.0f);
 	shader.setUniform("texture", blurred);
 	sprajtBlurred.setTexture(blurred);
+
+	//sen::Box box(sf::Vector2f(window.getSize()));
+	sen::Box box(sf::Vector2f(400.f, 400.f), sf::Vector2f(150.f, 150.f));
+	box.blurBackground(0.009f, window);
 
 	while (window.isOpen())
 	{
@@ -58,6 +61,7 @@ int main()
 		window.clear(sf::Color::Black);
 		tekst.draw(window);
 		window.draw(sprajtBlurred, &shader);
+		box.draw(window);
 		window.display();
 	}
 
