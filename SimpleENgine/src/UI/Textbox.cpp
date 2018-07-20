@@ -9,12 +9,12 @@ namespace sen {
 		Box::setSize(size);
 		Box::setFillColor(sf::Color::Transparent);
 		Box::setOutlineColor(sf::Color::Red);
-		Box::setOutlineThickness(1.5f);
+		Box::setOutlineThickness(-1.5f);
 	}
-	void TextBox::draw(sf::RenderTarget & target)
+	void TextBox::render(sf::RenderTarget & target)
 	{
-		Box::draw(target);
-		Text::draw(target);
+		Box::render(target);
+		Text::render(target);
 	}
 	void TextBox::setPosition(const sf::Vector2f & pos)
 	{

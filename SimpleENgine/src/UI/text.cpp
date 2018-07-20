@@ -9,7 +9,7 @@ namespace sen {
 		this->setOrigin(sf::Vector2f(bounds.width / 2.f, bounds.height / 2.f));
 	}
 
-	void Text::draw(sf::RenderTarget & target)
+	void Text::render(sf::RenderTarget & target)
 	{
 		target.draw(*this);
 		sf::FloatRect bounds = this->getLocalBounds();

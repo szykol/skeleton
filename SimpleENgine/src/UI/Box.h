@@ -3,7 +3,7 @@
 
 namespace sen {
 	/** 
-		This class is just a wrapper for a sf::RectangleShape class.
+		Just a wrapper for a sf::RectangleShape class.
 		it provides a couple of methods that are handy such as centerBox that centers the box around it's position.
 		in future, it will let you blur it's background.
 	*/
@@ -19,7 +19,7 @@ namespace sen {
 		*/
 		Box() : sf::RectangleShape() {}
 		/**
-			This constructor lets you specify the size of the Box.
+			Lets you specify the size of the Box.
 			It also calls the centerBox method.
 
 			@param size Size of the box
@@ -27,7 +27,7 @@ namespace sen {
 		Box(const sf::Vector2f &size);
 
 		/**
-			This constructor lets you specify both size and position of the box.
+			Lets you specify both size and position of the box.
 			It also calls the centerBox method.
 
 			@param size Size of the box
@@ -40,7 +40,7 @@ namespace sen {
 		
 			@param target Target you want to draw the box on
 		*/
-		void draw(sf::RenderTarget &target);	
+		void render(sf::RenderTarget &target);	
 		/**
 			Let's you blur the background of the box
 

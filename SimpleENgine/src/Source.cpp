@@ -19,8 +19,9 @@ int main()
 	sen::TextBox test("Dzien dobry");
 
 	test.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
-		
-
+	
+	sen::TextButton przycisk("klik");
+	przycisk.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
 	while (window.isOpen())
 	{
 		sf::Event evnt;
@@ -31,9 +32,9 @@ int main()
 		}
 		
 		window.clear();
-		test.draw(window);
+		//test.render(window);
 
-
+		przycisk.render(window);
 		window.display();
 	}
 

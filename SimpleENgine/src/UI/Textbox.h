@@ -5,7 +5,7 @@
 
 namespace sen {
 	/**
-		This class extends both Text and Box classes
+		Extends both Text and Box classes
 
 		It can be used as a simple text inside of a box
 	*/
@@ -23,7 +23,7 @@ namespace sen {
 		
 			@param target Target you want to draw box on.
 		*/
-		void draw(sf::RenderTarget &target);
+		void render(sf::RenderTarget &target);
 		/**
 			Sets the position of TextBox and centers it.
 			

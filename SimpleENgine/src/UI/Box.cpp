@@ -12,7 +12,7 @@ namespace sen {
 		this->setPosition(pos);
 		this->centerBox();
 	}
-	void Box::draw(sf::RenderTarget & target)
+	void Box::render(sf::RenderTarget & target)
 	{
 		target.draw(*this);
 	}
