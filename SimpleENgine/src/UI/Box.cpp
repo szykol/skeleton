@@ -16,7 +16,7 @@ namespace sen {
 	{
 		target.draw(*this);
 	}
-	void Box::blurBackground(float ammount, sf::RenderWindow &window)
+	/*void Box::blurBackground(float ammount, sf::RenderWindow &window)
 	{
 		this->texture = new sf::Texture();
 		this->texture->create(window.getSize().x, window.getSize().y);
@@ -29,10 +29,9 @@ namespace sen {
 		this->shader->loadFromFile("Shaders/blur.frag", sf::Shader::Fragment);
 		this->shader->setUniform("blur_radius", ammount);
 		this->shader->setUniform("texture", this->texture);
-	}
+	}*/
 	void Box::centerBox()
 	{
-		sf::FloatRect bounds = this->getLocalBounds();
-		this->setOrigin(sf::Vector2f(bounds.width / 2.f, bounds.height / 2.f));
+		this->setOrigin(this->getSize() / 2.f);
 	}
 }

@@ -28,6 +28,11 @@ namespace sen {
 			@param target Target you want to draw text on
 		*/
 		void render(sf::RenderTarget &target);
+		/**
+			Sets character size of text and resets the origin.
+
+			@param size Size of text
+		*/
 		void setCharacterSize(unsigned int size);
 		~Text();
 	};

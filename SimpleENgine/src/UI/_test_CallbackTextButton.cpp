@@ -4,7 +4,15 @@ namespace sen {
 	CallbackTextButton::CallbackTextButton(const std::string & string)
 		: TextBox(string)
 	{
-
+		onHover = [](sen::CallbackTextButton& button) {
+			button.setFillColor(sf::Color::Red);
+		};
+		onUnhover = [](sen::CallbackTextButton& button) {
+			button.setFillColor(sf::Color::Blue);
+		};
+		onClick = [](sen::CallbackTextButton& button) {
+			button.setFillColor(sf::Color::Green);
+		};
 	}
 	void CallbackTextButton::update(const sf::RenderWindow & window)
 	{
