@@ -33,15 +33,7 @@ int main()
 	sen::CallbackTextButton testCallback("callback");
 	testCallback.setPosition(przycisk.getPosition());
 
-	testCallback.onHover = [](sen::CallbackTextButton& button) {
-		button.setFillColor(sf::Color::Red);
-	};
-	testCallback.onUnhover = [](sen::CallbackTextButton& button) {
-		button.setFillColor(sf::Color::Blue);
-	};
-	testCallback.onClick = [&window](sen::CallbackTextButton& button) {
-		window.close();
-	};
+	
 	while (window.isOpen())
 	{
 		sf::Event evnt;

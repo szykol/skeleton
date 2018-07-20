@@ -4,6 +4,7 @@ namespace sen {
 	TextButton::TextButton(const std::string & string)
 		:TextBox(string)
 	{
+		// remember original settings
 		this->originalColor = this->getFillColor();
 		this->originalSize = this->getSize();
 		this->originalCharacterSize = this->message.getCharacterSize();
@@ -14,22 +15,27 @@ namespace sen {
 	}
 	void TextButton::update(const sf::RenderWindow & window)
 	{
+		// create a cooldown to avoid calling the callback function every frame
 		if (this->timer.getElapsedTime().asSeconds() > 0.5f)
 		{
 			this->clickable = true;
 			this->timer.restart();
 		}
+		// if the button is clickable again..
 		if (this->clickable)
 		{
+			// and mouse hovers over the button..
 			if (this->mouseOver(window))
 			{
 				this->onHover();
+				// and the button is pressed
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					this->onClick();
 					this->clickable = false;
 				}
 			}
+			// or the mouse doesn't hover over
 			else
 			{
 				this->onUnhover();
@@ -54,14 +60,12 @@ namespace sen {
 
 		this->setFillColor(sf::Color::Green);
 	}
-	void TextButton::onUnClick()
-	{
-		this->setFillColor(this->originalColor);
-	}
 	bool TextButton::mouseOver(const sf::RenderWindow & window)
 	{
+		// get position of mouse
 		const sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
 
-		return (this->getGlobalBounds()	.contains(mousePos));
+		// return whether the mouse in in bounds of button
+		return (this->getGlobalBounds().contains(mousePos));
 	}
 }

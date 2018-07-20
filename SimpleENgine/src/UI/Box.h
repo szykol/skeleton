@@ -10,9 +10,9 @@ namespace sen {
 	class Box : public sf::RectangleShape
 	{
 	private:
-		sf::Shader  *shader = nullptr;
+		/*sf::Shader  *shader = nullptr;
 		sf::Sprite  *sprite = nullptr;
-		sf::Texture *texture = nullptr;
+		sf::Texture *texture = nullptr;*/
 	public:
 		/**
 			Default constructor of the Box, it just calls sf::RectangleShape's default constructor

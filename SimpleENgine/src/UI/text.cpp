@@ -2,9 +2,9 @@
 #include "Box.h"
 
 namespace sen {
-	// Centers the text around its position
 	void Text::centerText()
 	{
+		// get bounds of text, set origin in the middle 
 		sf::FloatRect bounds = this->getLocalBounds();
 		this->setOrigin(sf::Vector2f(bounds.width / 2.f, bounds.height / 2.f));
 	}
@@ -12,17 +12,12 @@ namespace sen {
 	void Text::render(sf::RenderTarget & target)
 	{
 		target.draw(*this);
-		sf::FloatRect bounds = this->getLocalBounds();
-
-		/*Box temp(sf::Vector2f(bounds.width, bounds.height), this->getPosition());
-		std::cout << this->getPosition().x<<this->getPosition().y << std::endl;
-		temp.setFillColor(sf::Color::White);
-		target.draw(temp);*/
 	}
 
 	void Text::setCharacterSize(unsigned int size)
 	{
 		sf::Text::setCharacterSize(size);
+		// when size of text changes we need to update the origin
 		this->centerText();
 	}
 
