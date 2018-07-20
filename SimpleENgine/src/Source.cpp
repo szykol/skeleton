@@ -1,16 +1,20 @@
 /**
 	Source.cpp
 	
+	For testing purposes.
 
 	@author: szykol
 	@version 0.0.2
 */
+
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
 #include "Managers/ResourceManager.h"
 #include "UIheaders.h"
+#include "UI/_test_CallbackTextButton.h"
+#include <functional>
 
 int main()
 {
@@ -22,6 +26,22 @@ int main()
 	
 	sen::TextButton przycisk("klik");
 	przycisk.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
+	przycisk.setOnClickFunction([&window] {
+		window.close();
+	});
+
+	sen::CallbackTextButton testCallback("callback");
+	testCallback.setPosition(przycisk.getPosition());
+
+	testCallback.onHover = [](sen::CallbackTextButton& button) {
+		button.setFillColor(sf::Color::Red);
+	};
+	testCallback.onUnhover = [](sen::CallbackTextButton& button) {
+		button.setFillColor(sf::Color::Blue);
+	};
+	testCallback.onClick = [&window](sen::CallbackTextButton& button) {
+		window.close();
+	};
 	while (window.isOpen())
 	{
 		sf::Event evnt;
@@ -33,8 +53,10 @@ int main()
 		
 		window.clear();
 		//test.render(window);
-
-		przycisk.render(window);
+		/*przycisk.update(window);
+		przycisk.render(window);*/
+		testCallback.update(window);
+		testCallback.render(window);
 		window.display();
 	}
 

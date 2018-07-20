@@ -2,10 +2,10 @@
 
 namespace sen {
 	TextBox::TextBox(const std::string & text)
-		: Text(text), Box()
+		: message(text), Box()
 	{
-		sf::FloatRect bounds = Text::getGlobalBounds();
-		sf::Vector2f size(bounds.width * 1.15f, bounds.height * 2.f);
+		sf::FloatRect bounds = this->message.getGlobalBounds();
+		sf::Vector2f size(bounds.width * 1.45f, bounds.height * 2.f);
 		Box::setSize(size);
 		Box::setFillColor(sf::Color::Transparent);
 		Box::setOutlineColor(sf::Color::Red);
@@ -14,14 +14,29 @@ namespace sen {
 	void TextBox::render(sf::RenderTarget & target)
 	{
 		Box::render(target);
-		Text::render(target);
+		this->message.render(target);
 	}
 	void TextBox::setPosition(const sf::Vector2f & pos)
 	{
 		Box::centerBox();
 		Box::setPosition(pos);
-		Text::centerText();
-		Text::setPosition(pos);
-		Box::move(Text::getLocalBounds().left, Text::getLocalBounds().top);
+		this->message.centerText();
+		this->message.setPosition(pos);
+		Box::move(this->message.getLocalBounds().left, this->message.getLocalBounds().top);
 	}
+	void TextBox::setFillColor(const sf::Color & color)
+	{
+		Box::setFillColor(color);
+	}
+	void TextBox::setTextFillColor(const sf::Color & color)
+	{
+		this->message.setFillColor(color);
+	}
+	void TextBox::setSize(const sf::Vector2f & size)
+	{
+		Box::setSize(size);
+		this->centerBox();
+		this->message.centerText();
+	}
+
 }
