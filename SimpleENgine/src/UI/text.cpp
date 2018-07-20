@@ -20,6 +20,12 @@ namespace sen {
 		target.draw(temp);*/
 	}
 
+	void Text::setCharacterSize(unsigned int size)
+	{
+		sf::Text::setCharacterSize(size);
+		this->centerText();
+	}
+
 	Text::~Text()
 	{
 	}

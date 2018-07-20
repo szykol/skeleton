@@ -9,8 +9,10 @@ namespace sen {
 
 		It can be used as a simple text inside of a box
 	*/
-	class TextBox : public Text, public Box
+	class TextBox : public Box
 	{
+	protected:
+		Text message;
 	public:
 		/**
 			Sets the text, and then sets size of the box.
@@ -30,5 +32,9 @@ namespace sen {
 			@param pos Position
 		*/
 		void setPosition(const sf::Vector2f &pos);
+		void setFillColor(const sf::Color &color);
+		void setTextFillColor(const sf::Color &color);
+		void setSize(const sf::Vector2f &size);
+		Text& getTextObject() { return this->message; }
 	};
 }
