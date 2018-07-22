@@ -7,7 +7,6 @@
 	@version 0.0.2
 */
 
-
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
@@ -30,10 +29,14 @@ int main()
 		window.close();
 	});
 
-	sen::CallbackTextButton testCallback("callback");
-	testCallback.setPosition(przycisk.getPosition());
+	sen::Text hi("hi");
+	hi.setPosition(przycisk.getPosition());
+	hi.setCharacterSize(79U);
 
-	
+	sen::TextBox welcome("Welcome");
+	welcome.setPosition(przycisk.getPosition());
+	welcome.setSize(welcome.getSize() * 2.f);
+	welcome.getTextObject().setFillColor(sf::Color::Blue);
 	while (window.isOpen())
 	{
 		sf::Event evnt;
@@ -44,13 +47,8 @@ int main()
 		}
 		
 		window.clear();
-		//test.render(window);
-		/*przycisk.update(window);
-		przycisk.render(window);*/
-		testCallback.update(window);
-		testCallback.render(window);
+		welcome.render(window);
 		window.display();
 	}
-
 	return 0;
 }

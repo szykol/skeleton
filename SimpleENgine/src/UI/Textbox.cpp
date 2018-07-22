@@ -16,32 +16,16 @@ namespace sen {
 	}
 	void TextBox::render(sf::RenderTarget & target)
 	{
-		// rendering must be in this order so the box wont cover the message
+		// rendering must be in this order so the box
+		// wont cover the message
 		Box::render(target);
 		this->message.render(target);
 	}
 	void TextBox::setPosition(const sf::Vector2f & pos)
 	{
 		// set origin and then position of box and text
-		Box::centerBox();
 		Box::setPosition(pos);
-		this->message.centerText();
 		this->message.setPosition(pos);
 		Box::move(this->message.getLocalBounds().left, this->message.getLocalBounds().top);
 	}
-	void TextBox::setFillColor(const sf::Color & color)
-	{
-		Box::setFillColor(color);
-	}
-	void TextBox::setTextFillColor(const sf::Color & color)
-	{
-		this->message.setFillColor(color);
-	}
-	void TextBox::setSize(const sf::Vector2f & size)
-	{
-		Box::setSize(size);
-		this->centerBox();
-		this->message.centerText();
-	}
-
 }

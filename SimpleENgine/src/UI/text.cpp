@@ -2,11 +2,10 @@
 #include "Box.h"
 
 namespace sen {
-	void Text::centerText()
+	Text::Text(const sf::String & string, unsigned int fontSize, const sf::Font & font)
+		: sf::Text(string, font, fontSize)
 	{
-		// get bounds of text, set origin in the middle 
-		sf::FloatRect bounds = this->getLocalBounds();
-		this->setOrigin(sf::Vector2f(bounds.width / 2.f, bounds.height / 2.f));
+		this->setOriginMode(OriginMode::CENTER);
 	}
 
 	void Text::render(sf::RenderTarget & target)
@@ -17,8 +16,32 @@ namespace sen {
 	void Text::setCharacterSize(unsigned int size)
 	{
 		sf::Text::setCharacterSize(size);
-		// when size of text changes we need to update the origin
-		this->centerText();
+
+		// when size of text changes and text is in center mode we need to update the origin
+		// so the text will be set in the middle (the bounds have changed)
+		if (this->originMode == OriginMode::CENTER)
+		{
+			sf::FloatRect bounds = this->getLocalBounds();
+			this->setOrigin(sf::Vector2f(bounds.width / 2.f, bounds.height / 2.f));
+		}
+	}
+
+	void Text::setOriginMode(OriginMode mode)
+	{
+		if (this->originMode == mode)
+			return;
+
+		this->originMode = mode;
+		
+		if (this->originMode == OriginMode::CENTER)
+		{
+			sf::FloatRect bounds = this->getLocalBounds();
+			this->setOrigin(sf::Vector2f(bounds.width / 2.f, bounds.height / 2.f));
+		}
+		else
+		{
+			this->setOrigin(0.f, 0.f);
+		}
 	}
 
 	Text::~Text()

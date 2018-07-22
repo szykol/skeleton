@@ -32,9 +32,13 @@ namespace sen {
 			@param pos Position
 		*/
 		void setPosition(const sf::Vector2f &pos);
-		void setFillColor(const sf::Color &color);
-		void setTextFillColor(const sf::Color &color);
-		void setSize(const sf::Vector2f &size);
+		/**
+			Returns the text object of the textbox.
+			If you want to perform any operations on the text
+			that's inside of the box, that method returns it
+
+			@return Text object inside of the box
+		*/
 		Text& getTextObject() { return this->message; }
 	};
 }
