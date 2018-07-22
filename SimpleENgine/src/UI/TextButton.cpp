@@ -65,7 +65,7 @@ namespace sen {
 		// get position of mouse
 		const sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
 
-		// return whether the mouse in in bounds of button
+		// return whether the mouse is in bounds of button
 		return (this->getGlobalBounds().contains(mousePos));
 	}
 }
