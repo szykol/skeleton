@@ -43,6 +43,8 @@ int main()
 		});
 	}
 
+	sen::ButtonController controller(buttons);
+
 	while (window.isOpen())
 	{
 		sf::Event evnt;
@@ -54,11 +56,8 @@ int main()
 		
 		window.clear(sf::Color::Black);
 		
-		for (auto &b : buttons)
-		{
-			b->update(window);
-			b->render(window);
-		}
+		controller.update(window);
+		controller.render(window);
 
 		window.display();
 	}

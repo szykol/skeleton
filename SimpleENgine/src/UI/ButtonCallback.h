@@ -2,7 +2,7 @@
 
 #include "Textbox.h"
 #include <functional>
-#include "InterfaceButton.h"
+#include "Button.h"
 
 namespace sen {
 	/**
