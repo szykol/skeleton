@@ -1,17 +1,17 @@
-#include "InterfaceButton.h"
+#include "Button.h"
 
 namespace sen {
 	void Button::onHover()
 	{
-		this->setFillColor(sf::Color(25, 25, 25, 170));
-		this->setOutlineColor(sf::Color(222, 222, 222, 170));
-		this->message.setFillColor(Box::getOutlineColor());
-	}
-	void Button::onUnhover()
-	{
 		this->setFillColor(sf::Color(sf::Color(25, 25, 25, 50)));
 		this->setOutlineColor(sf::Color(222, 222, 222, 240));
 		this->message.setFillColor(this->getOutlineColor());
+	}
+	void Button::onUnhover()
+	{
+		this->setFillColor(sf::Color(25, 25, 25, 170));
+		this->setOutlineColor(sf::Color(222, 222, 222, 170));
+		this->message.setFillColor(Box::getOutlineColor());
 	}
 	void Button::onClick()
 	{

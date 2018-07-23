@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Textbox.h"
+#include "TextBox.h"
 #include <functional>
 
 typedef std::function<void(void)> onClickCallback;
@@ -17,8 +17,8 @@ namespace sen {
 	protected:
 		sf::Clock timer;
 		bool clickable = true;
-		onClickCallback callback;
 	public:
+		onClickCallback callback;
 		Button(const std::string &string) : TextBox(string) {}
 		/**
 			This should change the button on mouse hover

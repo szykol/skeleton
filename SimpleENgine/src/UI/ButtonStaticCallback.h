@@ -1,6 +1,6 @@
 #pragma once
 
-#include "InterfaceButton.h"
+#include "Button.h"
 #include <functional>
 
 namespace sen {
