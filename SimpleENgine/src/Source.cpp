@@ -12,31 +12,37 @@
 #include <unordered_map>
 #include "Managers/ResourceManager.h"
 #include "UIheaders.h"
-#include "UI/_test_CallbackTextButton.h"
 #include <functional>
+#include <vector>
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.2");
 	window.setFramerateLimit(20);
-	sen::TextBox test("Dzien dobry");
 
-	test.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
+	sen::ButtonStaticCallback buttonStatic("Hello");
+	buttonStatic.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
 	
-	sen::TextButton przycisk("klik");
-	przycisk.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
-	przycisk.setOnClickFunction([&window] {
-		window.close();
-	});
+	sen::Button button("Hello");
+	button.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f - 60.f));
 
-	sen::Text hi("hi");
-	hi.setPosition(przycisk.getPosition());
-	hi.setCharacterSize(79U);
+	sen::ButtonCallback buttonCallback("Hello");
+	buttonCallback.setPosition(sf::Vector2f(window.getSize().x / 2.f , window.getSize().y / 2.f + 60.f));
 
-	sen::TextBox welcome("Welcome");
-	welcome.setPosition(przycisk.getPosition());
-	welcome.setSize(welcome.getSize() * 2.f);
-	welcome.getTextObject().setFillColor(sf::Color::Blue);
+	std::vector<sen::Button*> buttons;
+
+	buttons.push_back(&buttonStatic);
+	buttons.push_back(&button);
+	buttons.push_back(&buttonCallback);
+
+	for (auto &b : buttons)
+	{
+
+		b->setOnClickCalback([&window] {
+			window.close();
+		});
+	}
+
 	while (window.isOpen())
 	{
 		sf::Event evnt;
@@ -46,8 +52,14 @@ int main()
 				window.close();
 		}
 		
-		window.clear();
-		welcome.render(window);
+		window.clear(sf::Color::Black);
+		
+		for (auto &b : buttons)
+		{
+			b->update(window);
+			b->render(window);
+		}
+
 		window.display();
 	}
 	return 0;

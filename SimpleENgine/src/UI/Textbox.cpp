@@ -10,9 +10,10 @@ namespace sen {
 		sf::Vector2f size(bounds.width * 1.45f, bounds.height * 2.f);
 
 		Box::setSize(size);
-		Box::setFillColor(sf::Color::Transparent);
-		Box::setOutlineColor(sf::Color::Red);
-		Box::setOutlineThickness(-1.5f);
+		Box::setFillColor(sf::Color(25,25,25, 170));
+		Box::setOutlineColor(sf::Color(222,222,222, 170));
+		this->message.setFillColor(Box::getOutlineColor());
+		Box::setOutlineThickness(-2.5f);
 	}
 	void TextBox::render(sf::RenderTarget & target)
 	{
