@@ -11,10 +11,10 @@ namespace sen {
 		sf::Clock timer;
 	public:
 		ButtonController() = default;
-		ButtonController(const std::vector<Button*> &buttons);
+		explicit ButtonController(const std::vector<Button*> &buttons);
+		ButtonController(const std::vector<Button*> buttons, const sf::RenderWindow &window);
 		void update(sf::RenderWindow &window);
 		void render(sf::RenderTarget &target);
-	private:
-		void placeButtons();
+		void placeButtons(const sf::RenderWindow &window);
 	};
 }

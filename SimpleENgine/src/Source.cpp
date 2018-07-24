@@ -29,6 +29,12 @@ int main()
 	sen::ButtonCallback buttonCallback("Hello");
 	buttonCallback.setPosition(sf::Vector2f(window.getSize().x / 2.f , window.getSize().y / 2.f + 60.f));
 
+	sen::Button b1("Hello");
+	sen::Button b2("Hello");
+	sen::Button b3("b3");
+	sen::Button b4("Hello");
+
+
 	std::vector<sen::Button*> buttons;
 
 	buttons.push_back(&buttonStatic);
@@ -38,12 +44,13 @@ int main()
 	for (auto &b : buttons)
 	{
 
-		b->setOnClickCalback([&window] {
+		/*b->setOnClickCalback([&window] {
 			window.close();
-		});
+		});*/
 	}
 
 	sen::ButtonController controller(buttons);
+	controller.placeButtons(window);
 
 	while (window.isOpen())
 	{
