@@ -4,11 +4,15 @@ namespace sen {
 	ButtonController::ButtonController(const std::vector<Button*>& buttons)
 		: buttons(buttons)
 	{
-		this->placeButtons();
+	}
+	ButtonController::ButtonController(const std::vector<Button*> buttons, const sf::RenderWindow & window)
+		: buttons(buttons)
+	{
+		this->placeButtons(window);
 	}
 	void ButtonController::update(sf::RenderWindow & window)
 	{
-		if (timer.getElapsedTime().asSeconds() > 0.1f)
+		if (timer.getElapsedTime().asSeconds() > 0.15f)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
@@ -36,7 +40,8 @@ namespace sen {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					this->buttons[this->activeIndex]->onClick();
-					this->buttons[this->activeIndex]->callback();
+					if (this->buttons[activeIndex]->callback)
+						this->buttons[activeIndex]->callback();
 				}
 			}
 		}
@@ -50,7 +55,8 @@ namespace sen {
 		this->buttons[activeIndex]->onHover();
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-			this->buttons[activeIndex]->callback();
+			if(this->buttons[activeIndex]->callback)
+				this->buttons[activeIndex]->callback();
 	}
 	void ButtonController::render(sf::RenderTarget & target)
 	{
@@ -59,11 +65,34 @@ namespace sen {
 			button->render(target);
 		}
 	}
-	void ButtonController::placeButtons()
+	void ButtonController::placeButtons(const sf::RenderWindow &window)
 	{
-		for (int i = 0; i < this->buttons.size(); ++i)
+		if (this->buttons.empty())
+			return;
+
+		const sf::Vector2f centerPos = sf::Vector2f(window.getSize()) / 2.f;
+
+		sf::Vector2f startingPos(centerPos);
+
+		int temp = this->buttons.size() / 2;
+		float gap = 50.f;
+
+		float offset = 0.f;
+		if (this->buttons.size() % 2 != 0)
 		{
-			this->buttons[i]->setPosition(sf::Vector2f(400.f, i * 200 + this->buttons[i]->getSize().y));
+			offset = temp * (this->buttons[0]->getSize().y + gap);
+		}
+		else
+		{
+			offset = temp * gap + (temp - 0.5f) * this->buttons[0]->getSize().y;
+		}
+
+		startingPos.y -= offset;
+
+		for (int i = 0; i < this->buttons.size(); i++)
+		{
+			this->buttons[i]->setPosition(startingPos);
+			startingPos.y += this->buttons[0]->getSize().y + gap;
 		}
 	}
 }
