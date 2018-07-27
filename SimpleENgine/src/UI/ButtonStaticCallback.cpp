@@ -8,7 +8,7 @@ namespace sen {
 	std::function<void(ButtonStaticCallback &)>
 		ButtonStaticCallback::onClickCallback;
 
-	ButtonStaticCallback::ButtonStaticCallback(const std::string & string)
+	ButtonStaticCallback::ButtonStaticCallback(const sf::String & string)
 		: Button(string) {}
 
 	void ButtonStaticCallback::onHover()

@@ -19,7 +19,7 @@ namespace sen {
 		bool clickable = true;
 	public:
 		onClickCallback callback;
-		Button(const std::string &string) : TextBox(string) {}
+		explicit Button(const sf::String &string) : TextBox(string) {}
 		/**
 			This should change the button on mouse hover
 		*/
@@ -47,7 +47,7 @@ namespace sen {
 		*/
 		void setOnClickCalback(const onClickCallback &callback) { this->callback = callback; }
 	};
-	/*void standardOnHover(InterfaceButton &button);
-	void standardOnUnhover(InterfaceButton &button);
-	void standardOnClick(InterfaceButton &button);*/
+	/*void standardOnHover(Button &button);
+	void standardOnUnhover(Button &button);
+	void standardOnClick(Button &button);*/
 }

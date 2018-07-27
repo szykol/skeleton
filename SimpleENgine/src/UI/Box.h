@@ -30,7 +30,7 @@ namespace sen {
 
 			@param size Size of the box
 		*/
-		Box(const sf::Vector2f &size);
+		explicit Box(const sf::Vector2f &size);
 
 		/**
 			Lets you specify both size and position of the box.

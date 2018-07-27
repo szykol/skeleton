@@ -1,11 +1,11 @@
 #include "Textbox.h"
 
 namespace sen {
-	TextBox::TextBox(const std::string & text)
-		: message(text), Box()
+	TextBox::TextBox(const sf::String & string)
+		: message(string), Box()
 	{
 		// get text bounds and set a box around it
-		sf::FloatRect bounds = this->message.getGlobalBounds();
+		sf::FloatRect bounds = this->message.getLocalBounds();
 		// make the box a little bigger so the text is clear
 		sf::Vector2f size(bounds.width * 1.45f, bounds.height * 2.f);
 
@@ -27,6 +27,5 @@ namespace sen {
 		// set origin and then position of box and text
 		Box::setPosition(pos);
 		this->message.setPosition(pos);
-		Box::move(this->message.getLocalBounds().left, this->message.getLocalBounds().top);
 	}
 }

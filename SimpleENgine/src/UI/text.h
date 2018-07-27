@@ -23,7 +23,7 @@ namespace sen {
 			@param fontSize Font size. Default value = 30U.
 			@param font Font used to display the text. Default font is Roboto.
 		*/
-		Text(const sf::String &string, unsigned int fontSize = 30U, 
+		explicit Text(const sf::String &string, unsigned int fontSize = 30U, 
 			 const sf::Font &font = FontManager::get("default"));
 		/**
 			Draws the box on the target
@@ -56,6 +56,7 @@ namespace sen {
 			@return The origin mode
 		*/
 		OriginMode getOriginMode() const { return this->originMode; }
+		void setString(const sf::String &string);
 		~Text();
 	};
 }
