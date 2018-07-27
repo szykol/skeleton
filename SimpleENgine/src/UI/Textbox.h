@@ -17,9 +17,9 @@ namespace sen {
 		/**
 			Sets the text, and then sets size of the box.
 
-			@param text Text displayed inside box.
+			@param string Text displayed inside box.
 		*/
-		TextBox(const std::string &text);
+		explicit TextBox(const sf::String &string);
 		/**
 			Draws the TextBox on the target.
 		

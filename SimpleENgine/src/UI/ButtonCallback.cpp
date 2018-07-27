@@ -1,7 +1,7 @@
 #include "ButtonCallback.h"
 
 namespace sen {
-	ButtonCallback::ButtonCallback(const std::string & string)
+	ButtonCallback::ButtonCallback(const sf::String & string)
 		:Button(string)
 	{
 	}

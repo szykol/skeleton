@@ -57,19 +57,19 @@ namespace sen {
 		// return whether the mouse is in bounds of button
 		return (this->getGlobalBounds().contains(mousePos));
 	}
-	/*void standardOnHover(InterfaceButton & button)
+	/*void standardOnHover(Button & button)
 	{
 		button.setFillColor(sf::Color(25, 25, 25, 170));
 		button.setOutlineColor(sf::Color(222, 222, 222, 170));
 		button.getTextObject().setFillColor(button.getOutlineColor());
 	}
-	void standardOnUnhover(InterfaceButton & button)
+	void standardOnUnhover(Button & button)
 	{
 		button.setFillColor(sf::Color(sf::Color(25, 25, 25, 50)));
 		button.setOutlineColor(sf::Color(222, 222, 222, 240));
 		button.getTextObject().setFillColor(button.getOutlineColor());
 	}
-	void standardOnClick(InterfaceButton & button)
+	void standardOnClick(Button & button)
 	{
 		button.setOutlineColor(sf::Color(0, 198, 0, 190));
 		button.getTextObject().setFillColor(button.getOutlineColor());

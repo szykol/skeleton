@@ -40,18 +40,29 @@ int main()
 	buttons.push_back(&buttonStatic);
 	buttons.push_back(&button);
 	buttons.push_back(&buttonCallback);
+	
+	sen::ButtonController controller(buttons);
+	controller.placeButtons(window, 40.f);
+	controller.setPositionX(200.f);
 
 	for (auto &b : buttons)
 	{
-
-		/*b->setOnClickCalback([&window] {
-			window.close();
-		});*/
+		b->setOnClickCalback([&controller] {
+			controller.setPositionX(400.f);
+		});
 	}
 
-	sen::ButtonController controller(buttons);
-	controller.placeButtons(window);
+	controller.map([](sen::Button *button) {
+		button->getTextObject().setString("Witamy");
+	});
 
+	controller.setButtonFixedSize(sf::Vector2f(150.f, 70.f));
+	button.getTextObject().setString("siemanko");
+	controller.removeButton();
+	sen::Button temp = button;
+	controller.addButton(&temp);
+	controller.placeButtons(window);
+	
 	while (window.isOpen())
 	{
 		sf::Event evnt;
@@ -65,7 +76,7 @@ int main()
 		
 		controller.update(window);
 		controller.render(window);
-
+		
 		window.display();
 	}
 	return 0;

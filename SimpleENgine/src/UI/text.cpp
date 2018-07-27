@@ -22,7 +22,7 @@ namespace sen {
 		if (this->originMode == OriginMode::CENTER)
 		{
 			sf::FloatRect bounds = this->getLocalBounds();
-			this->setOrigin(sf::Vector2f(bounds.width / 2.f, bounds.height / 2.f));
+			this->setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f));
 		}
 	}
 
@@ -36,11 +36,21 @@ namespace sen {
 		if (this->originMode == OriginMode::CENTER)
 		{
 			sf::FloatRect bounds = this->getLocalBounds();
-			this->setOrigin(sf::Vector2f(bounds.width / 2.f, bounds.height / 2.f));
+			this->setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f));
 		}
 		else
 		{
 			this->setOrigin(0.f, 0.f);
+		}
+	}
+
+	void Text::setString(const sf::String & string)
+	{
+		sf::Text::setString(string);
+		if (this->originMode == OriginMode::CENTER)
+		{
+			sf::FloatRect bounds = this->getLocalBounds();
+			this->setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f));
 		}
 	}
 
