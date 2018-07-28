@@ -13,7 +13,7 @@ namespace sen {
 	class Box : public sf::RectangleShape
 	{
 	private:
-		OriginMode originMode;
+		OriginMode m_originMode;
 		/*sf::Shader  *shader = nullptr;
 		sf::Sprite  *sprite = nullptr;
 		sf::Texture *texture = nullptr;*/
@@ -22,7 +22,7 @@ namespace sen {
 			Default constructor of the Box, it just calls sf::RectangleShape's 
 			default constructor and sets origin mode to CENTER
 		*/
-		Box() : sf::RectangleShape() { this->setOriginMode(OriginMode::CENTER); }
+		Box() : sf::RectangleShape() { setOriginMode(OriginMode::CENTER); }
 		/**
 			Lets you specify the size of the Box.
 			It also sets origin mode to center.
@@ -65,7 +65,7 @@ namespace sen {
 
 			@return The origin mode
 		*/
-		OriginMode getOriginMode() const { return this->originMode; }
+		OriginMode getOriginMode() const { return m_originMode; }
 		/**
 			Calls sf::RectangleShape setSize method and if the originMode
 			is set to CENTER resets the origin to the middle.
@@ -73,6 +73,7 @@ namespace sen {
 			@param size New size
 		*/
 		void setSize(const sf::Vector2f &size);
+		virtual ~Box() = default;
 		/**
 			Let's you blur the background of the box
 

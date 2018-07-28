@@ -4,7 +4,7 @@
 	For testing purposes.
 
 	@author: szykol
-	@version 0.0.2
+	@version 0.0.3
 */
 
 #include <iostream>
@@ -12,57 +12,51 @@
 #include <unordered_map>
 #include "Managers/ResourceManager.h"
 #include "UIheaders.h"
+#include "States/StateHeaders.h"
 #include <functional>
 #include <vector>
 
-int main()
+class TempState : public sen::State
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.2");
-	window.setFramerateLimit(20);
+private:
+	sen::ButtonCallback m_infoButton;
+public:
+	TempState(sf::RenderWindow &window) :m_infoButton("Hover over me") {
+		m_infoButton.m_onHoverCallback = [](sen::Button &button) {
+			button.getTextObject().setString("Spawn TestState");
+		};
 
-	sen::ButtonStaticCallback buttonStatic("Hello");
-	buttonStatic.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
-	
-	sen::Button button("Hello");
-	button.setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f - 60.f));
+		m_infoButton.m_onUnhoverCallback = [](sen::Button &button) {
+			button.getTextObject().setString("Hover over me");
+		};
 
-	sen::ButtonCallback buttonCallback("Hello");
-	buttonCallback.setPosition(sf::Vector2f(window.getSize().x / 2.f , window.getSize().y / 2.f + 60.f));
-
-	sen::Button b1("Hello");
-	sen::Button b2("Hello");
-	sen::Button b3("b3");
-	sen::Button b4("Hello");
-
-
-	std::vector<sen::Button*> buttons;
-
-	buttons.push_back(&buttonStatic);
-	buttons.push_back(&button);
-	buttons.push_back(&buttonCallback);
-	
-	sen::ButtonController controller(buttons);
-	controller.placeButtons(window, 40.f);
-	controller.setPositionX(200.f);
-
-	for (auto &b : buttons)
-	{
-		b->setOnClickCalback([&controller] {
-			controller.setPositionX(400.f);
-		});
+		m_infoButton.m_callback = [&window] {
+			sen::StateManager::pushState(new sen::TestState(window));
+		};
+		m_infoButton.setPosition(sf::Vector2f(window.getSize().x / 2.f, 
+									window.getSize().y / 2.f - 100.f));
+	}
+	virtual void update(sf::RenderWindow &window) override {
+		m_infoButton.update(window);
+	}
+	virtual void input(sf::RenderWindow &window)  override {
+	}
+	virtual void render(sf::RenderTarget &target) override {
+		m_infoButton.render(target);
 	}
 
-	controller.map([](sen::Button *button) {
-		button->getTextObject().setString("Witamy");
-	});
+	virtual ~TempState() = default;
+};
 
-	controller.setButtonFixedSize(sf::Vector2f(150.f, 70.f));
-	button.getTextObject().setString("siemanko");
-	controller.removeButton();
-	sen::Button temp = button;
-	controller.addButton(&temp);
-	controller.placeButtons(window);
-	
+
+
+int main()
+{
+	sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.3");
+	const sf::Vector2f centerPos(window.getSize().x / 2.f, window.getSize().y / 2.f);
+
+	sen::StateManager::pushState(new TempState(window));
+
 	while (window.isOpen())
 	{
 		sf::Event evnt;
@@ -73,11 +67,11 @@ int main()
 		}
 		
 		window.clear(sf::Color::Black);
-		
-		controller.update(window);
-		controller.render(window);
-		
+
+		sen::StateManager::run(window);
+
 		window.display();
+
 	}
 	return 0;
 }

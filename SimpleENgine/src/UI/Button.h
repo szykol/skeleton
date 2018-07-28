@@ -15,10 +15,10 @@ namespace sen {
 	class Button : public TextBox
 	{
 	protected:
-		sf::Clock timer;
+		sf::Clock m_timer;
 		bool clickable = true;
 	public:
-		onClickCallback callback;
+		onClickCallback m_callback;
 		explicit Button(const sf::String &string) : TextBox(string) {}
 		/**
 			This should change the button on mouse hover
@@ -45,7 +45,8 @@ namespace sen {
 		/**
 			Sets a callback function called on mouse click
 		*/
-		void setOnClickCalback(const onClickCallback &callback) { this->callback = callback; }
+		void setOnClickCalback(const onClickCallback &callback) { m_callback = callback; }
+		virtual ~Button() = default;
 	};
 	/*void standardOnHover(Button &button);
 	void standardOnUnhover(Button &button);

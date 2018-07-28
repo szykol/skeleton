@@ -14,7 +14,7 @@ namespace sen {
 	class Text : public sf::Text
 	{
 	private:
-		OriginMode originMode;
+		OriginMode m_originMode;
 	public:
 		/**
 			Lets you specify the string, fontsize and font that will be used in this object.
@@ -55,8 +55,13 @@ namespace sen {
 
 			@return The origin mode
 		*/
-		OriginMode getOriginMode() const { return this->originMode; }
+		OriginMode getOriginMode() const { return m_originMode; }
+		/**
+			sets the new string.
+
+			@param string New string.
+		*/
 		void setString(const sf::String &string);
-		~Text();
+		virtual ~Text();
 	};
 }

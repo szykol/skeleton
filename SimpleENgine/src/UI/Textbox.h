@@ -12,7 +12,7 @@ namespace sen {
 	class TextBox : public Box
 	{
 	protected:
-		Text message;
+		Text m_message;
 	public:
 		/**
 			Sets the text, and then sets size of the box.
@@ -39,6 +39,7 @@ namespace sen {
 
 			@return Text object inside of the box
 		*/
-		Text& getTextObject() { return this->message; }
+		Text& getTextObject() { return m_message; }
+		virtual ~TextBox() = default;
 	};
 }
