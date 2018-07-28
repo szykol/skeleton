@@ -3,14 +3,14 @@
 namespace sen {
 	Box::Box(const sf::Vector2f & size)
 	{
-		this->setSize(size);
-		this->setOriginMode(OriginMode::CENTER);
+		setSize(size);
+		setOriginMode(OriginMode::CENTER);
 	}
 	Box::Box(const sf::Vector2f & size, const sf::Vector2f & pos)
 	{
-		this->setSize(size);
-		this->setPosition(pos);
-		this->setOriginMode(OriginMode::CENTER);
+		setSize(size);
+		setPosition(pos);
+		setOriginMode(OriginMode::CENTER);
 	}
 	void Box::render(sf::RenderTarget & target)
 	{
@@ -18,33 +18,33 @@ namespace sen {
 	}
 	void Box::setOriginMode(OriginMode mode)
 	{
-		if (this->originMode == mode)
+		if (m_originMode == mode)
 			return;
 
-		this->originMode = mode;
-		if (this->originMode == OriginMode::CENTER)
-			this->setOrigin(this->getSize() / 2.f);
+		m_originMode = mode;
+		if (m_originMode == OriginMode::CENTER)
+			setOrigin(getSize() / 2.f);
 		else
-			this->setOrigin(0.f, 0.f);
+			setOrigin(0.f, 0.f);
 	}
 	void Box::setSize(const sf::Vector2f & size)
 	{
 		sf::RectangleShape::setSize(size);
-		if (this->originMode == OriginMode::CENTER)
-			this->setOrigin(this->getSize() / 2.f);
+		if (m_originMode == OriginMode::CENTER)
+			setOrigin(getSize() / 2.f);
 	}
 	/*void Box::blurBackground(float ammount, sf::RenderWindow &window)
 	{
-		this->texture = new sf::Texture();
-		this->texture->create(window.getSize().x, window.getSize().y);
-		this->texture->update(window);
+		texture = new sf::Texture();
+		texture->create(window.getSize().x, window.getSize().y);
+		texture->update(window);
 
-		this->setTexture(this->texture);
-		this->setTextureRect(sf::IntRect((sf::Vector2i)this->getPosition(), (sf::Vector2i)this->getSize()));
+		setTexture(texture);
+		setTextureRect(sf::IntRect((sf::Vector2i)getPosition(), (sf::Vector2i)getSize()));
 
-		this->shader = new sf::Shader();
-		this->shader->loadFromFile("Shaders/blur.frag", sf::Shader::Fragment);
-		this->shader->setUniform("blur_radius", ammount);
-		this->shader->setUniform("texture", this->texture);
+		shader = new sf::Shader();
+		shader->loadFromFile("Shaders/blur.frag", sf::Shader::Fragment);
+		shader->setUniform("blur_radius", ammount);
+		shader->setUniform("texture", texture);
 	}*/
 }

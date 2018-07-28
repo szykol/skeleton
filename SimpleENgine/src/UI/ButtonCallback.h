@@ -15,9 +15,9 @@ namespace sen {
 	class ButtonCallback : public Button
 	{
 	public:
-		std::function<void(ButtonCallback &)> onHoverCallback;
-		std::function<void(ButtonCallback &)> onUnhoverCallback;
-		std::function<void(ButtonCallback &)> onClickCallback;
+		std::function<void(ButtonCallback &)> m_onHoverCallback;
+		std::function<void(ButtonCallback &)> m_onUnhoverCallback;
+		std::function<void(ButtonCallback &)> m_onClickCallback;
 		/**
 			Basic constructor that calls Button constructor
 
@@ -40,5 +40,6 @@ namespace sen {
 			Calls the onClickCallback.
 		*/
 		virtual void onClick()	 override;
+		virtual ~ButtonCallback() = default;
 	};
 }

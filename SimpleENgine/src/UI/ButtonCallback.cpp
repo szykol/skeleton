@@ -7,22 +7,22 @@ namespace sen {
 	}
 	void ButtonCallback::onHover()
 	{
-		if (this->onHoverCallback)
-			this->onHoverCallback(*this);
+		if (m_onHoverCallback)
+			m_onHoverCallback(*this);
 		else
 			Button::onHover();
 	}
 	void ButtonCallback::onUnhover()
 	{
-		if (this->onUnhoverCallback)
-			this->onUnhoverCallback(*this);
+		if (m_onUnhoverCallback)
+			m_onUnhoverCallback(*this);
 		else
 			Button::onUnhover();
 	}
 	void ButtonCallback::onClick()
 	{
-		if (this->onClickCallback)
-			this->onClickCallback(*this);
+		if (m_onClickCallback)
+			m_onClickCallback(*this);
 		else
 			Button::onClick();
 	}

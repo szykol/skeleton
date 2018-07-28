@@ -16,10 +16,10 @@ namespace sen {
 	*/
 	class ButtonController
 	{
-		bool nonStandardPosition = false;
-		std::vector<Button*> buttons;
-		int activeIndex = 0;
-		sf::Clock timer;
+		bool m_nonStandardPosition = false;
+		std::vector<Button*> m_buttons;
+		int m_activeIndex = 0;
+		sf::Clock m_timer;
 	public:
 		/**
 			Default constructor of the controller.

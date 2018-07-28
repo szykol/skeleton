@@ -2,33 +2,33 @@
 
 namespace sen {
 	std::function<void(ButtonStaticCallback &)>
-		ButtonStaticCallback::onHoverCallback;
+		ButtonStaticCallback::s_onHoverCallback;
 	std::function<void(ButtonStaticCallback &)>
-		ButtonStaticCallback::onUnhoverCallback;
+		ButtonStaticCallback::s_onUnhoverCallback;
 	std::function<void(ButtonStaticCallback &)>
-		ButtonStaticCallback::onClickCallback;
+		ButtonStaticCallback::s_onClickCallback;
 
 	ButtonStaticCallback::ButtonStaticCallback(const sf::String & string)
 		: Button(string) {}
 
 	void ButtonStaticCallback::onHover()
 	{
-		if (this->onHoverCallback)
-			this->onHoverCallback(*this);
+		if (s_onHoverCallback)
+			s_onHoverCallback(*this);
 		else
 			Button::onHover();
 	}
 	void ButtonStaticCallback::onUnhover()
 	{
-		if (this->onUnhoverCallback)
-			this->onUnhoverCallback(*this);
+		if (s_onUnhoverCallback)
+			s_onUnhoverCallback(*this);
 		else
 			Button::onUnhover();
 	}
 	void ButtonStaticCallback::onClick()
 	{
-		if (this->onClickCallback)
-			this->onClickCallback(*this);
+		if (s_onClickCallback)
+			s_onClickCallback(*this);
 		else
 			Button::onClick();
 	}
