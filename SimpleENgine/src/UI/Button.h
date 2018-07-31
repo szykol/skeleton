@@ -16,7 +16,7 @@ namespace sen {
 	{
 	protected:
 		sf::Clock m_timer;
-		bool clickable = true;
+		bool clickable = false;
 	public:
 		onClickCallback m_callback;
 		explicit Button(const sf::String &string) : TextBox(string) {}

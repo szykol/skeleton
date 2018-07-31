@@ -21,33 +21,52 @@ namespace sen {
 	void Button::update(const sf::RenderWindow & window)
 	{
 		// create a cooldown to avoid calling the callback function every frame
-		if (m_timer.getElapsedTime().asSeconds() > 0.5f)
+		if (m_timer.getElapsedTime().asSeconds() > 0.5f
+			&& !sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			clickable = true;
 			m_timer.restart();
 		}
-		// if the button is clickable again..
-		if (clickable)
+
+		if (mouseOver(window))
 		{
-			// and mouse hovers over the button..
-			if (mouseOver(window))
+			onHover();
+			if (clickable && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				onHover();
-				// and the button is pressed
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-				{
-					onClick();
-					if (m_callback)
-						m_callback();
-					clickable = false;
-				}
-			}
-			// or the mouse doesn't hover over
-			else
-			{
-				onUnhover();
+				onClick();
+				if (m_callback)
+					m_callback();
+				clickable = false;
 			}
 		}
+		else
+			onUnhover();
+
+
+
+
+		//// if the button is clickable again..
+		//if (clickable)
+		//{
+		//	// and mouse hovers over the button..
+		//	if (mouseOver(window))
+		//	{
+		//		onHover();
+		//		// and the button is pressed
+		//		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		//		{
+		//			onClick();
+		//			if (m_callback)
+		//				m_callback();
+		//			clickable = false;
+		//		}
+		//	}
+		//	// or the mouse doesn't hover over
+		//	else
+		//	{
+		//		onUnhover();
+		//	}
+		//}
 	}
 	bool Button::mouseOver(const sf::RenderWindow & window)
 	{

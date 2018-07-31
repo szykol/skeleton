@@ -10,7 +10,7 @@ namespace sen {
 	{
 		placeButtons(window);
 	}
-	void ButtonController::addButton(Button * button)
+	void ButtonController::addButtons(Button * button)
 	{
 		m_buttons.push_back(button);
 	}
@@ -45,6 +45,11 @@ namespace sen {
 					m_activeIndex--;
 				m_timer.restart();
 			}
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+			&& !sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				m_canClick = true;
+			}
 		}
 
 		for (int i = 0; i < m_buttons.size(); ++i)
@@ -55,11 +60,14 @@ namespace sen {
 				// the button now is active
 				m_activeIndex = i;
 				// and if the mouse is pressed, perform an action
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				if (m_canClick && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					m_buttons[m_activeIndex]->onClick();
 					if (m_buttons[m_activeIndex]->m_callback)
+					{
 						m_buttons[m_activeIndex]->m_callback();
+						m_canClick = false;
+					}
 				}
 			}
 		}
@@ -76,9 +84,12 @@ namespace sen {
 
 		// check if user pressed an enter key rather than clicking on button
 		// with the mouse
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-			if(m_buttons[m_activeIndex]->m_callback)
+		if (m_canClick && sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+			if (m_buttons[m_activeIndex]->m_callback)
+			{
 				m_buttons[m_activeIndex]->m_callback();
+				m_canClick = false;
+			}
 	}
 	void ButtonController::render(sf::RenderTarget & target)
 	{
@@ -145,5 +156,10 @@ namespace sen {
 	void ButtonController::map(const std::function<void(Button*)>& function)
 	{
 		std::for_each(m_buttons.begin(), m_buttons.end(), function);
+	}
+	void ButtonController::freeMemory()
+	{
+		for (auto b : m_buttons)
+			delete b;
 	}
 }

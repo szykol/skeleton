@@ -20,6 +20,7 @@ namespace sen {
 		std::vector<Button*> m_buttons;
 		int m_activeIndex = 0;
 		sf::Clock m_timer;
+		bool m_canClick = false;
 	public:
 		/**
 			Default constructor of the controller.
@@ -46,7 +47,17 @@ namespace sen {
 
 			@param button Button pointer wich will be added to the vector
 		*/
-		void addButton(Button *button);
+		void addButtons(Button *button);
+		/**
+			Pass all buttons with single function call
+		*/
+		template<typename... Args>
+		void addButtons(Button *button, Args... args)
+		{
+			m_buttons.push_back(button);
+
+			addButtons(args...);
+		}
 		/**
 			Removes last added button 
 		*/
@@ -89,5 +100,10 @@ namespace sen {
 				   takes a button pointer as a parameter
 		*/
 		void map(const std::function<void(Button*)> &function);
+		/**
+			If using heap allocated buttons this method will 
+			free up memory used by them.
+		*/
+		void freeMemory();
 	};
 }
