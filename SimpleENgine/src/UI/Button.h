@@ -8,9 +8,9 @@ typedef std::function<void(void)> onClickCallback;
 
 namespace sen {
 	/**
-		Abstract class. Provides an interface for button functionality.
+		Provides an interface for button functionality.
 		Those virtual voids need to be overriden in order to specify how button behaves. 
-		Provides callback function that's being called wherever user presses the button
+		Provides callback function that's being called whenever user presses the button
 	*/
 	class Button : public TextBox
 	{
@@ -37,7 +37,7 @@ namespace sen {
 
 			@param window Window needed to get the position of Mouse
 		*/
-		virtual void update(const sf::RenderWindow &window);
+		virtual void update(sf::RenderWindow &window);
 		/**
 			Checks if a Mouse hovers over the button
 		*/

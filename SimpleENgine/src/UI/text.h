@@ -15,6 +15,8 @@ namespace sen {
 	{
 	private:
 		OriginMode m_originMode;
+		bool m_boundsChanged;
+		bool m_boundsStatusReset;
 	public:
 		/**
 			Lets you specify the string, fontsize and font that will be used in this object.
@@ -62,6 +64,7 @@ namespace sen {
 			@param string New string.
 		*/
 		void setString(const sf::String &string);
+		bool haveBoundsChanged() const;
 		virtual ~Text();
 	};
 }

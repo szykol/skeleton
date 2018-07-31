@@ -4,7 +4,7 @@
 
 namespace sen {
 	/**
-		Inteface for all state classes. It is made
+		Interface for all state classes. It is made
 		for StateManager class which works with
 		State pointers.
 		There are 3 methods that need to be overriden.
