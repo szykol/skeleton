@@ -18,7 +18,7 @@ namespace sen {
 		setOutlineColor(sf::Color(0, 198, 0, 190));
 		m_message.setFillColor(Box::getOutlineColor());
 	}
-	void Button::update(const sf::RenderWindow & window)
+	void Button::update(sf::RenderWindow & window)
 	{
 		// create a cooldown to avoid calling the callback function every frame
 		if (m_timer.getElapsedTime().asSeconds() > 0.5f

@@ -13,6 +13,7 @@ namespace sen {
 	{
 	protected:
 		Text m_message;
+		unsigned int m_initialTextSize;
 	public:
 		/**
 			Sets the text, and then sets size of the box.
@@ -40,6 +41,7 @@ namespace sen {
 			@return Text object inside of the box
 		*/
 		Text& getTextObject() { return m_message; }
+		bool isTextOutOfBounds();
 		virtual ~TextBox() = default;
 	};
 }

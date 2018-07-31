@@ -14,9 +14,21 @@ namespace sen {
 		Box::setOutlineColor(sf::Color(222,222,222, 170));
 		m_message.setFillColor(Box::getOutlineColor());
 		Box::setOutlineThickness(-2.5f);
+
+		m_initialTextSize = m_message.getCharacterSize();
 	}
 	void TextBox::render(sf::RenderTarget & target)
 	{
+		// set text size to fix in the box
+		if (m_message.haveBoundsChanged())
+		{
+			unsigned int textSize = m_initialTextSize;
+			m_message.setCharacterSize(m_initialTextSize);
+			while (isTextOutOfBounds() && textSize > 15)
+				m_message.setCharacterSize(
+					--textSize
+				);
+		}
 		// rendering must be in this order so the box
 		// wont cover the message
 		Box::render(target);
@@ -27,5 +39,10 @@ namespace sen {
 		// set origin and then position of box and text
 		Box::setPosition(pos);
 		m_message.setPosition(pos);
+	}
+	bool TextBox::isTextOutOfBounds()
+	{
+		return (m_message.getGlobalBounds().left
+			< Box::getGlobalBounds().left + 20.f);
 	}
 }
