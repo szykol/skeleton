@@ -2,34 +2,56 @@
 #include "StateManager.h"
 
 namespace sen {
+	unsigned int TestState::s_pushedStates = 0;
+
 	TestState::TestState(sf::RenderWindow & window)
-		: m_infoButton("Test State")
+		: m_info("Ammount of states: ")
 	{
-		m_infoButton.setPosition(
-			sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f + 100.f));
+		Button* popState = new Button("Pop State");
+		Button* pushState = new Button("Push State");
 
-		m_infoButton.m_onHoverCallback = [](Button &button) {
-			button.getTextObject().setString("Click me");
-		};
+		pushState->setOnClickCalback([&window] {
+			StateManager::pushState(new TestState(window));
+		});
+		popState->setOnClickCalback([] {
+			StateManager::popState();
+		});
 
-		m_infoButton.m_onUnhoverCallback = [](Button &button) {
-			button.getTextObject().setString("Test State");
-		};
+		// Get text object of textbox and set its string
+		// and character size
+		auto& tObject = m_info.getTextObject();
+		tObject.setCharacterSize(26U);
+		sf::String ammount = tObject.getString();
+		ammount += std::to_string(s_pushedStates);
+		tObject.setString(ammount);
+		m_info.setPosition(sf::Vector2f(window.getSize().x / 2.f, 50.f));
 
-		m_infoButton.m_callback = [] {
-			sen::StateManager::popState();
-		};
+		s_pushedStates++;
+
+		// setup button controller
+		m_buttonController.addButtons(popState, pushState);
+		m_buttonController.placeButtons(window);
+		m_buttonController.setButtonFixedSize(
+			sf::Vector2f(170.f, 50.f)
+		);
+
 	}
 	void TestState::update(sf::RenderWindow & window)
 	{
-		m_infoButton.update(window);
+		m_buttonController.update(window);
 	}
 	void TestState::input(sf::RenderWindow & window)
 	{
-
 	}
 	void TestState::render(sf::RenderTarget & target)
 	{
-		m_infoButton.render(target);
+		m_info.render(target);
+		m_buttonController.render(target);
+	}
+	TestState::~TestState()
+	{
+		// buttons are heap allocated
+		m_buttonController.freeMemory();
+		s_pushedStates--;
 	}
 }
