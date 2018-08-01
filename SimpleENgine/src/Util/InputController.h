@@ -7,18 +7,23 @@
 typedef std::function<bool(const sf::String& string)> stringValidateFunc;
 
 namespace sen {
-	class InputController
+	class InputController : sf::NonCopyable
 	{
 	private:
-		Text & m_text;
-		Cursor m_cursor;
-		stringValidateFunc m_validateFunc;
+		static Text* s_text;
+		static Cursor s_cursor;
+		static stringValidateFunc s_validateFunc;
+		static bool s_isBound;
+		InputController() = default;
+		~InputController() = default;
 	public:
-		InputController(Text& text);
-		void handleInput(const sf::Event& evnt);
+	    static void bindText(Text& text);
+		static void unbindText();
+		static inline bool isBound() {return s_isBound;}
+		static void handleInput(const sf::Event& evnt);
 		//void update();
-		void render(sf::RenderTarget& target);
-		bool validate();
-		void setValidateFunction(const stringValidateFunc& func) { m_validateFunc = func; }
+		static void render(sf::RenderTarget& target);
+		static bool validate();
+		static void setValidateFunction(const stringValidateFunc& func) { s_validateFunc = func; }
 	};
 }

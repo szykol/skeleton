@@ -9,6 +9,7 @@ namespace sen {
 	{
 		Button* popState = new Button("Pop State");
 		Button* pushState = new Button("Push State");
+		InputBox* box = new InputBox();
 
 		pushState->setOnClickCalback([&window] {
 			StateManager::pushState(new TestState(window));
@@ -29,12 +30,17 @@ namespace sen {
 		s_pushedStates++;
 
 		// setup button controller
-		m_buttonController.addButtons(popState, pushState);
+		m_buttonController.addButtons(popState, pushState, box);
 		m_buttonController.placeButtons(window);
 		m_buttonController.setButtonFixedSize(
 			sf::Vector2f(170.f, 50.f)
 		);
 
+
+	}
+	void TestState::handleEvents(sf::Event &evnt)
+	{
+		
 	}
 	void TestState::update(sf::RenderWindow & window)
 	{
