@@ -2,15 +2,16 @@
 
 
 namespace sen {
-
-	InputController::InputController(Text & text)
-		: m_text(text), m_cursor(text)
-	{
-	}
+	Text* InputController::s_text = nullptr;
+	Cursor InputController::s_cursor;
+	stringValidateFunc InputController::s_validateFunc;
+	bool InputController::s_isBound = false;
 
 	void InputController::handleInput(const sf::Event& evnt)
 	{
-		sf::String string = m_text.getString();
+		if(!s_isBound) return;
+
+		sf::String string = s_text->getString();
 
 		auto unicode = evnt.text.unicode;
 		if (unicode >= 'A' && unicode <= 'Z'
@@ -21,15 +22,29 @@ namespace sen {
 		{
 			string += char(evnt.key.code);
 			if(validate())
-				m_text.setString(string);
+				s_text->setString(string);
 		}
 		else if (unicode == '\b' && !string.isEmpty())
 		{
 			string.erase(string.getSize() - 1);
 			if(validate())
-				m_text.setString(string);
+				s_text->setString(string);
 		}
 		
+	}
+
+	void InputController::bindText(Text& text)
+	{
+		s_isBound = true;
+		s_text = &text;
+		s_cursor.setTextRef(&text);
+	}
+
+	void InputController::unbindText()
+	{
+		s_isBound = false;
+		s_text = nullptr;
+		s_cursor.setTextRef(nullptr);
 	}
 
 	//void InputController::update()
@@ -38,12 +53,13 @@ namespace sen {
 
 	void InputController::render(sf::RenderTarget & target)
 	{
-		m_cursor.render(target);
+		if(s_isBound)
+			s_cursor.render(target);
 	}
 	bool InputController::validate()
 	{
-		if (m_validateFunc)
-			return m_validateFunc(m_text.getString());
+		if (s_validateFunc)
+			return s_validateFunc(s_text->getString());
 		else
 			return true;
 	}
