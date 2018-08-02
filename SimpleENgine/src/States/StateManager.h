@@ -2,9 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 #include "State.h"
 
 namespace sen {
+	typedef std::shared_ptr<State> StatePointer;
+	typedef std::vector<StatePointer> StatePointerVector;
 	/**
 	 *	Basic state manager. Works with classes 
 	 *	that derive from State class.
@@ -21,19 +24,43 @@ namespace sen {
 	class StateManager : sf::NonCopyable
 	{
 	private:
-		static std::vector<State*> m_states;
-		static State* m_currentState;
-		static State* m_awaitState;
+		static StatePointerVector m_states;
+		static StatePointer m_currentState;
+		static StatePointer m_awaitState;
 		static bool m_wannaPop;
-	public:
 		StateManager() = default;
+	public:
 		/**
-		 *	Lets you push new state - it stops updating
-		 *	current state and switches to new one.
+		 *	Lets you push a new state - it stops updating
+		 *	current state and switches to a new one.
 		 *
 		 *	@param newState New state to push
 		 */
-		static void pushState(State* newState);
+		static void pushState(StatePointer& newState);
+		/** 
+		 * @brief  Lets you push a new state if its
+		 * an R-value. 
+		 * @note   
+		 * @param  newState: R-value state shared pointer
+		 * @retval None
+		 */
+		static void pushState(StatePointer&& newState);
+		/** 
+		 * @brief  Lets you pass all constructor arguments
+		 * of a state, and creates a shared pointer.
+		 * This takes care of creating shared_ptr which
+		 * could be a little complicated
+		 * @note   All you need to do is pass the arguments
+		 * needed in the State constructor
+		 * @param  args: 
+		 * @retval None
+		 */
+		template<typename tState, typename... Args>
+		static void pushState(Args&... args)
+		{
+			m_awaitState = std::make_shared<tState>(args...);
+		}
+
 		/**
 		 *  Lets you pop states - it stops updating
 		 *	current state, delets it and switches to

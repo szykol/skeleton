@@ -1,19 +1,20 @@
 #include "ButtonController.h"
 
 namespace sen {
-	ButtonController::ButtonController(const std::vector<Button*>& buttons)
+	ButtonController::ButtonController(const ButtonPointerVector& buttons)
 		: m_buttons(buttons)
 	{
 	}
-	ButtonController::ButtonController(const std::vector<Button*> buttons, const sf::RenderWindow & window)
+	ButtonController::ButtonController(const ButtonPointerVector& buttons, const sf::RenderWindow & window)
 		: m_buttons(buttons)
 	{
 		placeButtons(window);
 	}
-	void ButtonController::addButtons(Button * button)
+	void ButtonController::pushButtons(ButtonPointer& button)
 	{
 		m_buttons.push_back(button);
 	}
+	
 	void ButtonController::removeButton()
 	{
 		m_buttons.pop_back();
@@ -87,6 +88,7 @@ namespace sen {
 		if (m_canClick && sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 			if (m_buttons[m_activeIndex]->m_callback)
 			{
+				m_buttons[m_activeIndex]->onClick();
 				m_buttons[m_activeIndex]->m_callback();
 				m_canClick = false;
 			}
@@ -141,7 +143,7 @@ namespace sen {
 	}
 	void ButtonController::setPositionX(float x)
 	{
-		map([x](Button* button) {
+		map([x](ButtonPointer& button) {
 			button->setPosition(sf::Vector2f(x, button->getPosition().y));
 		});
 
@@ -149,17 +151,17 @@ namespace sen {
 	}
 	void ButtonController::setButtonFixedSize(const sf::Vector2f & size)
 	{
-		map([&size](Button* button) {
+		map([&size](ButtonPointer& button) {
 			button->setSize(size);
 		});
 	}
-	void ButtonController::map(const std::function<void(Button*)>& function)
+	void ButtonController::map(const std::function<void(ButtonPointer&)>& function)
 	{
 		std::for_each(m_buttons.begin(), m_buttons.end(), function);
 	}
-	void ButtonController::freeMemory()
-	{
-		for (auto b : m_buttons)
-			delete b;
-	}
+	// void ButtonController::freeMemory()
+	// {
+	// 	for (auto b : m_buttons)
+	// 		delete b;
+	// }
 }

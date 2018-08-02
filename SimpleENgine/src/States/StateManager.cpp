@@ -1,14 +1,18 @@
 #include "StateManager.h"
 
 namespace sen {
-  std::vector<State*> StateManager::m_states;
-  State* StateManager::m_currentState = nullptr;
-  State* StateManager::m_awaitState = nullptr;
+  StatePointerVector StateManager::m_states;
+  StatePointer StateManager::m_currentState;
+  StatePointer StateManager::m_awaitState;  
   bool StateManager::m_wannaPop = false;
 
-  void StateManager::pushState(State * newState)
+  void StateManager::pushState(StatePointer& newState)
   {
     // mark the new state as awaiting state
+    m_awaitState = newState;
+  }
+  void StateManager::pushState(StatePointer&& newState)
+  {
     m_awaitState = newState;
   }
   void StateManager::popState()
@@ -40,7 +44,6 @@ namespace sen {
     // popped, pop it
     if (m_wannaPop)
     {
-      delete m_currentState;
       if (m_states.empty())
         m_currentState = nullptr;
       else
@@ -53,11 +56,5 @@ namespace sen {
   }
   StateManager::~StateManager()
   {
-    // free up the memory
-    std::for_each(m_states.begin(), m_states.end(), [](State* state) {
-      delete state;
-    });
-    if(m_currentState)
-      delete m_currentState;
   }
 }

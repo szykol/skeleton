@@ -2,8 +2,11 @@
 
 #include <vector>
 #include "Button.h"
+#include <memory>
 
 namespace sen {
+	typedef std::shared_ptr<Button> ButtonPointer;
+	typedef std::vector<ButtonPointer> ButtonPointerVector;
 	/**
 	 * 	All the buttons you pass to the controller will be
 	 *	updated and rendered. Additionaly controller has built 
@@ -17,7 +20,7 @@ namespace sen {
 	class ButtonController
 	{
 		bool m_nonStandardPosition = false;
-		std::vector<Button*> m_buttons;
+		ButtonPointerVector m_buttons;
 		int m_activeIndex = 0;
 		sf::Clock m_timer;
 		bool m_canClick = false;
@@ -32,7 +35,7 @@ namespace sen {
          *
 		 *	@param buttons A vector of button pointers
 		 */
-		explicit ButtonController(const std::vector<Button*> &buttons);
+		explicit ButtonController(const ButtonPointerVector &buttons);
 		/**
 		 *	Constructor that takes the vector of button pointers
 		 *	and makes a copy. It places all buttons evenly on the
@@ -41,22 +44,36 @@ namespace sen {
 		 *	@param buttons A vector of button pointers
 		 *	@param window Window is needed for placing the buttons
 		 */
-		ButtonController(const std::vector<Button*> buttons, const sf::RenderWindow &window);
+		ButtonController(const ButtonPointerVector& buttons, const sf::RenderWindow &window);
 		/**
 		 *	Adds the button pointer to the vector
          *
 		 *	@param button Button pointer wich will be added to the vector
 		 */
-		void addButtons(Button *button);
+		void pushButtons(ButtonPointer& button);
 		/**
 		 *	Pass all buttons with single function call
 		 */
 		template<typename... Args>
-		void addButtons(Button *button, Args... args)
+		void pushButtons(ButtonPointer& button, Args... args)
 		{
 			m_buttons.push_back(button);
 
-			addButtons(args...);
+			pushButtons(args...);
+		}
+		/** 
+		 * @brief  Adds a button at the end. The button is constructed
+		 * by the std::vector<t>::emplace_back function
+		 * @param  arguments: Arguments that will be forwarded
+		 * to the constructor of button shared pointer.
+		 * example: 
+		 *  (new Button("something"))
+		 * @retval None
+		 */
+		template<typename... Args>
+		void emplaceButtons(Args&&... args)
+		{
+			m_buttons.emplace_back(args...);
 		}
 		/**
 		 *	Removes last added button 
@@ -99,11 +116,14 @@ namespace sen {
 		 *	@param function Function that does something with button and
 		 *		   takes a button pointer as a parameter
 		 */
-		void map(const std::function<void(Button*)> &function);
-		/**
-		 *	If using heap allocated buttons this method will 
-		 *	free up memory used by them.
+		void map(const std::function<void(ButtonPointer&)> &function);
+		/** 
+		 * @brief  If using heap allocated buttons this method will 
+		 * free up memory used by them.
+		 * @note   THIS FUNCTION IS DEPRECATED since moving to
+		 * shared pointers instead of c-style pointers.
+		 * @retval None
 		 */
-		void freeMemory();
+		void freeMemory() = delete;
 	};
 }
