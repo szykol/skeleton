@@ -45,4 +45,14 @@ namespace sen {
 		return (m_message.getGlobalBounds().left
 			< Box::getGlobalBounds().left + 20.f);
 	}
+	void TextBox::move(float offsetX, float offsetY)
+	{
+		Box::move(offsetX, offsetY);
+		m_message.move(offsetX, offsetY);
+	}
+	void TextBox::move(const sf::Vector2f & offset)
+	{
+		Box::move(offset);
+		m_message.move(offset);
+	}
 }

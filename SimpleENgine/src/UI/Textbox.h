@@ -43,5 +43,7 @@ namespace sen {
 		Text& getTextObject() { return m_message; }
 		bool isTextOutOfBounds();
 		virtual ~TextBox() = default;
+		void move(float offsetX, float offsetY);
+		void move(const sf::Vector2f& offset);
 	};
 }

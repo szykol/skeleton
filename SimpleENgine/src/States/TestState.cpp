@@ -5,10 +5,11 @@ namespace sen {
 	unsigned int TestState::s_pushedStates = 0;
 
 	TestState::TestState(sf::RenderWindow & window)
-		: m_info("Ammount of states: ")
+		: m_info("Amount of states: ")
 	{
 		std::shared_ptr<Button> popState(new Button("Pop State"));
 		std::shared_ptr<Button> pushState(new Button("Push State"));
+		std::shared_ptr<Button> spawnPopup(new Button("Spawn Popup"));
 		//std::shared_ptr<Button> box(new InputBox());
 
 		pushState->setOnClickCalback([&window] {
@@ -16,6 +17,12 @@ namespace sen {
 		});
 		popState->setOnClickCalback([] {
 			StateManager::popState();
+		});
+
+		PopupPointer& popRef = m_popup;
+		spawnPopup->setOnClickCalback([&popRef, &window]{
+			popRef = std::make_shared<Popup>(window);
+			StateManager::pushPopup(popRef);
 		});
 
 		// Get text object of textbox and set its string
@@ -30,13 +37,13 @@ namespace sen {
 		s_pushedStates++;
 
 		// setup button controller
-		m_buttonController.pushButtons(popState, pushState);// , box);
+		m_buttonController.pushButtons(popState, pushState, spawnPopup);
 		m_buttonController.placeButtons(window);
 		m_buttonController.setButtonFixedSize(
-			sf::Vector2f(170.f, 50.f)
+			sf::Vector2f(185.f, 50.f)
 		);
 
-
+		
 	}
 	void TestState::handleEvents(sf::Event &evnt)
 	{
@@ -45,6 +52,13 @@ namespace sen {
 	void TestState::update(sf::RenderWindow & window)
 	{
 		m_buttonController.update(window);
+		if(m_popup && m_popup->hasResponse())
+		{
+			std::cout<<"Got response!\n\tThe response is :'"
+			 << m_popup->getResponse()["Response"]<<std::endl;
+			
+			m_popup = nullptr;
+		}
 	}
 	void TestState::input(sf::RenderWindow & window)
 	{
