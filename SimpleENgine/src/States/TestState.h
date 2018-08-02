@@ -2,6 +2,8 @@
 
 #include "State.h"
 #include "../UI/UIheaders.h"
+#include "../UI/Popup.h"
+#include <memory>
 
 namespace sen {
 	/**
@@ -12,8 +14,9 @@ namespace sen {
 	class TestState : public State
 	{
 	private:
-		sen::ButtonController m_buttonController;
-		sen::TextBox m_info;
+		ButtonController m_buttonController;
+		TextBox m_info;
+		std::shared_ptr<Popup> m_popup;
 		static unsigned int s_pushedStates;
 	public:
 		/**

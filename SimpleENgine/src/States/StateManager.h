@@ -1,13 +1,17 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
 #include <vector>
 #include <memory>
+
+#include "../UI/Popup.h"
 #include "State.h"
 
 namespace sen {
 	typedef std::shared_ptr<State> StatePointer;
 	typedef std::vector<StatePointer> StatePointerVector;
+	typedef std::shared_ptr<Popup> PopupPointer;
 	/**
 	 *	Basic state manager. Works with classes 
 	 *	that derive from State class.
@@ -27,9 +31,17 @@ namespace sen {
 		static StatePointerVector m_states;
 		static StatePointer m_currentState;
 		static StatePointer m_awaitState;
+		static PopupPointer m_popup;
 		static bool m_wannaPop;
 		StateManager() = default;
 	public:
+		/**
+		 *	Basically updates current state.
+		 *
+		 *	@param window Window is needed for
+		 *	       current state
+		 */
+		static void run(sf::RenderWindow &window);
 		/**
 		 *	Lets you push a new state - it stops updating
 		 *	current state and switches to a new one.
@@ -60,20 +72,13 @@ namespace sen {
 		{
 			m_awaitState = std::make_shared<tState>(args...);
 		}
-
 		/**
 		 *  Lets you pop states - it stops updating
 		 *	current state, delets it and switches to
 		 *	the previous one
 		 */
 		static void popState();
-		/**
-		 *	Basically updates current state.
-		 *
-		 *	@param window Window is needed for
-		 *	       current state
-		 */
-		static void run(sf::RenderWindow &window);
+		static void pushPopup(PopupPointer& popup);
 		~StateManager();
 	};
 }
