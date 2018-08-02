@@ -7,31 +7,32 @@
     @version 0.0.3
 */
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
+
+#include <iostream>
 #include <unordered_map>
+#include <functional>
+#include <vector>
+#include <memory>
+
 #include "Managers/ResourceManager.h"
 #include "UI/UIheaders.h"
 #include "States/StateHeaders.h"
-#include <functional>
-#include <vector>
-#include "Util/FPSCounter.h"
-#include "Util/InputController.h"
+#include "Util/UtilHeaders.h"
+
+#include "vendor/nlohmann/json.hpp"
 
 int main()
-{
+{	
     sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.3");
     window.setFramerateLimit(60U);
     const sf::Vector2f centerPos(window.getSize().x / 2.f, window.getSize().y / 2.f);
 
-    sen::StateManager::pushState(new sen::TestState(window));
-
-    /*sen::Text tekst("Temp");
-    tekst.setPosition(centerPos);*/
+	sen::StateManager::pushState<sen::TestState>(window);
 
     sf::Clock timer;
     sen::FPSCounter counter;
-    
+
     while (window.isOpen())
     {
         sf::Event evnt;
@@ -56,8 +57,6 @@ int main()
         counter.update(deltaTime);
         counter.render(window);
 
-        
-        //ic.render(window);
         sen::InputController::render(window);
 
         sen::StateManager::run(window);

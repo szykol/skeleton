@@ -7,12 +7,12 @@ namespace sen {
 	TestState::TestState(sf::RenderWindow & window)
 		: m_info("Ammount of states: ")
 	{
-		Button* popState = new Button("Pop State");
-		Button* pushState = new Button("Push State");
-		InputBox* box = new InputBox();
+		std::shared_ptr<Button> popState(new Button("Pop State"));
+		std::shared_ptr<Button> pushState(new Button("Push State"));
+		//std::shared_ptr<Button> box(new InputBox());
 
 		pushState->setOnClickCalback([&window] {
-			StateManager::pushState(new TestState(window));
+			StateManager::pushState<TestState>(window);
 		});
 		popState->setOnClickCalback([] {
 			StateManager::popState();
@@ -30,7 +30,7 @@ namespace sen {
 		s_pushedStates++;
 
 		// setup button controller
-		m_buttonController.addButtons(popState, pushState, box);
+		m_buttonController.pushButtons(popState, pushState);// , box);
 		m_buttonController.placeButtons(window);
 		m_buttonController.setButtonFixedSize(
 			sf::Vector2f(170.f, 50.f)
@@ -56,8 +56,8 @@ namespace sen {
 	}
 	TestState::~TestState()
 	{
-		// buttons are heap allocated
-		m_buttonController.freeMemory();
+		// buttons are no longer heap allocated
+		//m_buttonController.freeMemory();
 		s_pushedStates--;
 	}
 }
