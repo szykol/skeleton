@@ -33,8 +33,11 @@ int main()
     sf::Clock timer;
     sen::FPSCounter counter;
 
-    sen::jButton button("eldo");
-    button.printGlobalSettings();
+    sen::jButton button("Testing json");
+    button.setPosition(centerPos);
+    //button.printGlobalSettings();
+	sen::Button second("Testing");
+	second.setPosition(centerPos);
     
     while (window.isOpen())
     {
@@ -62,7 +65,12 @@ int main()
 
         sen::InputController::render(window);
 
-        sen::StateManager::run(window);
+        button.update(window);
+        button.render(window);
+
+        //sen::StateManager::run(window);
+
+
 
         window.display();
     }
