@@ -33,6 +33,9 @@ int main()
     sf::Clock timer;
     sen::FPSCounter counter;
 
+    sen::jButton button("eldo");
+    button.printGlobalSettings();
+    
     while (window.isOpen())
     {
         sf::Event evnt;
