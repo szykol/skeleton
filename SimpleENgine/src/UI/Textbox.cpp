@@ -2,7 +2,7 @@
 
 namespace sen {
 	TextBox::TextBox(const sf::String & string)
-		: m_message(string), Box()
+		: m_message(string), Box(), m_fitTextSize(false)
 	{
 		// get text bounds and set a box around it
 		sf::FloatRect bounds = m_message.getLocalBounds();
@@ -13,21 +13,25 @@ namespace sen {
 		Box::setFillColor(sf::Color(25,25,25, 170));
 		Box::setOutlineColor(sf::Color(222,222,222, 170));
 		m_message.setFillColor(Box::getOutlineColor());
+		m_message.setOriginMode(OriginMode::CENTER);
 		Box::setOutlineThickness(-2.5f);
 
 		m_initialTextSize = m_message.getCharacterSize();
 	}
 	void TextBox::render(sf::RenderTarget & target)
 	{
-		// set text size to fix in the box
-		if (m_message.haveBoundsChanged())
+		if(m_fitTextSize)
 		{
-			unsigned int textSize = m_initialTextSize;
-			m_message.setCharacterSize(m_initialTextSize);
-			while (isTextOutOfBounds() && textSize > 15)
-				m_message.setCharacterSize(
-					--textSize
-				);
+			// set text size to fix in the box
+			if (m_message.haveBoundsChanged())
+			{
+				unsigned int textSize = m_initialTextSize;
+				m_message.setCharacterSize(m_initialTextSize);
+				while (isTextOutOfBounds() && textSize > 15)
+					m_message.setCharacterSize(
+						--textSize
+					);
+			}
 		}
 		// rendering must be in this order so the box
 		// wont cover the message

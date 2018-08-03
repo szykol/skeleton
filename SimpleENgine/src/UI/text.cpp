@@ -6,6 +6,7 @@ namespace sen {
 		: sf::Text(string, font, fontSize), m_boundsChanged(false), m_boundsStatusReset(false)
 	{
 		setOriginMode(OriginMode::CENTER);
+		originSet();
 	}
 
 	void Text::render(sf::RenderTarget & target)
@@ -34,11 +35,7 @@ namespace sen {
 
 		// when size of text changes and text is in center mode we need to update the origin
 		// so the text will be set in the middle (the bounds have changed)
-		if (m_originMode == OriginMode::CENTER)
-		{
-			sf::FloatRect bounds = getLocalBounds();
-			setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f));
-		}
+		originSet();
 	}
 
 	void Text::setOriginMode(OriginMode mode)
@@ -48,26 +45,14 @@ namespace sen {
 
 		m_originMode = mode;
 		
-		if (m_originMode == OriginMode::CENTER)
-		{
-			sf::FloatRect bounds = getLocalBounds();
-			setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f));
-		}
-		else
-		{
-			setOrigin(0.f, 0.f);
-		}
+		originSet();
 	}
 
 	void Text::setString(const sf::String & string)
 	{
 		m_boundsChanged = true;
 		sf::Text::setString(string);
-		if (m_originMode == OriginMode::CENTER)
-		{
-			sf::FloatRect bounds = getLocalBounds();
-			setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f));
-		}
+		originSet();
 	}
 
 	bool Text::haveBoundsChanged() const
@@ -77,5 +62,18 @@ namespace sen {
 
 	Text::~Text()
 	{
+	}
+	
+	void Text::originSet()
+	{
+		if (m_originMode == OriginMode::CENTER)
+		{
+			sf::FloatRect bounds = getLocalBounds();
+			setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f));
+		}
+		else
+		{
+			setOrigin(0.f, 0.f);
+		}
 	}
 }

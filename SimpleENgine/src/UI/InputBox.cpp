@@ -7,6 +7,7 @@ namespace sen {
 		: m_placeholder(placeholder),
 		  Button(placeholder), m_hasFocus(false)
 	{
+		Button::setFitTextSize(false);
 		InputController::setValidateFunction(
 			[](const sf::String& string) -> bool {
 				return string.getSize() <= 30;

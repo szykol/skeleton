@@ -66,5 +66,7 @@ namespace sen {
 		void setString(const sf::String &string);
 		bool haveBoundsChanged() const;
 		virtual ~Text();
+	private:
+		void originSet();
 	};
 }

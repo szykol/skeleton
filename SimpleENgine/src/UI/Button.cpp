@@ -30,7 +30,6 @@ namespace sen {
 
 		if (mouseOver(window))
 		{
-			onHover();
 			if (clickable && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				onClick();
@@ -38,35 +37,11 @@ namespace sen {
 					m_callback();
 				clickable = false;
 			}
+			else if(!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				onHover();
 		}
 		else
 			onUnhover();
-
-
-
-
-		//// if the button is clickable again..
-		//if (clickable)
-		//{
-		//	// and mouse hovers over the button..
-		//	if (mouseOver(window))
-		//	{
-		//		onHover();
-		//		// and the button is pressed
-		//		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		//		{
-		//			onClick();
-		//			if (m_callback)
-		//				m_callback();
-		//			clickable = false;
-		//		}
-		//	}
-		//	// or the mouse doesn't hover over
-		//	else
-		//	{
-		//		onUnhover();
-		//	}
-		//}
 	}
 	bool Button::mouseOver(const sf::RenderWindow & window)
 	{

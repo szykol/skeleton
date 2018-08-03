@@ -1,32 +1,35 @@
 #include "jButton.h"
-
+#include "../Util/sf_to_json.h"
+#include "Text.h"
 namespace sen {
     json jButton::s_globalSettings = {
         {"hover",{
             {"CharacterSize", 32U},
-            {"FillColor", "Red"}
+            {"FillColor", sf::Color::Red}
         }},
         {"click",{
             {"CharacterSize", 34U},
-            {"FillColor", "White"}
-        }}
+            {"FillColor", sf::Color::White}
+        }},
+		{"standard", {
+			{"CharacterSize", 25U},
+			{"FillColor", sf::Color(128,128,90,20)}
+		}}
     };
 	void jButton::onHover()
 	{
-		setFillColor(sf::Color(sf::Color(25, 25, 25, 50)));
-		setOutlineColor(sf::Color(222, 222, 222, 240));
-		m_message.setFillColor(getOutlineColor());
+		sf::Color color = s_globalSettings["hover"]["FillColor"];
+		setFillColor(color);
 	}
 	void jButton::onUnhover()
 	{
-		setFillColor(sf::Color(25, 25, 25, 170));
-		setOutlineColor(sf::Color(222, 222, 222, 170));
-		m_message.setFillColor(Box::getOutlineColor());
+		sf::Color color = s_globalSettings["standard"]["FillColor"];
+		setFillColor(color);
 	}
 	void jButton::onClick()
 	{
-		setOutlineColor(sf::Color(0, 198, 0, 190));
-		m_message.setFillColor(Box::getOutlineColor());
+		sf::Color color = s_globalSettings["click"]["FillColor"];
+		setFillColor(color);
 	}
 	void jButton::update(sf::RenderWindow & window)
 	{
@@ -40,7 +43,7 @@ namespace sen {
 
 		if (mouseOver(window))
 		{
-			onHover();
+			
 			if (clickable && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				onClick();
@@ -48,6 +51,8 @@ namespace sen {
 					m_callback();
 				clickable = false;
 			}
+			else if(!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				onHover();
 		}
 		else
 			onUnhover();
@@ -62,9 +67,5 @@ namespace sen {
 	}
     void jButton::printGlobalSettings()
     {
-        std::cout<<s_globalSettings<<std::endl;
-        std::cout<<"json['hover']['FillColor']="<<s_globalSettings["hover"]["FillColor"]<<std::endl;
-
-
     }
 }
