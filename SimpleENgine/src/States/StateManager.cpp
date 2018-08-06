@@ -34,12 +34,18 @@ namespace sen {
         // if there's anything to update
         if (m_currentState)
         {
-            sf::Event evnt;
+            /*sf::Event evnt;
             while(window.pollEvent(evnt))
-                m_currentState->handleEvents(evnt);
-            m_currentState->input(window);
-            m_currentState->update(window);
-            m_currentState->render(window);
+                m_currentState->handleEvents(evnt);*/
+
+			// if doesn't have popup or if it has but it doesn't pause
+			// state
+			if (!m_popup || !m_popup->pausesState())
+			{
+				m_currentState->input(window);
+				m_currentState->update(window);
+			}
+			m_currentState->render(window);
         }
         if(m_popup)
         {
@@ -65,7 +71,8 @@ namespace sen {
     void StateManager::pushPopup(PopupPointer& popup)
     {
         if(m_popup) return;
-            m_popup = popup;
+        
+		m_popup = popup;
     }
     StateManager::~StateManager()
     {
