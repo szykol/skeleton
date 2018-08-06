@@ -1,10 +1,13 @@
 #pragma once
 
-#include <vector>
 #include "Button.h"
+
+#include <vector>
 #include <memory>
+#include <functional>
 
 namespace sen {
+	class Button;
 	typedef std::shared_ptr<Button> ButtonPointer;
 	typedef std::vector<ButtonPointer> ButtonPointerVector;
 	/**

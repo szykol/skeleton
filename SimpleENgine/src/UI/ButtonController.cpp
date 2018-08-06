@@ -64,9 +64,9 @@ namespace sen {
 				if (m_canClick && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					m_buttons[m_activeIndex]->onClick();
-					if (m_buttons[m_activeIndex]->m_callback)
+					if (m_buttons[m_activeIndex]->m_clickCallback)
 					{
-						m_buttons[m_activeIndex]->m_callback();
+						m_buttons[m_activeIndex]->m_clickCallback();
 						m_canClick = false;
 					}
 				}
@@ -86,10 +86,10 @@ namespace sen {
 		// check if user pressed an enter key rather than clicking on button
 		// with the mouse
 		if (m_canClick && sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-			if (m_buttons[m_activeIndex]->m_callback)
+			if (m_buttons[m_activeIndex]->m_clickCallback)
 			{
 				m_buttons[m_activeIndex]->onClick();
-				m_buttons[m_activeIndex]->m_callback();
+				m_buttons[m_activeIndex]->m_clickCallback();
 				m_canClick = false;
 			}
 	}

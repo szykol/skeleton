@@ -30,8 +30,8 @@ namespace sen {
 			if (clickable && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				onClick();
-				if (m_callback)
-					m_callback();
+				if (m_clickCallback)
+					m_clickCallback();
 				clickable = false;
 			}
 		}

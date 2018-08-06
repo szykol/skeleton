@@ -6,6 +6,7 @@
     @author: szykol
     @version 0.0.3
 */
+#include "vendor/nlohmann/json.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -19,8 +20,7 @@
 #include "UI/UIheaders.h"
 #include "States/StateHeaders.h"
 #include "Util/UtilHeaders.h"
-
-#include "vendor/nlohmann/json.hpp"
+#include "UI/Button.h"
 
 int main()
 {	
@@ -33,12 +33,33 @@ int main()
     sf::Clock timer;
     sen::FPSCounter counter;
 
-    sen::jButton button("Testing json");
+    sen::Button button("STANDARD");
+	button.setSize(button.getSize() * 1.25f);
+	button.addListener(
+		sen::ButtonEvent::STANDARD,
+		[](sen::Button& button) {
+			button.setFillColor({ 0,255,120,50 });
+		},
+		false
+	);
+	button.addListener(
+		sen::ButtonEvent::HOVER,
+		[](sen::Button& button) {
+		button.getTextObject().setString("HOVER");
+		button.setFillColor({ 255,0,120,50 });
+	},
+		true
+	);
+	button.addListener(
+		sen::ButtonEvent::CLICK,
+		[](sen::Button& button) {
+		button.getTextObject().setString("CLICK");
+		button.setFillColor({ 125,0,120,50 });
+	},
+		true
+	);
     button.setPosition(centerPos);
-    //button.printGlobalSettings();
-	sen::Button second("Testing");
-	second.setPosition(centerPos);
-    
+
     while (window.isOpen())
     {
         sf::Event evnt;
