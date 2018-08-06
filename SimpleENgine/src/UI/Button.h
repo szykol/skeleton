@@ -25,7 +25,9 @@ namespace sen {
         CallbackMap* m_callbacks;
 		sf::String m_standardString;
 	public:
-		explicit Button(const sf::String &string) : TextBox(string), m_standardString(string) {}
+		explicit Button(const sf::String &string)
+			: TextBox(string), m_standardString(string),
+			  m_callbacks(nullptr) {}
 		/**
 		 *	This should change the button on mouse hover
 		 */

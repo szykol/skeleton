@@ -23,15 +23,6 @@ namespace sen {
         m_acceptButton.move({Box::getSize().x / 2.f - m_acceptButton.getSize().x,
                             m_acceptButton.getSize().y * 1.25f});
         m_acceptButton.getTextObject().setCharacterSize(24U);
-        // m_message.setPosition(sf::Vector2f(
-        //     pos.x + size.x / 2.f,
-        //     pos.y + size.y / 2.f
-        // ));
-
-        // m_acceptButton.setPosition(sf::Vector2f(
-        //     pos.x + size.x - m_acceptButton.getSize().x,
-        //     pos.y + size.y - m_acceptButton.getSize().y
-        // ));
 
         json& respRef = m_response;
         m_acceptButton.setOnClickCalback(

@@ -21,7 +21,8 @@ namespace sen {
 
 		PopupPointer& popRef = m_popup;
 		spawnPopup->setOnClickCalback([&popRef, &window]{
-			popRef = std::make_shared<Popup>(window);
+			if(!popRef)
+				popRef = std::make_shared<Popup>(window);
 			StateManager::pushPopup(popRef);
 		});
 

@@ -59,9 +59,6 @@ int main()
 
         sen::InputController::render(window);
 
-        button.update(window);
-        button.render(window);
-
         sen::StateManager::run(window);
 
         window.display();
