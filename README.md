@@ -30,6 +30,7 @@ More specific description of parts of my engine
 What this engine won't provide
 - Anything based on physics. The purpose of this project is not to build a begginer friendly physics engine but to build a begginer friendly app builder. 
 
+### This project uses [nlohmann's json class](https://github.com/nlohmann/json) which introduces json in modern c++.
 ### If you want to use a physics engine I highly recommend using  [BOX2D](https://github.com/erincatto/Box2D) (you can still use my engine/framework for UI, state managing etc.)
 ### If you want to use this sort of engine now I highly reccomend checking out [Hopson's SFML-game-framework](https://github.com/Hopson97/SFML-Game-Framework) (as he made his framework for similiar purposes, and it's a great example) 
 ## Keep in mind that this project is still work in progress.
@@ -65,6 +66,7 @@ Szczegółowy opis części elementów silnika
 Czego silnik zapewniać nie będzie:
 - Czegokolwiek związanego z fizyką. Celem tego projektu jest stworzenie silnika/frameworku przyjaznego w tworzeniu szkieletow aplikacji, UI itd. natomiast nie jest celem stworzenie pełnoprawnego silnika fizycznego.
 
+### Ten projekt korzysta z [klasy json](https://github.com/nlohmann/json) która wprowadza obiekty json znane z javascriptu do nowoczesnego c++.
 ### Jeśli chcesz skorzystać z silnika fizycznego polecam [BOX2D](https://github.com/erincatto/Box2D) (wciąż możesz korzystać z mojego silnika w celu tworzenia UI, zmiany state'ow itp)
 ### Jeśli chcesz skorzystać z *gotowego* na tę chwilę silnika/frameworka, który opiera się na podobnych zasadach co mój - sprawdź [Framework do Gier w SFML Hopson'a](https://github.com/Hopson97/SFML-Game-Framework) (jest dobrym przykładem jak wygląda gotowy framework do aplikacji w sfml) 
 
