@@ -1,25 +1,31 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "TextBox.h"
-#include <functional>
+#include "Textbox.h"
+#include "ButtonController.h"
 
-typedef std::function<void(void)> onClickCallback;
+#include <functional>
+#include <unordered_map>
 
 namespace sen {
-	/**
-	 *	Provides an interface for button functionality.
-	 *	Those virtual voids need to be overriden in order to specify how button behaves. 
-	 *	Provides callback function that's being called whenever user presses the button
-	 */
-	class Button : public TextBox
-	{
-	protected:
+    enum class ButtonEvent {STANDARD, HOVER, CLICK};
+    class Button;
+
+    typedef std::function<void(void)> OnClickCallback;
+    typedef std::function<void(Button&)> Callback;
+    typedef std::pair<Callback, bool> ButtonAction;
+    typedef std::unordered_map<ButtonEvent, ButtonAction> CallbackMap; 
+
+    class Button : public TextBox
+    {
+	friend class ButtonController;
+    protected:
 		sf::Clock m_timer;
 		bool clickable = false;
+        OnClickCallback m_clickCallback;
+        CallbackMap* m_callbacks;
+		sf::String m_standardString;
 	public:
-		onClickCallback m_callback;
-		explicit Button(const sf::String &string) : TextBox(string) {}
+		explicit Button(const sf::String &string) : TextBox(string), m_standardString(string) {}
 		/**
 		 *	This should change the button on mouse hover
 		 */
@@ -46,10 +52,27 @@ namespace sen {
 		/**
 		 *	Sets a callback function called on mouse click
 		 */
-		void setOnClickCalback(const onClickCallback &callback) { m_callback = callback; }
-		virtual ~Button() = default;
-	};
-	/*void standardOnHover(Button &button);
-	void standardOnUnhover(Button &button);
-	void standardOnClick(Button &button);*/
+		void setOnClickCalback(const OnClickCallback &callback) { m_clickCallback = callback; }
+		/** 
+		 * @brief  sets a callback function and calls it when an event occurs
+		 * @note   if you change the button when the "hover" or "click"
+		 * event occurs, you need to explicitly specify all standard 
+		 * looks of the button in the "standard" event for example:
+		 * if you change the size of a button, you need to set its 
+		 * basic size in "standard" callback
+		 * --- You do not need to specify the standard text which 
+		 * is passed in the constructor ---.
+		 * 
+		 * @param  event: either one of HOVER, CLICK, STANDARD
+		 * @param  callback: function to perform an action on button
+		 * it takes a button reference as a parameter
+		 * @param  preventDefault: prevent default behaviour of 
+		 * the button
+		 * @retval None
+		 */
+        void addListener(ButtonEvent state, const Callback& callback, bool preventDefault = false);
+		virtual ~Button();
+    private:
+        const ButtonAction* getCallbackForState(ButtonEvent state) const;
+    };
 }

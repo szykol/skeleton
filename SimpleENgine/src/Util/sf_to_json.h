@@ -3,8 +3,8 @@
  * some sfml and sen datatypes to json and vice versa
  * @note   For more informations check
  * here https://github.com/nlohmann/json#arbitrary-types-conversions
- * @retval None
  */
+#pragma once
 
 #include <SFML/Graphics.hpp>
 #include "../vendor/nlohmann/json.hpp"
@@ -13,12 +13,12 @@ using json = nlohmann::json;
 
 namespace sf {
     // sf::Color
-    void to_json(json& j, const Color& c)
+    inline void to_json(json& j, const Color& c)
     {
 		j = json{ {"red", c.r},{"green", c.g}, {"blue", c.b},
         {"alpha",c.a}};
     }
-    void from_json(const json& j, Color& c)
+    inline void from_json(const json& j, Color& c)
     {
         c.r = j.at("red").get<sf::Uint8>();
         c.g = j.at("green").get<sf::Uint8>();
@@ -29,7 +29,7 @@ namespace sf {
 
     // sf::Vector<T>
     template<typename T>
-    void to_json(json& j, const sf::Vector2<T>& v)
+    inline void to_json(json& j, const sf::Vector2<T>& v)
     {
         j = json{
             {"x", v.x},
@@ -37,7 +37,7 @@ namespace sf {
         };
     }
     template<typename T>
-    void from_json(const json& j, sf::Vector2<T>& v)
+    inline void from_json(const json& j, sf::Vector2<T>& v)
     {
         v.x = j.at("x").get<T>();
         v.y = j.at("y").get<T>();

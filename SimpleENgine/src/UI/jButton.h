@@ -6,7 +6,6 @@
 #include "../vendor/nlohmann/json.hpp"
 #include <functional>
 
-
 typedef std::function<void(void)> onClickCallback;
 using json = nlohmann::json;
 
@@ -55,6 +54,9 @@ namespace sen {
 		 */
 		void setOnClickCalback(const onClickCallback &callback) { m_callback = callback; }
         static void printGlobalSettings();
+		void parseSettings(const std::string& mode);
+		void setJSONSettings(const json& settings);
+		void removeJSONSettings();
 		virtual ~jButton() = default;
 	};
 }
