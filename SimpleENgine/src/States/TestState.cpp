@@ -12,18 +12,31 @@ namespace sen {
 		std::shared_ptr<Button> spawnPopup(new Button("Spawn Popup"));
 		//std::shared_ptr<Button> box(new InputBox());
 
-		pushState->setOnClickCalback([&window] {
-			StateManager::pushState<TestState>(window);
+		PopupPointer& popRef = m_popup;
+
+		pushState->setOnClickCalback([&window, &popRef] {
+			// StateManager::pushState<TestState>(window);
+			if(!popRef)
+			{
+				popRef = std::make_shared<PopupBinary>(window, "Are you sure?");
+				StateManager::pushPopup(popRef);
+			}	
 		});
-		popState->setOnClickCalback([] {
-			StateManager::popState();
+		popState->setOnClickCalback([&popRef, &window] {
+			// StateManager::popState();
+			if(!popRef)
+			{
+				popRef = std::make_shared<PopupBinary>(window, "Are you sure?");
+				StateManager::pushPopup(popRef);
+			}	
 		});
 
-		PopupPointer& popRef = m_popup;
 		spawnPopup->setOnClickCalback([&popRef, &window]{
 			if(!popRef)
+			{
 				popRef = std::make_shared<Popup>(window);
-			StateManager::pushPopup(popRef);
+				StateManager::pushPopup(popRef);
+			}
 		});
 
 		// Get text object of textbox and set its string

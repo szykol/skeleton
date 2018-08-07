@@ -14,7 +14,7 @@ using json = nlohmann::json;
 namespace sen {
     class Popup : public Box
     {
-    private:
+    protected:
         json m_response;
         Text m_message;
         ButtonController m_bc;

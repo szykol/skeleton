@@ -14,3 +14,5 @@
 #include "Cursor.h"
 #include "InputBox.h"
 #include "jButton.h"
+#include "Popup.h"
+#include "PopupBinary.h"
