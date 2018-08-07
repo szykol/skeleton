@@ -3,6 +3,7 @@
 #include "Box.h"
 #include "Button.h"
 #include "Text.h"
+#include "ButtonController.h"
 
 #include "../vendor/nlohmann/json.hpp"
 
@@ -16,7 +17,7 @@ namespace sen {
     private:
         json m_response;
         Text m_message;
-        Button m_acceptButton;
+        ButtonController m_bc;
         bool m_pausesState, m_blursBG;
     public:
         Popup(const sf::RenderWindow& window,
