@@ -101,6 +101,15 @@ namespace sen {
 		 *	@param gap Gap between buttons
 		 */
 		void placeButtons(const sf::RenderWindow &window, float gap = 20.f);
+		/** 
+		 * @brief  Places buttons evenly on the screen within the bounds
+		 * @note   If you want to place buttons on the window you can
+		 * pass window instead of bounds
+		 * @param  bounds: Bounds you want to place buttons within
+		 * @param  gap: Gap between buttons
+		 * @retval None
+		 */
+		void placeButtons(const sf::FloatRect& bounds, float gap = 20.f);
 		/**
 		 *	Sets the X position of all buttons.
  		 *

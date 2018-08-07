@@ -3,7 +3,7 @@
 namespace sen {
 	Popup::Popup(const sf::RenderWindow& window,
         const sf::String& message, bool pausesState, bool blursBG)
-        : m_acceptButton("OK"), m_message(message), m_pausesState(pausesState),
+        : m_message(message), m_pausesState(pausesState),
 		  m_blursBG(blursBG)
     {
         Box::setFillColor(sf::Color(30,30,30, 235));
@@ -19,13 +19,15 @@ namespace sen {
         
         m_message.setPosition(Box::getPosition());
 		m_message.setFillColor(Box::getOutlineColor());
-        m_acceptButton.setPosition(Box::getPosition());
-        m_acceptButton.move({Box::getSize().x / 2.f - m_acceptButton.getSize().x,
-                            m_acceptButton.getSize().y * 1.25f});
-        m_acceptButton.getTextObject().setCharacterSize(24U);
+
+        auto acceptButton = std::make_shared<Button>("OK");
+        acceptButton->getTextObject().setCharacterSize(24U);
+
+        m_bc.pushButtons(acceptButton);
+		m_bc.placeButtons(getGlobalBounds());
 
         json& respRef = m_response;
-        m_acceptButton.setOnClickCalback(
+        acceptButton->setOnClickCalback(
             [&respRef] {
               respRef["Response"] = true;
             }
@@ -35,12 +37,12 @@ namespace sen {
     {
         Box::render(target);
         m_message.render(target);
-        m_acceptButton.render(target);
+        m_bc.render(target);
     }
 
     void Popup::update(sf::RenderWindow & window)
     {
-        m_acceptButton.update(window);
+        m_bc.update(window);
     }
     bool Popup::hasResponse() const
     {

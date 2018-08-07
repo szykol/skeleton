@@ -102,11 +102,18 @@ namespace sen {
 	}
 	void ButtonController::placeButtons(const sf::RenderWindow &window, float gap)
 	{
+		sf::FloatRect bounds(0.f,0.f,window.getSize().x, window.getSize().y);
+		placeButtons(bounds, gap);
+	}
+	void ButtonController::placeButtons(const sf::FloatRect& bounds, float gap)
+	{
 		if (m_buttons.empty())	return;
 
-		const sf::Vector2f centerPos = sf::Vector2f(window.getSize()) / 2.f;
-
-		sf::Vector2f startingPos(centerPos);
+		// middle of the bounding box
+		sf::Vector2f startingPos(
+			bounds.left + bounds.width / 2.f,
+			bounds.top + bounds.height / 2.f
+		);
 
 		// override the x coord if it was set eariler
 		if (m_nonStandardPosition)
