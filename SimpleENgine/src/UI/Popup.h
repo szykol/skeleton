@@ -22,7 +22,7 @@ namespace sen {
     public:
         Popup(const sf::RenderWindow& window,
               const sf::String &message = "STANDARD POPUP",
-              bool pausesState = false, bool blursBG = false);
+              bool pausesState = true, bool blursBG = false);
         virtual void render(sf::RenderTarget& target);
         virtual void update(sf::RenderWindow& window);
         bool hasResponse() const;
