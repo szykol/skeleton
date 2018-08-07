@@ -102,8 +102,7 @@ namespace sen {
 	}
 	void ButtonController::placeButtons(const sf::RenderWindow &window, float gap)
 	{
-		if (m_buttons.empty())
-			return;
+		if (m_buttons.empty())	return;
 
 		const sf::Vector2f centerPos = sf::Vector2f(window.getSize()) / 2.f;
 
