@@ -13,17 +13,14 @@ const sf::Font & FontManager::get(const std::string & key)
 
 	find = map.find(key);
 	if (find != map.end())
-	{
-		std::cout << "Znalazlem!" << std::endl;
 		return find->second;
-	}
 	else
 	{
-		std::cout << "Nie znalazlem.. laduje!" << std::endl;
+		std::cout << "Couldn't find font in memory.. loading from file!" << std::endl;
 		sf::Font fTemp;
 		if (!fTemp.loadFromFile("Fonts/" + key + ".ttf"))
 		{
-			std::cout << "Nie udalo sie zaladowac! Daje ci standardowa czcionke!" << std::endl;
+			std::cout << "Couldn't load from file. Take a default one!" << std::endl;
 			return map["default"];
 		}
 		else

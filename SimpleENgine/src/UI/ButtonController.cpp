@@ -21,6 +21,14 @@ namespace sen {
 	}
 	void ButtonController::update(sf::RenderWindow & window)
 	{
+		auto prev = sf::Keyboard::Up;
+		auto next = sf::Keyboard::Down;
+
+		if(m_buttonPlacing == ButtonPlacing::HORIZONTAL)
+		{
+			prev = sf::Keyboard::Left;
+			next = sf::Keyboard::Right;
+		}
 		// if there are any buttons
 		if (m_buttons.empty())
 			return;
@@ -30,7 +38,7 @@ namespace sen {
 		if (m_timer.getElapsedTime().asSeconds() > 0.15f)
 		{
 			// check for keyboard input
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			if (sf::Keyboard::isKeyPressed(next))
 			{
 				if (m_activeIndex >= m_buttons.size() - 1)
 					m_activeIndex = 0;
@@ -38,7 +46,7 @@ namespace sen {
 					m_activeIndex++;
 				m_timer.restart();
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			else if (sf::Keyboard::isKeyPressed(prev))
 			{
 				if (m_activeIndex <= 0)
 					m_activeIndex = m_buttons.size() - 1;
@@ -116,8 +124,11 @@ namespace sen {
 		);
 
 		// override the x coord if it was set eariler
-		if (m_nonStandardPosition)
-			startingPos.x = m_buttons[0]->getPosition().x;
+		
+		if (m_buttonPlacing==ButtonPlacing::VERTICAL && m_nonStandardPosition)
+			startingPos.x = m_coord;
+		else if(m_nonStandardPosition)
+			startingPos.y = m_coord;
 
 
 		// tells how many buttons are above the center position
@@ -128,31 +139,32 @@ namespace sen {
 		// center of the first button
 		float offset = 0.f;
 
-		// height of buttons ( now the function works with the buttons
-		// that are the same height
-		float buttonSizeY = m_buttons[0]->getSize().y;
+		float buttonSize = getBiggestSizeOfButton();
 
 		// set the offset accordingly to the number of buttons
 		// being odd or even
 		if (m_buttons.size() % 2 != 0)
-			offset = temp * (buttonSizeY + gap);
+			offset = temp * (buttonSize + gap);
 		else
-			offset = temp * gap + (temp - 0.5f) * buttonSizeY;
+			offset = temp * gap + (temp - 0.5f) * buttonSize;
 
-		startingPos.y -= offset;
+		if(m_buttonPlacing == ButtonPlacing::VERTICAL)
+			startingPos.y -= offset;
+		else
+			startingPos.x -= offset;
 
 		for (int i = 0; i < m_buttons.size(); i++)
 		{
 			m_buttons[i]->setPosition(startingPos);
-			startingPos.y += buttonSizeY + gap;
+			if(m_buttonPlacing == ButtonPlacing::VERTICAL)
+				startingPos.y += buttonSize + gap;
+			else
+				startingPos.x += buttonSize + gap;
 		}
 	}
-	void ButtonController::setPositionX(float x)
+	void ButtonController::setPosition(float coord)
 	{
-		map([x](ButtonPointer& button) {
-			button->setPosition(sf::Vector2f(x, button->getPosition().y));
-		});
-
+		m_coord = coord;
 		m_nonStandardPosition = true;
 	}
 	void ButtonController::setButtonFixedSize(const sf::Vector2f & size)
@@ -164,6 +176,27 @@ namespace sen {
 	void ButtonController::map(const std::function<void(ButtonPointer&)>& function)
 	{
 		std::for_each(m_buttons.begin(), m_buttons.end(), function);
+	}
+	float ButtonController::getBiggestSizeOfButton()
+	{
+		float biggestSize = 0.f;
+
+		if(m_buttonPlacing == ButtonPlacing::VERTICAL)
+			map(
+				[&biggestSize](sen::ButtonPointer& b) {
+					if(b->getSize().y > biggestSize)
+						biggestSize = b->getSize().y;
+				}
+			);
+		else
+			map(
+				[&biggestSize](sen::ButtonPointer& b) {
+					if(b->getSize().x > biggestSize)
+						biggestSize = b->getSize().x;
+				}
+			);
+
+		return biggestSize;
 	}
 	// void ButtonController::freeMemory()
 	// {

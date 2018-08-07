@@ -38,12 +38,12 @@ namespace sen {
 		s_pushedStates++;
 
 		// setup button controller
+		//m_buttonController.setButtonPlacing(ButtonPlacing::HORIZONTAL);
 		m_buttonController.pushButtons(popState, pushState, spawnPopup);
 		m_buttonController.placeButtons(window);
 		m_buttonController.setButtonFixedSize(
 			sf::Vector2f(185.f, 50.f)
 		);
-
 		
 	}
 	void TestState::handleEvents(sf::Event &evnt)

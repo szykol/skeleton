@@ -22,14 +22,24 @@ namespace sen {
 
         auto acceptButton = std::make_shared<Button>("OK");
         acceptButton->getTextObject().setCharacterSize(24U);
-
-        m_bc.pushButtons(acceptButton);
+        auto declineButton = std::make_shared<Button>("CANCEL");
+        declineButton->getTextObject().setCharacterSize(24U);
+        acceptButton->setSize(declineButton->getSize());
+        m_bc.setButtonPlacing(ButtonPlacing::HORIZONTAL);
+        auto bounds = getGlobalBounds();
+        m_bc.pushButtons(declineButton, acceptButton);
+        m_bc.setPosition(bounds.top + bounds.height - 35.f);
 		m_bc.placeButtons(getGlobalBounds());
 
         json& respRef = m_response;
         acceptButton->setOnClickCalback(
             [&respRef] {
               respRef["Response"] = true;
+            }
+        );
+        declineButton->setOnClickCalback(
+            [&respRef] {
+              respRef["Response"] = false;
             }
         );
 	}
