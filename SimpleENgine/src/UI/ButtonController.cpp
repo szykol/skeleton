@@ -162,7 +162,7 @@ namespace sen {
 				startingPos.x += buttonSize + gap;
 		}
 	}
-	void ButtonController::setPosition(float coord)
+	void ButtonController::setCoord(float coord)
 	{
 		m_coord = coord;
 		m_nonStandardPosition = true;
