@@ -120,7 +120,7 @@ namespace sen {
  		 *
 		 *	@param x X position.
 		 */
-		void setPosition(float coord);
+		void setCoord(float coord);
 		/**
 		 *	Sets the same size for all buttons.
          *

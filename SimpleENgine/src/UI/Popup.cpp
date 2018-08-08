@@ -1,51 +1,36 @@
  #include "Popup.h"
 
 namespace sen {
-	Popup::Popup(const sf::RenderWindow& window,
-        const sf::String& message, bool pausesState, bool blursBG)
+	Popup::Popup(const sf::String& message, bool pausesState, bool blursBG)
         : m_message(message), m_pausesState(pausesState),
-		  m_blursBG(blursBG)
+		  m_blursBG(blursBG), TextBox(message)
     {
         Box::setFillColor(sf::Color(30,30,30, 235));
         Box::setOutlineColor(sf::Color(255,255,255, 128));
         Box::setOutlineThickness(-5.5);
 
-        Box::setPosition({window.getSize().x/2.f, window.getSize().y/2.f});
-        const sf::Vector2f textSize(
-            m_message.getLocalBounds().width,
-            m_message.getLocalBounds().height
-        );
-        Box::setSize({textSize.x * 2.5f, textSize.y * 4.f + 100});
-        
-        m_message.setPosition(Box::getPosition());
-		m_message.setFillColor(Box::getOutlineColor());
+        m_message.setFillColor(Box::getOutlineColor());
 
-        auto acceptButton = std::make_shared<Button>("OK");
-        acceptButton->getTextObject().setCharacterSize(24U);
-        auto declineButton = std::make_shared<Button>("CANCEL");    
-        m_bc.setButtonPlacing(ButtonPlacing::HORIZONTAL);
-        auto bounds = getGlobalBounds();
-        m_bc.pushButtons(acceptButton);
-        m_bc.setPosition(bounds.top + bounds.height - 35.f);
-		m_bc.placeButtons(getGlobalBounds());
+        // ButtonController::pushButtons(acceptButton);
+        // ButtonController::setPosition(bounds.top + bounds.height - 35.f);
+		// ButtonController::placeButtons(getGlobalBounds());
 
-        json& respRef = m_response;
-        acceptButton->setOnClickCalback(
-            [&respRef] {
-              respRef["Response"] = true;
-            }
-        );
+        // acceptButton->setOnClickCalback(
+        //     [this] {
+        //       m_response["Response"] = true;
+        //     }
+        // );
 	}
 	void Popup::render(sf::RenderTarget & target)
     {
         Box::render(target);
         m_message.render(target);
-        m_bc.render(target);
+        ButtonController::render(target);
     }
 
     void Popup::update(sf::RenderWindow & window)
     {
-        m_bc.update(window);
+        ButtonController::update(window);
     }
     bool Popup::hasResponse() const
     {
@@ -60,4 +45,58 @@ namespace sen {
     {
         m_message.setString(message);
     }
+	std::shared_ptr<Popup> createPopup(PopupStyle style)
+	{
+		if (style == PopupStyle::CUSTOM)
+    		return std::shared_ptr<Popup>();
+
+        auto popup = std::make_shared<Popup>();
+
+        json response = popup->m_response;
+
+        auto okButton = std::make_shared<Button>("OK");
+        
+        okButton->setOnClickCalback(
+            [&response] {
+                response["Response"] = true;
+            }
+        );
+        
+        auto declButton = std::make_shared<Button>("CANCEL");
+        declButton->setOnClickCalback(
+            [&response] {
+                response["Response"] = false;
+            }
+        );
+        
+        auto latButton = std::make_shared<Button>("LATER");
+        // latButton->setOnClickCalback(
+        //     [&response] {
+        //         response["Response"] = "later";
+        //     }
+        // );
+
+        if (style == PopupStyle::UNARY)
+        {
+            popup->pushButtons(okButton);
+            // this won't work because the size/position is about to change
+            //popup->placeButtons(popup->getGlobalBounds());
+        }
+        else if (style == PopupStyle::BINARY)
+        {
+            okButton->getTextObject().setString("YES");
+            declButton->getTextObject().setString("NO");
+
+            popup->pushButtons(declButton, okButton);
+        }
+        else if (style == PopupStyle::TERNARY)
+        {
+            latButton->getTextObject().setString("LATER");
+            popup->pushButtons(declButton, latButton, okButton);
+        }
+        popup->setSize(sf::Vector2f(400.f, 300.f));
+        //popup->placeButtons(popup->getGlobalBounds());
+
+        return popup;
+	}
 }

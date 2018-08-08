@@ -1,5 +1,6 @@
 #include "TestState.h"
 #include "StateManager.h"
+#include "../UI/Popup.h"
 
 namespace sen {
 	unsigned int TestState::s_pushedStates = 0;
@@ -12,31 +13,41 @@ namespace sen {
 		std::shared_ptr<Button> spawnPopup(new Button("Spawn Popup"));
 		//std::shared_ptr<Button> box(new InputBox());
 
-		PopupPointer& popRef = m_popup;
-
-		pushState->setOnClickCalback([&window, &popRef] {
+		pushState->setOnClickCalback([&window, this] {
 			// StateManager::pushState<TestState>(window);
-			if(!popRef)
+			if(!m_popup)
 			{
-				popRef = std::make_shared<PopupBinary>(window, "Are you sure?");
-				StateManager::pushPopup(popRef);
+				m_popup = createPopup(PopupStyle::BINARY);
+				m_popup->getTextObject().setString("Are you sure");
+				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->placeButtons(m_popup->getGlobalBounds());
+				StateManager::pushPopup(m_popup);
 			}	
 		});
-		popState->setOnClickCalback([&popRef, &window] {
+		popState->setOnClickCalback([&window, this] {
 			// StateManager::popState();
-			if(!popRef)
+			if(!m_popup)
 			{
-				popRef = std::make_shared<PopupBinary>(window, "Are you sure?");
-				StateManager::pushPopup(popRef);
+				m_popup = createPopup(PopupStyle::BINARY);
+				m_popup->getTextObject().setString("Are you sure");
+				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->placeButtons(m_popup->getGlobalBounds());
+				StateManager::pushPopup(m_popup);
 			}	
 		});
 
-		spawnPopup->setOnClickCalback([&popRef, &window]{
-			if(!popRef)
+		popState->setOnClickCalback([&window, this] {
+			// StateManager::popState();
+			if(!m_popup)
 			{
-				popRef = std::make_shared<Popup>(window);
-				StateManager::pushPopup(popRef);
-			}
+				m_popup = createPopup(PopupStyle::UNARY);
+				m_popup->getTextObject().setString("SPAWNED POPUP");
+				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->placeButtons(m_popup->getGlobalBounds());
+
+
+				StateManager::pushPopup(m_popup);
+			}	
 		});
 
 		// Get text object of textbox and set its string
