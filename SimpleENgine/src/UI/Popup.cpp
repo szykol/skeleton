@@ -2,7 +2,7 @@
 
 namespace sen {
 	Popup::Popup(const sf::String& message, bool pausesState, bool blursBG)
-        : m_message(message), m_pausesState(pausesState),
+        : m_pausesState(pausesState),
 		  m_blursBG(blursBG), TextBox(message)
     {
         Box::setFillColor(sf::Color(30,30,30, 235));
@@ -10,16 +10,6 @@ namespace sen {
         Box::setOutlineThickness(-5.5);
 
         m_message.setFillColor(Box::getOutlineColor());
-
-        // ButtonController::pushButtons(acceptButton);
-        // ButtonController::setPosition(bounds.top + bounds.height - 35.f);
-		// ButtonController::placeButtons(getGlobalBounds());
-
-        // acceptButton->setOnClickCalback(
-        //     [this] {
-        //       m_response["Response"] = true;
-        //     }
-        // );
 	}
 	void Popup::render(sf::RenderTarget & target)
     {
@@ -31,12 +21,13 @@ namespace sen {
     void Popup::update(sf::RenderWindow & window)
     {
         ButtonController::update(window);
+        if(hasResponse() && m_callback)
+            m_callback(m_response);
     }
     bool Popup::hasResponse() const
     {
         return m_response.size();
     }
-
     const json & Popup::getResponse() const
     {
         return m_response;
@@ -51,8 +42,9 @@ namespace sen {
     		return std::shared_ptr<Popup>();
 
         auto popup = std::make_shared<Popup>();
+        popup->setButtonPlacing(ButtonPlacing::HORIZONTAL);
 
-        json response = popup->m_response;
+        json& response = popup->m_response;
 
         auto okButton = std::make_shared<Button>("OK");
         
@@ -70,11 +62,11 @@ namespace sen {
         );
         
         auto latButton = std::make_shared<Button>("LATER");
-        // latButton->setOnClickCalback(
-        //     [&response] {
-        //         response["Response"] = "later";
-        //     }
-        // );
+         latButton->setOnClickCalback(
+             [&response] {
+                 response["Response"] = "later";
+             }
+         );
 
         if (style == PopupStyle::UNARY)
         {

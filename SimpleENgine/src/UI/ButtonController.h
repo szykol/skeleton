@@ -24,6 +24,7 @@ namespace sen {
 	class ButtonController
 	{
 		bool m_nonStandardPosition = false;
+		bool m_sameSize = true;
 		float m_coord;
 		ButtonPointerVector m_buttons;
 		int m_activeIndex = 0;
@@ -121,12 +122,28 @@ namespace sen {
 		 *	@param x X position.
 		 */
 		void setCoord(float coord);
+		/** 
+		 * @brief  Move every button by the offset based on the 
+		 * ButtonPlacing mode
+		 * @note   If ButtonPlacing::Horizontal -> it will move
+		 * buttons by the offset horizontaly and so on
+		 * @param  offset: 
+		 * @retval None
+		 */
+		void setOffset(float offset);
 		/**
 		 *	Sets the same size for all buttons.
          *
 		 *	@param size New size
 		 */
 		void setButtonFixedSize(const sf::Vector2f &size);
+		/** 
+		 * @brief  Sets the same size for all buttons
+		 * @note   It sets the size of the biggest button
+		 * @param  set: Whether to set the same size 
+		 * @retval None
+		 */
+		void setButtonSameSize(bool set) { m_sameSize = set; }
 		/**
 		 *	Performs an specified action on each button.
  		 *
@@ -144,5 +161,10 @@ namespace sen {
 		void freeMemory() = delete;
 	private:
 		float getBiggestSizeOfButton();
+		void  checkIfSameSize(float biggestSize);
+		// dodac opcje ukladania przyciskow center, top, bottom, left, right -> czyli przyklejanie osi przyciskow np do
+		// dna boxa kiedy przyciski sa ukladane horyzontalnie
+
+		// dodac offset jako skladowa klasy
 	};
 }

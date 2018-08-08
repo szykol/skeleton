@@ -23,9 +23,13 @@ namespace sen {
             setOutlineColor(sf::Color(222, 222, 222, 170));
             m_message.setFillColor(Box::getOutlineColor());
         }
-        if(action) action->first(*this);
+		if (action)
+		{
+			action->first(*this);
+			m_message.setString(m_standardString);
+		}
 
-		m_message.setString(m_standardString);
+		
 	}
 	void Button::onClick()
 	{
