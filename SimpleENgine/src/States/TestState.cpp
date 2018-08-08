@@ -21,7 +21,17 @@ namespace sen {
 				m_popup->getTextObject().setString("Are you sure");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
 				m_popup->placeButtons(m_popup->getGlobalBounds());
+				m_popup->setOffset(100.f);
 				StateManager::pushPopup(m_popup);
+
+				m_popup->setOnResponseCallback(
+					[&](const json& j) {
+						if(j["Response"])
+							StateManager::pushState<TestState>(window);
+						m_popup = nullptr;
+
+					}
+				);
 			}	
 		});
 		popState->setOnClickCalback([&window, this] {
@@ -32,11 +42,20 @@ namespace sen {
 				m_popup->getTextObject().setString("Are you sure");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
 				m_popup->placeButtons(m_popup->getGlobalBounds());
+				m_popup->setOffset(100.f);
 				StateManager::pushPopup(m_popup);
+
+				m_popup->setOnResponseCallback(
+					[&](const json& j) {
+						if(j["Response"])
+							StateManager::popState();
+						m_popup = nullptr;
+					}
+				);
 			}	
 		});
 
-		popState->setOnClickCalback([&window, this] {
+		spawnPopup->setOnClickCalback([&window, this] {
 			// StateManager::popState();
 			if(!m_popup)
 			{
@@ -44,9 +63,16 @@ namespace sen {
 				m_popup->getTextObject().setString("SPAWNED POPUP");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
 				m_popup->placeButtons(m_popup->getGlobalBounds());
+				m_popup->setOffset(100.f);
 
 
 				StateManager::pushPopup(m_popup);
+				
+				m_popup->setOnResponseCallback(
+					[&](const json& j) {
+						m_popup = nullptr;
+					}
+				);
 			}	
 		});
 
@@ -77,13 +103,6 @@ namespace sen {
 	void TestState::update(sf::RenderWindow & window)
 	{
 		m_buttonController.update(window);
-		if(m_popup && m_popup->hasResponse())
-		{
-			std::cout<<"Got response!\n\tThe response is :'"
-			 << m_popup->getResponse()["Response"]<<std::endl;
-			
-			m_popup = nullptr;
-		}
 	}
 	void TestState::input(sf::RenderWindow & window)
 	{

@@ -140,6 +140,7 @@ namespace sen {
 		float offset = 0.f;
 
 		float buttonSize = getBiggestSizeOfButton();
+		checkIfSameSize(buttonSize);
 
 		// set the offset accordingly to the number of buttons
 		// being odd or even
@@ -167,12 +168,29 @@ namespace sen {
 		m_coord = coord;
 		m_nonStandardPosition = true;
 	}
+	void ButtonController::setOffset(float offset)
+	{
+		if(m_buttonPlacing == ButtonPlacing::HORIZONTAL)
+			map(
+			[offset](ButtonPointer& button) {
+				button->move(0.f, offset);
+			}
+		);
+		else
+			map(
+			[offset](ButtonPointer& button) {
+				button->move(offset, 0.f);
+			}
+		);
+
+	}
 	void ButtonController::setButtonFixedSize(const sf::Vector2f & size)
 	{
 		map([&size](ButtonPointer& button) {
 			button->setSize(size);
 		});
 	}
+
 	void ButtonController::map(const std::function<void(ButtonPointer&)>& function)
 	{
 		std::for_each(m_buttons.begin(), m_buttons.end(), function);
@@ -197,6 +215,26 @@ namespace sen {
 			);
 
 		return biggestSize;
+	}
+	void ButtonController::checkIfSameSize(float biggestSize)
+	{
+		if (m_sameSize)
+		{
+			if (m_buttonPlacing == ButtonPlacing::VERTICAL)
+			{
+				map(
+					[&biggestSize](ButtonPointer b) {
+					b->setSize({ b->getSize().x , biggestSize});
+					}
+				);
+			}
+			else
+				map(
+					[&biggestSize](ButtonPointer b) {
+					b->setSize({ biggestSize, b->getSize().y});
+					}
+				);
+		}
 	}
 	// void ButtonController::freeMemory()
 	// {
