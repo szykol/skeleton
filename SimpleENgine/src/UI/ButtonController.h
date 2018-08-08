@@ -10,6 +10,7 @@ namespace sen {
 	class Button;
 	typedef std::shared_ptr<Button> ButtonPointer;
 	typedef std::vector<ButtonPointer> ButtonPointerVector;
+	enum class ButtonPlacing {HORIZONTAL, VERTICAL};
 	/**
 	 * 	All the buttons you pass to the controller will be
 	 *	updated and rendered. Additionaly controller has built 
@@ -23,10 +24,13 @@ namespace sen {
 	class ButtonController
 	{
 		bool m_nonStandardPosition = false;
+		bool m_sameSize = true;
+		float m_coord;
 		ButtonPointerVector m_buttons;
 		int m_activeIndex = 0;
 		sf::Clock m_timer;
 		bool m_canClick = false;
+		ButtonPlacing m_buttonPlacing = ButtonPlacing::VERTICAL;
 	public:
 		/**
 	     *	Default constructor of the controller.
@@ -48,6 +52,8 @@ namespace sen {
 		 *	@param window Window is needed for placing the buttons
 		 */
 		ButtonController(const ButtonPointerVector& buttons, const sf::RenderWindow &window);
+		inline void setButtonPlacing(ButtonPlacing placing) {m_buttonPlacing = placing;}
+		inline ButtonPlacing getButtonPlacing() const {return m_buttonPlacing;}
 		/**
 		 *	Adds the button pointer to the vector
          *
@@ -100,19 +106,44 @@ namespace sen {
 		 *	@param window Window needed to get it's size.
 		 *	@param gap Gap between buttons
 		 */
-		void placeButtons(const sf::RenderWindow &window, float gap = 20.f);
+		void placeButtons(const sf::RenderWindow &window, float gap = 30.f);
+		/** 
+		 * @brief  Places buttons evenly on the screen within the bounds
+		 * @note   If you want to place buttons on the window you can
+		 * pass window instead of bounds
+		 * @param  bounds: Bounds you want to place buttons within
+		 * @param  gap: Gap between buttons
+		 * @retval None
+		 */
+		void placeButtons(const sf::FloatRect& bounds, float gap = 30.f);
 		/**
 		 *	Sets the X position of all buttons.
  		 *
 		 *	@param x X position.
 		 */
-		void setPositionX(float x);
+		void setCoord(float coord);
+		/** 
+		 * @brief  Move every button by the offset based on the 
+		 * ButtonPlacing mode
+		 * @note   If ButtonPlacing::Horizontal -> it will move
+		 * buttons by the offset horizontaly and so on
+		 * @param  offset: 
+		 * @retval None
+		 */
+		void setOffset(float offset);
 		/**
 		 *	Sets the same size for all buttons.
          *
 		 *	@param size New size
 		 */
 		void setButtonFixedSize(const sf::Vector2f &size);
+		/** 
+		 * @brief  Sets the same size for all buttons
+		 * @note   It sets the size of the biggest button
+		 * @param  set: Whether to set the same size 
+		 * @retval None
+		 */
+		void setButtonSameSize(bool set) { m_sameSize = set; }
 		/**
 		 *	Performs an specified action on each button.
  		 *
@@ -128,5 +159,12 @@ namespace sen {
 		 * @retval None
 		 */
 		void freeMemory() = delete;
+	private:
+		float getBiggestSizeOfButton();
+		void  checkIfSameSize(float biggestSize);
+		// dodac opcje ukladania przyciskow center, top, bottom, left, right -> czyli przyklejanie osi przyciskow np do
+		// dna boxa kiedy przyciski sa ukladane horyzontalnie
+
+		// dodac offset jako skladowa klasy
 	};
 }

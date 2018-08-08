@@ -1,5 +1,6 @@
 #include "TestState.h"
 #include "StateManager.h"
+#include "../UI/Popup.h"
 
 namespace sen {
 	unsigned int TestState::s_pushedStates = 0;
@@ -12,18 +13,67 @@ namespace sen {
 		std::shared_ptr<Button> spawnPopup(new Button("Spawn Popup"));
 		//std::shared_ptr<Button> box(new InputBox());
 
-		pushState->setOnClickCalback([&window] {
-			StateManager::pushState<TestState>(window);
+		pushState->setOnClickCalback([&window, this] {
+			// StateManager::pushState<TestState>(window);
+			if(!m_popup)
+			{
+				m_popup = createPopup(PopupStyle::BINARY);
+				m_popup->getTextObject().setString("Are you sure");
+				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->placeButtons(m_popup->getGlobalBounds());
+				m_popup->setOffset(100.f);
+				StateManager::pushPopup(m_popup);
+
+				m_popup->setOnResponseCallback(
+					[&](const json& j) {
+						if(j["Response"])
+							StateManager::pushState<TestState>(window);
+						m_popup = nullptr;
+
+					}
+				);
+			}	
 		});
-		popState->setOnClickCalback([] {
-			StateManager::popState();
+		popState->setOnClickCalback([&window, this] {
+			// StateManager::popState();
+			if(!m_popup)
+			{
+				m_popup = createPopup(PopupStyle::BINARY);
+				m_popup->getTextObject().setString("Are you sure");
+				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->placeButtons(m_popup->getGlobalBounds());
+				m_popup->setOffset(100.f);
+				StateManager::pushPopup(m_popup);
+
+				m_popup->setOnResponseCallback(
+					[&](const json& j) {
+						if(j["Response"])
+							StateManager::popState();
+						m_popup = nullptr;
+					}
+				);
+			}	
 		});
 
-		PopupPointer& popRef = m_popup;
-		spawnPopup->setOnClickCalback([&popRef, &window]{
-			if(!popRef)
-				popRef = std::make_shared<Popup>(window);
-			StateManager::pushPopup(popRef);
+		spawnPopup->setOnClickCalback([&window, this] {
+			// StateManager::popState();
+			if(!m_popup)
+			{
+				m_popup = createPopup(PopupStyle::UNARY);
+				m_popup->getTextObject().setString("SPAWNED POPUP");
+				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->placeButtons(m_popup->getGlobalBounds());
+				m_popup->setOffset(100.f);
+
+
+				StateManager::pushPopup(m_popup);
+				
+				m_popup->setOnResponseCallback(
+					[&](const json& j) {
+						m_popup = nullptr;
+					}
+				);
+			}	
 		});
 
 		// Get text object of textbox and set its string
@@ -38,12 +88,12 @@ namespace sen {
 		s_pushedStates++;
 
 		// setup button controller
+		//m_buttonController.setButtonPlacing(ButtonPlacing::HORIZONTAL);
 		m_buttonController.pushButtons(popState, pushState, spawnPopup);
 		m_buttonController.placeButtons(window);
 		m_buttonController.setButtonFixedSize(
 			sf::Vector2f(185.f, 50.f)
 		);
-
 		
 	}
 	void TestState::handleEvents(sf::Event &evnt)
@@ -53,13 +103,6 @@ namespace sen {
 	void TestState::update(sf::RenderWindow & window)
 	{
 		m_buttonController.update(window);
-		if(m_popup && m_popup->hasResponse())
-		{
-			std::cout<<"Got response!\n\tThe response is :'"
-			 << m_popup->getResponse()["Response"]<<std::endl;
-			
-			m_popup = nullptr;
-		}
 	}
 	void TestState::input(sf::RenderWindow & window)
 	{

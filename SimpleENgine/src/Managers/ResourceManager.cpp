@@ -10,17 +10,14 @@ const sf::Texture & ResourceManager::get(const std::string & key)
 
 	find = map.find(key);
 	if (find != map.end())
-	{
-		std::cout << "Znalazlem!" << std::endl;
 		return find->second;
-	}
 	else
 	{
-		std::cout << "Nie znalazlem.. laduje!" << std::endl;
+		std::cout << "Couldn't find texture in memory.. loading!" << std::endl;
 		sf::Texture tTemp;
 		if (!tTemp.loadFromFile("Images/" + key))
 		{
-			std::cout << "Nie udalo sie zaladowac! Daje ci standardowy obrazek!" << std::endl;
+			std::cout << "Couldn't load from file! Take a default one!" << std::endl;
 			return map["default"];
 		}
 		else

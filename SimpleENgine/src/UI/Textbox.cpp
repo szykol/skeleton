@@ -7,7 +7,7 @@ namespace sen {
 		// get text bounds and set a box around it
 		sf::FloatRect bounds = m_message.getLocalBounds();
 		// make the box a little bigger so the text is clear
-		sf::Vector2f size(bounds.width * 1.45f, bounds.height * 2.f);
+		sf::Vector2f size(bounds.width * 1.45f, m_message.getCharacterSize() * 1.5f);
 
 		Box::setSize(size);
 		Box::setFillColor(sf::Color(25,25,25, 170));
@@ -32,7 +32,7 @@ namespace sen {
 						--textSize
 					);
 			}
-		}
+		}	
 		// rendering must be in this order so the box
 		// wont cover the message
 		Box::render(target);
