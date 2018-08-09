@@ -1,7 +1,7 @@
  #include "Popup.h"
 
 namespace sen {
-	Popup::Popup(const sf::String& message, bool pausesState, bool blursBG)
+	Popup::Popup(PopupStyle style, const sf::String& message, bool pausesState, bool blursBG)
         : m_pausesState(pausesState),
 		  m_blursBG(blursBG), TextBox(message)
     {
@@ -10,11 +10,72 @@ namespace sen {
         Box::setOutlineThickness(-5.5);
 
         m_message.setFillColor(Box::getOutlineColor());
+        	if (style == PopupStyle::CUSTOM) return;
+
+
+        setButtonPlacing(ButtonPlacing::HORIZONTAL);
+        setButtonBaseline(ButtonBaseline::END);
+        auto okButton = std::make_shared<Button>("OK");
+        
+        okButton->setOnClickCalback(
+            [this] {
+                m_response["Response"] = true;
+            }
+        );
+        auto declButton = std::make_shared<Button>("CANCEL");
+        declButton->setOnClickCalback(
+            [this] {
+                m_response["Response"] = false;
+            }
+        );
+        auto latButton = std::make_shared<Button>("LATER");
+         latButton->setOnClickCalback(
+             [this] {
+                 m_response["Response"] = "later";
+             }
+         );
+        if (style == PopupStyle::UNARY)
+            pushButtons(okButton);
+        else if (style == PopupStyle::BINARY)
+        {
+            okButton->getTextObject().setString("YES");
+            declButton->getTextObject().setString("NO");
+            pushButtons(declButton, okButton);
+        }
+        else if (style == PopupStyle::TERNARY)
+        {
+            latButton->getTextObject().setString("LATER");
+            pushButtons(declButton, latButton, okButton);
+        }
+        else if (style == PopupStyle::INPUT)
+        {
+            pushButtons(declButton, okButton);
+            m_input = std::make_unique<InputBox>(m_message.getString());
+            m_input->setPosition(getPosition());
+            InputController::bindText(m_input->getTextObject());
+            m_input->onFocus();
+            m_input->setFitTextSize(true);
+
+            setTextOffset({0.f, -50.f});
+            okButton->setOnClickCalback(
+            [this] {
+                m_response["Response"] = std::string(m_input->getTextObject().getString());
+            }
+        );
+        }
+        setSize(sf::Vector2f(400.f, 300.f));
+        placeButtons();
 	}
 	void Popup::render(sf::RenderTarget & target)
     {
         Box::render(target);
-        m_message.render(target);
+        if(!m_input || m_input->hasFocus())
+            m_message.render(target);
+
+        if(m_input)
+            m_input->render(target);
+        
+
         ButtonController::render(target);
     }
 
@@ -23,6 +84,14 @@ namespace sen {
         ButtonController::update(window);
         if(hasResponse() && m_callback)
             m_callback(m_response);
+        if(m_shouldUpdateButtonPlacing)
+        {
+            placeButtons();
+            if(m_input)
+                m_input->setPosition(getPosition());
+        }   
+        if(m_input)
+            m_input->update(window);
     }
     bool Popup::hasResponse() const
     {
@@ -36,59 +105,31 @@ namespace sen {
     {
         m_message.setString(message);
     }
-	std::shared_ptr<Popup> createPopup(PopupStyle style)
+
+	void Popup::setButtonBaseline(ButtonBaseline baseline)
 	{
-		if (style == PopupStyle::CUSTOM)
-    		return std::shared_ptr<Popup>();
-
-        auto popup = std::make_shared<Popup>();
-        popup->setButtonPlacing(ButtonPlacing::HORIZONTAL);
-
-        json& response = popup->m_response;
-
-        auto okButton = std::make_shared<Button>("OK");
-        
-        okButton->setOnClickCalback(
-            [&response] {
-                response["Response"] = true;
-            }
-        );
-        
-        auto declButton = std::make_shared<Button>("CANCEL");
-        declButton->setOnClickCalback(
-            [&response] {
-                response["Response"] = false;
-            }
-        );
-        
-        auto latButton = std::make_shared<Button>("LATER");
-         latButton->setOnClickCalback(
-             [&response] {
-                 response["Response"] = "later";
-             }
-         );
-
-        if (style == PopupStyle::UNARY)
-        {
-            popup->pushButtons(okButton);
-            // this won't work because the size/position is about to change
-            //popup->placeButtons(popup->getGlobalBounds());
-        }
-        else if (style == PopupStyle::BINARY)
-        {
-            okButton->getTextObject().setString("YES");
-            declButton->getTextObject().setString("NO");
-
-            popup->pushButtons(declButton, okButton);
-        }
-        else if (style == PopupStyle::TERNARY)
-        {
-            latButton->getTextObject().setString("LATER");
-            popup->pushButtons(declButton, latButton, okButton);
-        }
-        popup->setSize(sf::Vector2f(400.f, 300.f));
-        //popup->placeButtons(popup->getGlobalBounds());
-
-        return popup;
+        ButtonController::setButtonBaseline(baseline);
+        m_shouldUpdateButtonPlacing = true;
 	}
+
+	void Popup::placeButtons(float gap)
+	{
+        ButtonController::placeButtons(
+            getGlobalBounds(), gap
+        );
+        m_shouldUpdateButtonPlacing = false;
+	}
+
+	void Popup::setPosition(const sf::Vector2f & position)
+	{
+        TextBox::setPosition(position);
+        m_shouldUpdateButtonPlacing = true;
+	}
+
+	void Popup::setSize(const sf::Vector2f & size)
+	{
+        TextBox::setSize(size);
+        m_shouldUpdateButtonPlacing = true;
+	}
+
 }

@@ -59,5 +59,7 @@ namespace sen {
 		 * @retval None
 		 */
 		void render(sf::RenderTarget &target);
+		bool hasFocus() const {return m_hasFocus;}
+		virtual ~InputBox();
 	};
 }

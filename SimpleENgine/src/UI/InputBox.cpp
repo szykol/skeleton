@@ -36,7 +36,9 @@ namespace sen {
 			}
 		}
 		else
+		{
 			onUnhover();
+		}
 	}
 	void InputBox::onHover()
 	{
@@ -82,5 +84,9 @@ namespace sen {
 	const sf::String& InputBox::getString() const
 	{
 		return m_message.getString();
+	}
+	InputBox::~InputBox()
+	{
+		InputController::unbindText();
 	}
 }

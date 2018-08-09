@@ -15,6 +15,7 @@ namespace sen {
 		Text m_message;
 		unsigned int m_initialTextSize;
 		bool m_fitTextSize;
+		sf::Vector2f m_textOffset;
 	public:
 		/**
 		 *	Sets the text, and then sets size of the box.
@@ -42,10 +43,11 @@ namespace sen {
 		 *	@return Text object inside of the box
 		 */
 		Text& getTextObject() { return m_message; }
+		inline void setFitTextSize(bool fit = false) {m_fitTextSize = fit;}
+		inline void setTextOffset(const sf::Vector2f& offset) {m_textOffset = offset;}
 		bool isTextOutOfBounds();
 		virtual ~TextBox() = default;
 		void move(float offsetX, float offsetY);
-		inline void setFitTextSize(bool fit = false) {m_fitTextSize = fit;}
 		void move(const sf::Vector2f& offset);
 	};
 }
