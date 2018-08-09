@@ -59,5 +59,6 @@ namespace sen {
 		 * @retval None
 		 */
 		void render(sf::RenderTarget &target);
+		virtual ~InputBox();
 	};
 }

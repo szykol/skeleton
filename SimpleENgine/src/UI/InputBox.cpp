@@ -83,4 +83,8 @@ namespace sen {
 	{
 		return m_message.getString();
 	}
+	InputBox::~InputBox()
+	{
+		InputController::unbindText();
+	}
 }
