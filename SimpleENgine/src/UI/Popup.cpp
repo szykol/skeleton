@@ -14,6 +14,7 @@ namespace sen {
 
 
         setButtonPlacing(ButtonPlacing::HORIZONTAL);
+        setButtonBaseline(ButtonBaseline::END);
         auto okButton = std::make_shared<Button>("OK");
         
         okButton->setOnClickCalback(
@@ -46,13 +47,22 @@ namespace sen {
             latButton->getTextObject().setString("LATER");
             pushButtons(declButton, latButton, okButton);
         }
+        else if (style == PopupStyle::INPUT)
+        {
+            pushButtons(declButton, okButton);
+            m_input = std::make_unique<InputBox>(m_message.getString());
+            m_input->setPosition(getPosition());
+        }
         setSize(sf::Vector2f(400.f, 300.f));
         placeButtons();
 	}
 	void Popup::render(sf::RenderTarget & target)
     {
         Box::render(target);
-        m_message.render(target);
+        if(!m_input)
+            m_message.render(target);
+        else 
+            m_input->render(target);
         ButtonController::render(target);
     }
 
@@ -61,6 +71,14 @@ namespace sen {
         ButtonController::update(window);
         if(hasResponse() && m_callback)
             m_callback(m_response);
+        if(m_shouldUpdateButtonPlacing)
+        {
+            placeButtons();
+            if(m_input)
+                m_input->setPosition(getPosition());
+        }   
+        if(m_input)
+            m_input->update(window);
     }
     bool Popup::hasResponse() const
     {
@@ -74,5 +92,31 @@ namespace sen {
     {
         m_message.setString(message);
     }
+
+	void Popup::setButtonBaseline(ButtonBaseline baseline)
+	{
+        ButtonController::setButtonBaseline(baseline);
+        m_shouldUpdateButtonPlacing = true;
+	}
+
+	void Popup::placeButtons(float gap)
+	{
+        ButtonController::placeButtons(
+            getGlobalBounds(), gap
+        );
+        m_shouldUpdateButtonPlacing = false;
+	}
+
+	void Popup::setPosition(const sf::Vector2f & position)
+	{
+        TextBox::setPosition(position);
+        m_shouldUpdateButtonPlacing = true;
+	}
+
+	void Popup::setSize(const sf::Vector2f & size)
+	{
+        TextBox::setSize(size);
+        m_shouldUpdateButtonPlacing = true;
+	}
 
 }

@@ -16,8 +16,6 @@ namespace sen {
 		pushState->setOnClickCalback([&window, this] {
 				m_popup = std::make_shared<Popup>(PopupStyle::BINARY, "Are you sure?");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
-				m_popup->setButtonBaseline(ButtonBaseline::END);
-				m_popup->placeButtons(m_popup->getGlobalBounds());
 				StateManager::pushPopup(m_popup);
 
 				m_popup->setOnResponseCallback(
@@ -30,10 +28,7 @@ namespace sen {
 		popState->setOnClickCalback([&window, this] {
 				m_popup = std::make_shared<Popup>(PopupStyle::BINARY, "Are you sure?");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
-				m_popup->setButtonBaseline(ButtonBaseline::END);
-				m_popup->placeButtons(m_popup->getGlobalBounds());
 				StateManager::pushPopup(m_popup);
-
 				m_popup->setOnResponseCallback(
 					[&](const json& j) {
 						if(j["Response"])
@@ -43,10 +38,8 @@ namespace sen {
 		});
 
 		spawnPopup->setOnClickCalback([&window, this] {
-				m_popup = std::make_shared<Popup>(PopupStyle::UNARY, "Spawned popup");
+				m_popup = std::make_shared<Popup>(PopupStyle::INPUT, "Spawned popup");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
-				m_popup->setButtonBaseline(ButtonBaseline::END);
-				m_popup->placeButtons(m_popup->getGlobalBounds());
 				StateManager::pushPopup(m_popup);
 		});
 

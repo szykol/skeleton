@@ -4,6 +4,8 @@
 #include "Button.h"
 #include "Text.h"
 #include "ButtonController.h"
+#include "InputBox.h"
+#include "../Util/InputController.h"
 
 #include "../vendor/nlohmann/json.hpp"
 
@@ -16,13 +18,15 @@ using json = nlohmann::json;
 
 namespace sen {
     typedef std::function<void(const json&)> OnResponseCallback;
-    enum class PopupStyle {UNARY, BINARY, TERNARY, CUSTOM};
+    enum class PopupStyle {UNARY, BINARY, TERNARY, INPUT, CUSTOM};
     class Popup : public TextBox, public ButtonController
     {
     protected:
         json m_response;
         bool m_pausesState, m_blursBG;
         OnResponseCallback m_callback;
+        bool m_shouldUpdateButtonPlacing = false;
+        std::unique_ptr<InputBox> m_input;
     public:
         Popup(PopupStyle style, const sf::String &message = "STANDARD MESSAGE",
               bool pausesState = true, bool blursBG = false);
