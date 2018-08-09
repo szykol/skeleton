@@ -17,14 +17,14 @@ using json = nlohmann::json;
 namespace sen {
     typedef std::function<void(const json&)> OnResponseCallback;
     enum class PopupStyle {UNARY, BINARY, TERNARY, CUSTOM};
-    class Popup : public TextBox, private ButtonController
+    class Popup : public TextBox, public ButtonController
     {
     protected:
         json m_response;
         bool m_pausesState, m_blursBG;
         OnResponseCallback m_callback;
     public:
-        Popup(const sf::String &message = "STANDARD MESSAGE",
+        Popup(PopupStyle style, const sf::String &message = "STANDARD MESSAGE",
               bool pausesState = true, bool blursBG = false);
         virtual void render(sf::RenderTarget& target);
         virtual void update(sf::RenderWindow& window);
@@ -33,14 +33,11 @@ namespace sen {
         bool pausesState() const {return m_pausesState;}
         void setMessage(const sf::String& message);
         void setOnResponseCallback(const OnResponseCallback& callback) {m_callback = callback;}
-        using ButtonController::pushButtons;
-        using ButtonController::removeButton;
-        using ButtonController::setButtonFixedSize;
-        using ButtonController::emplaceButtons;
+		void setButtonBaseline(ButtonBaseline baseline);
+		void placeButtons(float gap = 30.f);
+        void setPosition(const sf::Vector2f& position);
+        void setSize(const sf::Vector2f& size);
+    private:
         using ButtonController::placeButtons;
-		using ButtonController::setOffset;
-
-        friend std::shared_ptr<Popup> createPopup(PopupStyle style);
     };
-	std::shared_ptr<Popup> createPopup(PopupStyle style);
 }

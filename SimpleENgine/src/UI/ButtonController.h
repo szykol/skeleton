@@ -11,6 +11,7 @@ namespace sen {
 	typedef std::shared_ptr<Button> ButtonPointer;
 	typedef std::vector<ButtonPointer> ButtonPointerVector;
 	enum class ButtonPlacing {HORIZONTAL, VERTICAL};
+	enum class ButtonBaseline {START, CENTER, END};
 	/**
 	 * 	All the buttons you pass to the controller will be
 	 *	updated and rendered. Additionaly controller has built 
@@ -31,6 +32,7 @@ namespace sen {
 		sf::Clock m_timer;
 		bool m_canClick = false;
 		ButtonPlacing m_buttonPlacing = ButtonPlacing::VERTICAL;
+		ButtonBaseline m_baseline = ButtonBaseline::CENTER;
 	public:
 		/**
 	     *	Default constructor of the controller.
@@ -121,6 +123,7 @@ namespace sen {
  		 *
 		 *	@param x X position.
 		 */
+		void setButtonBaseline(ButtonBaseline baseline) {m_baseline = baseline;}
 		void setCoord(float coord);
 		/** 
 		 * @brief  Move every button by the offset based on the 
@@ -151,20 +154,8 @@ namespace sen {
 		 *		   takes a button pointer as a parameter
 		 */
 		void map(const std::function<void(ButtonPointer&)> &function);
-		/** 
-		 * @brief  If using heap allocated buttons this method will 
-		 * free up memory used by them.
-		 * @note   THIS FUNCTION IS DEPRECATED since moving to
-		 * shared pointers instead of c-style pointers.
-		 * @retval None
-		 */
-		void freeMemory() = delete;
 	private:
-		float getBiggestSizeOfButton();
+		sf::Vector2f getBiggestSizeOfButton();
 		void  checkIfSameSize(float biggestSize);
-		// dodac opcje ukladania przyciskow center, top, bottom, left, right -> czyli przyklejanie osi przyciskow np do
-		// dna boxa kiedy przyciski sa ukladane horyzontalnie
-
-		// dodac offset jako skladowa klasy
 	};
 }
