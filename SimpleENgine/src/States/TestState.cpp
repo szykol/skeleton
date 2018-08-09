@@ -14,66 +14,40 @@ namespace sen {
 		//std::shared_ptr<Button> box(new InputBox());
 
 		pushState->setOnClickCalback([&window, this] {
-			// StateManager::pushState<TestState>(window);
-			if(!m_popup)
-			{
-				m_popup = createPopup(PopupStyle::BINARY);
-				m_popup->getTextObject().setString("Are you sure");
+				m_popup = std::make_shared<Popup>(PopupStyle::BINARY, "Are you sure?");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->setButtonBaseline(ButtonBaseline::END);
 				m_popup->placeButtons(m_popup->getGlobalBounds());
-				m_popup->setOffset(100.f);
 				StateManager::pushPopup(m_popup);
 
 				m_popup->setOnResponseCallback(
 					[&](const json& j) {
 						if(j["Response"])
 							StateManager::pushState<TestState>(window);
-						m_popup = nullptr;
-
 					}
 				);
-			}	
 		});
 		popState->setOnClickCalback([&window, this] {
-			// StateManager::popState();
-			if(!m_popup)
-			{
-				m_popup = createPopup(PopupStyle::BINARY);
-				m_popup->getTextObject().setString("Are you sure");
+				m_popup = std::make_shared<Popup>(PopupStyle::BINARY, "Are you sure?");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->setButtonBaseline(ButtonBaseline::END);
 				m_popup->placeButtons(m_popup->getGlobalBounds());
-				m_popup->setOffset(100.f);
 				StateManager::pushPopup(m_popup);
 
 				m_popup->setOnResponseCallback(
 					[&](const json& j) {
 						if(j["Response"])
 							StateManager::popState();
-						m_popup = nullptr;
 					}
 				);
-			}	
 		});
 
 		spawnPopup->setOnClickCalback([&window, this] {
-			// StateManager::popState();
-			if(!m_popup)
-			{
-				m_popup = createPopup(PopupStyle::UNARY);
-				m_popup->getTextObject().setString("SPAWNED POPUP");
+				m_popup = std::make_shared<Popup>(PopupStyle::UNARY, "Spawned popup");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_popup->setButtonBaseline(ButtonBaseline::END);
 				m_popup->placeButtons(m_popup->getGlobalBounds());
-				m_popup->setOffset(100.f);
-
-
 				StateManager::pushPopup(m_popup);
-				
-				m_popup->setOnResponseCallback(
-					[&](const json& j) {
-						m_popup = nullptr;
-					}
-				);
-			}	
 		});
 
 		// Get text object of textbox and set its string

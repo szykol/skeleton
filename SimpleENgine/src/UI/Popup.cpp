@@ -1,7 +1,7 @@
  #include "Popup.h"
 
 namespace sen {
-	Popup::Popup(const sf::String& message, bool pausesState, bool blursBG)
+	Popup::Popup(PopupStyle style, const sf::String& message, bool pausesState, bool blursBG)
         : m_pausesState(pausesState),
 		  m_blursBG(blursBG), TextBox(message)
     {
@@ -10,6 +10,44 @@ namespace sen {
         Box::setOutlineThickness(-5.5);
 
         m_message.setFillColor(Box::getOutlineColor());
+        	if (style == PopupStyle::CUSTOM) return;
+
+
+        setButtonPlacing(ButtonPlacing::HORIZONTAL);
+        auto okButton = std::make_shared<Button>("OK");
+        
+        okButton->setOnClickCalback(
+            [this] {
+                m_response["Response"] = true;
+            }
+        );
+        auto declButton = std::make_shared<Button>("CANCEL");
+        declButton->setOnClickCalback(
+            [this] {
+                m_response["Response"] = false;
+            }
+        );
+        auto latButton = std::make_shared<Button>("LATER");
+         latButton->setOnClickCalback(
+             [this] {
+                 m_response["Response"] = "later";
+             }
+         );
+        if (style == PopupStyle::UNARY)
+            pushButtons(okButton);
+        else if (style == PopupStyle::BINARY)
+        {
+            okButton->getTextObject().setString("YES");
+            declButton->getTextObject().setString("NO");
+            pushButtons(declButton, okButton);
+        }
+        else if (style == PopupStyle::TERNARY)
+        {
+            latButton->getTextObject().setString("LATER");
+            pushButtons(declButton, latButton, okButton);
+        }
+        setSize(sf::Vector2f(400.f, 300.f));
+        placeButtons();
 	}
 	void Popup::render(sf::RenderTarget & target)
     {
@@ -36,59 +74,5 @@ namespace sen {
     {
         m_message.setString(message);
     }
-	std::shared_ptr<Popup> createPopup(PopupStyle style)
-	{
-		if (style == PopupStyle::CUSTOM)
-    		return std::shared_ptr<Popup>();
 
-        auto popup = std::make_shared<Popup>();
-        popup->setButtonPlacing(ButtonPlacing::HORIZONTAL);
-
-        json& response = popup->m_response;
-
-        auto okButton = std::make_shared<Button>("OK");
-        
-        okButton->setOnClickCalback(
-            [&response] {
-                response["Response"] = true;
-            }
-        );
-        
-        auto declButton = std::make_shared<Button>("CANCEL");
-        declButton->setOnClickCalback(
-            [&response] {
-                response["Response"] = false;
-            }
-        );
-        
-        auto latButton = std::make_shared<Button>("LATER");
-         latButton->setOnClickCalback(
-             [&response] {
-                 response["Response"] = "later";
-             }
-         );
-
-        if (style == PopupStyle::UNARY)
-        {
-            popup->pushButtons(okButton);
-            // this won't work because the size/position is about to change
-            //popup->placeButtons(popup->getGlobalBounds());
-        }
-        else if (style == PopupStyle::BINARY)
-        {
-            okButton->getTextObject().setString("YES");
-            declButton->getTextObject().setString("NO");
-
-            popup->pushButtons(declButton, okButton);
-        }
-        else if (style == PopupStyle::TERNARY)
-        {
-            latButton->getTextObject().setString("LATER");
-            popup->pushButtons(declButton, latButton, okButton);
-        }
-        popup->setSize(sf::Vector2f(400.f, 300.f));
-        //popup->placeButtons(popup->getGlobalBounds());
-
-        return popup;
-	}
 }

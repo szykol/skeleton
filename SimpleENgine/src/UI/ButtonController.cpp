@@ -75,7 +75,7 @@ namespace sen {
 					if (m_buttons[m_activeIndex]->m_clickCallback)
 					{
 						m_buttons[m_activeIndex]->m_clickCallback();
-						m_canClick = false;
+ 						m_canClick = false;
 					}
 				}
 			}
@@ -122,14 +122,12 @@ namespace sen {
 			bounds.left + bounds.width / 2.f,
 			bounds.top + bounds.height / 2.f
 		);
-
-		// override the x coord if it was set eariler
 		
+		// override the x coord if it was set eariler
 		if (m_buttonPlacing==ButtonPlacing::VERTICAL && m_nonStandardPosition)
 			startingPos.x = m_coord;
 		else if(m_nonStandardPosition)
 			startingPos.y = m_coord;
-
 
 		// tells how many buttons are above the center position
 		// aswell as specifies the middle index of buttons vector
@@ -139,20 +137,34 @@ namespace sen {
 		// center of the first button
 		float offset = 0.f;
 
-		float buttonSize = getBiggestSizeOfButton();
+		sf::Vector2f biggestSize = getBiggestSizeOfButton();
+		float buttonSize = m_buttonPlacing == ButtonPlacing::VERTICAL ? biggestSize.y : biggestSize.x;
 		checkIfSameSize(buttonSize);
-
 		// set the offset accordingly to the number of buttons
 		// being odd or even
 		if (m_buttons.size() % 2 != 0)
 			offset = temp * (buttonSize + gap);
 		else
 			offset = temp * gap + (temp - 0.5f) * buttonSize;
+		
+		
 
 		if(m_buttonPlacing == ButtonPlacing::VERTICAL)
+		{
 			startingPos.y -= offset;
+			if(m_baseline == ButtonBaseline::START)
+				startingPos.x = bounds.left + biggestSize.x;
+			else if(m_baseline == ButtonBaseline::END)
+				startingPos.x = bounds.left + bounds.width - biggestSize.x;
+		}
 		else
+		{
 			startingPos.x -= offset;
+			if(m_baseline == ButtonBaseline::START)
+				startingPos.y = bounds.top + biggestSize.y;
+			else if(m_baseline == ButtonBaseline::END)
+				startingPos.y = bounds.top + bounds.height - biggestSize.y;
+		}	
 
 		for (int i = 0; i < m_buttons.size(); i++)
 		{
@@ -195,25 +207,16 @@ namespace sen {
 	{
 		std::for_each(m_buttons.begin(), m_buttons.end(), function);
 	}
-	float ButtonController::getBiggestSizeOfButton()
+	sf::Vector2f ButtonController::getBiggestSizeOfButton()
 	{
-		float biggestSize = 0.f;
-
-		if(m_buttonPlacing == ButtonPlacing::VERTICAL)
-			map(
-				[&biggestSize](sen::ButtonPointer& b) {
-					if(b->getSize().y > biggestSize)
-						biggestSize = b->getSize().y;
-				}
-			);
-		else
-			map(
-				[&biggestSize](sen::ButtonPointer& b) {
-					if(b->getSize().x > biggestSize)
-						biggestSize = b->getSize().x;
-				}
-			);
-
+		sf::Vector2f biggestSize(0.f,0.f);
+		map(
+			[&biggestSize](ButtonPointer& b) {
+				if(b->getSize().x * b->getSize().y >
+					biggestSize.x * biggestSize.y)
+					biggestSize = b->getSize();
+			}
+		);
 		return biggestSize;
 	}
 	void ButtonController::checkIfSameSize(float biggestSize)
@@ -236,9 +239,4 @@ namespace sen {
 				);
 		}
 	}
-	// void ButtonController::freeMemory()
-	// {
-	// 	for (auto b : m_buttons)
-	// 		delete b;
-	// }
 }
