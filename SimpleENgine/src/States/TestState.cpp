@@ -38,7 +38,7 @@ namespace sen {
 		});
 
 		spawnPopup->setOnClickCalback([&window, this] {
-				m_popup = std::make_shared<Popup>(PopupStyle::INPUT, "Spawned popup");
+				m_popup = std::make_shared<Popup>(PopupStyle::INPUT, "Type something..");
 				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
 				StateManager::pushPopup(m_popup);
 		});
@@ -70,6 +70,11 @@ namespace sen {
 	void TestState::update(sf::RenderWindow & window)
 	{
 		m_buttonController.update(window);
+		if (m_popup && m_popup->hasResponse())
+		{
+			std::cout<<"Response: "<<m_popup->getResponse()["Response"]<<std::endl;
+			m_popup = nullptr;
+		}
 	}
 	void TestState::input(sf::RenderWindow & window)
 	{

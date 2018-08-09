@@ -2,7 +2,8 @@
 
 namespace sen {
 	TextBox::TextBox(const sf::String & string)
-		: m_message(string), Box(), m_fitTextSize(false)
+		: m_message(string), Box(), m_fitTextSize(false),
+		 m_textOffset({0.f,0.f})
 	{
 		// get text bounds and set a box around it
 		sf::FloatRect bounds = m_message.getLocalBounds();
@@ -42,7 +43,7 @@ namespace sen {
 	{
 		// set origin and then position of box and text
 		Box::setPosition(pos);
-		m_message.setPosition(pos);
+		m_message.setPosition(pos + m_textOffset);
 	}
 	bool TextBox::isTextOutOfBounds()
 	{
@@ -52,11 +53,11 @@ namespace sen {
 	void TextBox::move(float offsetX, float offsetY)
 	{
 		Box::move(offsetX, offsetY);
-		m_message.move(offsetX, offsetY);
+		m_message.move(sf::Vector2f(offsetX, offsetY) + m_textOffset);
 	}
 	void TextBox::move(const sf::Vector2f & offset)
 	{
 		Box::move(offset);
-		m_message.move(offset);
+		m_message.move(m_textOffset + offset);
 	}
 }

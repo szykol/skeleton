@@ -36,7 +36,9 @@ namespace sen {
 			}
 		}
 		else
+		{
 			onUnhover();
+		}
 	}
 	void InputBox::onHover()
 	{
