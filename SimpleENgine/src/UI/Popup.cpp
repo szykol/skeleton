@@ -52,6 +52,16 @@ namespace sen {
             pushButtons(declButton, okButton);
             m_input = std::make_unique<InputBox>(m_message.getString());
             m_input->setPosition(getPosition());
+            InputController::bindText(m_input->getTextObject());
+            m_input->onFocus();
+            m_input->setFitTextSize(true);
+
+            setTextOffset({0.f, -50.f});
+            okButton->setOnClickCalback(
+            [this] {
+                m_response["Response"] = std::string(m_input->getTextObject().getString());
+            }
+        );
         }
         setSize(sf::Vector2f(400.f, 300.f));
         placeButtons();
@@ -59,10 +69,13 @@ namespace sen {
 	void Popup::render(sf::RenderTarget & target)
     {
         Box::render(target);
-        if(!m_input)
+        if(!m_input || m_input->hasFocus())
             m_message.render(target);
-        else 
+
+        if(m_input)
             m_input->render(target);
+        
+
         ButtonController::render(target);
     }
 

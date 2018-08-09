@@ -7,7 +7,6 @@ namespace sen {
 	 *	It provides a couple of methods that are handy such as setOriginMode
 	 *	that lets you easily change the origin to the center or top left corner.
 	 *	
-	 *	
 	 *	In the future, it will let you blur it's background.
 	 */
 	class Box : public sf::RectangleShape
@@ -27,7 +26,6 @@ namespace sen {
 		 *	Lets you specify the size of the Box.
 		 *	It also sets origin mode to center.
 		 *
-		 * 	
 		 *	@param size Size of the box
 		 */
 		explicit Box(const sf::Vector2f &size);
@@ -39,7 +37,6 @@ namespace sen {
 		 *	@param pos Position of the box
 		 */
 		Box(const sf::Vector2f &size, const sf::Vector2f &pos);
-
 		/**
 		 *	Draws the box on the target
 		 *
