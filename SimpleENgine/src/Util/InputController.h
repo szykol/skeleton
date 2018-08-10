@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../UI/Cursor.h"
-#include "../UI/Text.h"
+#include "../GUI/Cursor.h"
+#include "../GUI/Text.h"
 #include <functional>
 
 typedef std::function<bool(const sf::String& string)> stringValidateFunc;

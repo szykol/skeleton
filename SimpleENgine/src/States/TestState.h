@@ -1,7 +1,7 @@
 #pragma once
 
 #include "State.h"
-#include "../UI/UIheaders.h"
+#include "../GUI/GUIheaders.h"
 #include <memory>
 
 namespace sen {
@@ -15,7 +15,7 @@ namespace sen {
 	private:
 		ButtonController m_buttonController;
 		TextBox m_info;
-		std::shared_ptr<Popup> m_popup;
+		std::shared_ptr<Prompt> m_prompt;
 		static unsigned int s_pushedStates;
 	public:
 		/**

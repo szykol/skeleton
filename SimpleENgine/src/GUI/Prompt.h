@@ -18,8 +18,8 @@ using json = nlohmann::json;
 
 namespace sen {
     typedef std::function<void(const json&)> OnResponseCallback;
-    enum class PopupStyle {UNARY, BINARY, TERNARY, INPUT, CUSTOM};
-    class Popup : public TextBox, public ButtonController
+    enum class PromptStyle {UNARY, BINARY, TERNARY, INPUT, CUSTOM};
+    class Prompt : public TextBox, public ButtonController
     {
     protected:
         json m_response;
@@ -28,7 +28,7 @@ namespace sen {
         bool m_shouldUpdateButtonPlacing = false;
         std::unique_ptr<InputBox> m_input;
     public:
-        Popup(PopupStyle style, const sf::String &message = "STANDARD MESSAGE",
+        Prompt(PromptStyle style, const sf::String &message = "STANDARD MESSAGE",
               bool pausesState = true, bool blursBG = false);
         virtual void render(sf::RenderTarget& target);
         virtual void update(sf::RenderWindow& window);

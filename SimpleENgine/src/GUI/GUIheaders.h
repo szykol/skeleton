@@ -1,7 +1,7 @@
 /**
-	UIheaders.h
+	GUIheaders.h
 
-	Includes all UI classes
+	Includes all GUI classes
 */
 
 #pragma once
@@ -13,4 +13,4 @@
 #include "ButtonController.h"
 #include "Cursor.h"
 #include "InputBox.h"
-#include "Popup.h"
+#include "Prompt.h"

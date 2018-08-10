@@ -1,6 +1,7 @@
 #include "TestState.h"
 #include "StateManager.h"
-#include "../UI/Popup.h"
+#include "../GUI/Prompt.h"
+#include "../GUI/Popup.h"
 
 namespace sen {
 	unsigned int TestState::s_pushedStates = 0;
@@ -10,37 +11,46 @@ namespace sen {
 	{
 		std::shared_ptr<Button> popState(new Button("Pop State"));
 		std::shared_ptr<Button> pushState(new Button("Push State"));
-		std::shared_ptr<Button> spawnPopup(new Button("Spawn Popup"));
+		std::shared_ptr<Button> spawnPopup(new Button("Spawn Prompt"));
 		//std::shared_ptr<Button> box(new InputBox());
 
 		pushState->setOnClickCalback([&window, this] {
-				m_popup = std::make_shared<Popup>(PopupStyle::BINARY, "Are you sure?");
-				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
-				StateManager::pushPopup(m_popup);
+				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
+				m_prompt->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				StateManager::pushPrompt(m_prompt);
 
-				m_popup->setOnResponseCallback(
+				m_prompt->setOnResponseCallback(
 					[&](const json& j) {
 						if(j["Response"])
+						{
 							StateManager::pushState<TestState>(window);
+							auto popup = new Popup(window, "Pushed State");
+							StateManager::pushPopup(popup);
+						}
 					}
 				);
 		});
 		popState->setOnClickCalback([&window, this] {
-				m_popup = std::make_shared<Popup>(PopupStyle::BINARY, "Are you sure?");
-				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
-				StateManager::pushPopup(m_popup);
-				m_popup->setOnResponseCallback(
+				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
+				m_prompt->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				StateManager::pushPrompt(m_prompt);
+				m_prompt->setOnResponseCallback(
 					[&](const json& j) {
 						if(j["Response"])
+						{
 							StateManager::popState();
+							auto popup = new Popup(window, "Popped State");
+							StateManager::pushPopup(popup);
+						}
 					}
 				);
+				
 		});
 
 		spawnPopup->setOnClickCalback([&window, this] {
-				m_popup = std::make_shared<Popup>(PopupStyle::INPUT, "Type something..");
-				m_popup->setPosition(sf::Vector2f(window.getSize()) / 2.f);
-				StateManager::pushPopup(m_popup);
+				m_prompt = std::make_shared<Prompt>(PromptStyle::INPUT, "Type something..");
+				m_prompt->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				StateManager::pushPrompt(m_prompt);
 		});
 
 		// Get text object of textbox and set its string
@@ -70,10 +80,10 @@ namespace sen {
 	void TestState::update(sf::RenderWindow & window)
 	{
 		m_buttonController.update(window);
-		if (m_popup && m_popup->hasResponse())
+		if (m_prompt && m_prompt->hasResponse())
 		{
-			std::cout<<"Response: "<<m_popup->getResponse()["Response"]<<std::endl;
-			m_popup = nullptr;
+			std::cout<<"Response: "<<m_prompt->getResponse()["Response"]<<std::endl;
+			m_prompt = nullptr;
 		}
 	}
 	void TestState::input(sf::RenderWindow & window)

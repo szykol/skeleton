@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "../vendor/nlohmann/json.hpp"
-#include "../UI/Text.h"
+#include "../GUI/Text.h"
 using json = nlohmann::json;
 
 namespace sf {

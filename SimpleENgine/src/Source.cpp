@@ -17,10 +17,10 @@
 #include <memory>
 
 #include "Managers/ResourceManager.h"
-#include "UI/UIheaders.h"
+#include "GUI/GUIheaders.h"
 #include "States/StateHeaders.h"
 #include "Util/UtilHeaders.h"
-#include "UI/Button.h"
+#include "GUI/Button.h"
 
 int main()
 {	

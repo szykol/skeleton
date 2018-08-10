@@ -5,13 +5,14 @@
 #include <vector>
 #include <memory>
 
-#include "../UI/Popup.h"
+#include "../GUI/Prompt.h"
 #include "State.h"
+#include "../GUI/Popup.h"
 
 namespace sen {
 	typedef std::shared_ptr<State> StatePointer;
 	typedef std::vector<StatePointer> StatePointerVector;
-	typedef std::shared_ptr<Popup> PopupPointer;
+	typedef std::shared_ptr<Prompt> PromptPointer;
 	/**
 	 *	Basic state manager. Works with classes 
 	 *	that derive from State class.
@@ -31,7 +32,8 @@ namespace sen {
 		static StatePointerVector m_states;
 		static StatePointer m_currentState;
 		static StatePointer m_awaitState;
-		static PopupPointer m_popup;
+		static PromptPointer m_prompt;
+		static Popup* m_popup; // stos popupow ? 
 		static bool m_wannaPop;
 		StateManager() = default;
 	public:
@@ -78,7 +80,8 @@ namespace sen {
 		 *	the previous one
 		 */
 		static void popState();
-		static void pushPopup(PopupPointer& popup);
+		static void pushPrompt(PromptPointer& Prompt);
+		static void pushPopup(Popup* popup);
 		~StateManager();
 	};
 }
