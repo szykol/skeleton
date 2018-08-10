@@ -4,9 +4,10 @@ namespace sen {
     StatePointerVector StateManager::m_states;
     StatePointer StateManager::m_currentState;
     StatePointer StateManager::m_awaitState;  
-    PopupPointer StateManager::m_popup;  
+    PromptPointer StateManager::m_prompt;  
     bool StateManager::m_wannaPop = false;
-
+    Popup* StateManager::m_popup = nullptr;
+    
     void StateManager::pushState(StatePointer& newState)
     {
         // mark the new state as awaiting state
@@ -38,21 +39,31 @@ namespace sen {
             while(window.pollEvent(evnt))
                 m_currentState->handleEvents(evnt);*/
 
-			// if doesn't have popup or if it has but it doesn't pause
+			// if doesn't have Prompt or if it has but it doesn't pause
 			// state
-			if (!m_popup || !m_popup->pausesState())
+			if (!m_prompt || !m_prompt->pausesState())
 			{
 				m_currentState->input(window);
 				m_currentState->update(window);
 			}
 			m_currentState->render(window);
         }
+        if(m_prompt)
+        {
+            m_prompt->update(window);
+            m_prompt->render(window);
+            if(m_prompt->hasResponse())
+                m_prompt = nullptr;
+        }
         if(m_popup)
         {
-            m_popup->update(window);
-            m_popup->render(window);
-            if(m_popup->hasResponse())
+            if(m_popup->shouldVanish())
+            {
+                delete m_popup;
                 m_popup = nullptr;
+            }
+            else
+                m_popup->render(window);
         }
         // if there's a state that need to be
         // popped, pop it
@@ -68,13 +79,19 @@ namespace sen {
             m_wannaPop = false;
         }
     }
-    void StateManager::pushPopup(PopupPointer& popup)
+    void StateManager::pushPrompt(PromptPointer& Prompt)
     {
+        if(m_prompt) return;
+        
+		m_prompt = Prompt;
+    }
+	void StateManager::pushPopup(Popup * popup)
+	{
         if(m_popup) return;
         
-		m_popup = popup;
-    }
-    StateManager::~StateManager()
+        m_popup = popup;
+	}
+	StateManager::~StateManager()
     {
     }
 }

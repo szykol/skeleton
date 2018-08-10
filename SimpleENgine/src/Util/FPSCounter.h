@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "../UI/Text.h"
+#include "../GUI/Text.h"
 
 namespace sen {
 	/**

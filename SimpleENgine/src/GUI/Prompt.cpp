@@ -1,7 +1,7 @@
- #include "Popup.h"
+ #include "Prompt.h"
 
 namespace sen {
-	Popup::Popup(PopupStyle style, const sf::String& message, bool pausesState, bool blursBG)
+	Prompt::Prompt(PromptStyle style, const sf::String& message, bool pausesState, bool blursBG)
         : m_pausesState(pausesState),
 		  m_blursBG(blursBG), TextBox(message)
     {
@@ -10,7 +10,7 @@ namespace sen {
         Box::setOutlineThickness(-5.5);
 
         m_message.setFillColor(Box::getOutlineColor());
-        	if (style == PopupStyle::CUSTOM) return;
+        	if (style == PromptStyle::CUSTOM) return;
 
 
         setButtonPlacing(ButtonPlacing::HORIZONTAL);
@@ -34,20 +34,20 @@ namespace sen {
                  m_response["Response"] = "later";
              }
          );
-        if (style == PopupStyle::UNARY)
+        if (style == PromptStyle::UNARY)
             pushButtons(okButton);
-        else if (style == PopupStyle::BINARY)
+        else if (style == PromptStyle::BINARY)
         {
             okButton->getTextObject().setString("YES");
             declButton->getTextObject().setString("NO");
             pushButtons(declButton, okButton);
         }
-        else if (style == PopupStyle::TERNARY)
+        else if (style == PromptStyle::TERNARY)
         {
             latButton->getTextObject().setString("LATER");
             pushButtons(declButton, latButton, okButton);
         }
-        else if (style == PopupStyle::INPUT)
+        else if (style == PromptStyle::INPUT)
         {
             pushButtons(declButton, okButton);
             m_input = std::make_unique<InputBox>(m_message.getString());
@@ -66,7 +66,7 @@ namespace sen {
         setSize(sf::Vector2f(400.f, 300.f));
         placeButtons();
 	}
-	void Popup::render(sf::RenderTarget & target)
+	void Prompt::render(sf::RenderTarget & target)
     {
         Box::render(target);
         if(!m_input || m_input->hasFocus())
@@ -79,7 +79,7 @@ namespace sen {
         ButtonController::render(target);
     }
 
-    void Popup::update(sf::RenderWindow & window)
+    void Prompt::update(sf::RenderWindow & window)
     {
         ButtonController::update(window);
         if(hasResponse() && m_callback)
@@ -93,26 +93,26 @@ namespace sen {
         if(m_input)
             m_input->update(window);
     }
-    bool Popup::hasResponse() const
+    bool Prompt::hasResponse() const
     {
         return m_response.size();
     }
-    const json & Popup::getResponse() const
+    const json & Prompt::getResponse() const
     {
         return m_response;
     }
-    void Popup::setMessage(const sf::String& message)
+    void Prompt::setMessage(const sf::String& message)
     {
         m_message.setString(message);
     }
 
-	void Popup::setButtonBaseline(ButtonBaseline baseline)
+	void Prompt::setButtonBaseline(ButtonBaseline baseline)
 	{
         ButtonController::setButtonBaseline(baseline);
         m_shouldUpdateButtonPlacing = true;
 	}
 
-	void Popup::placeButtons(float gap)
+	void Prompt::placeButtons(float gap)
 	{
         ButtonController::placeButtons(
             getGlobalBounds(), gap
@@ -120,13 +120,13 @@ namespace sen {
         m_shouldUpdateButtonPlacing = false;
 	}
 
-	void Popup::setPosition(const sf::Vector2f & position)
+	void Prompt::setPosition(const sf::Vector2f & position)
 	{
         TextBox::setPosition(position);
         m_shouldUpdateButtonPlacing = true;
 	}
 
-	void Popup::setSize(const sf::Vector2f & size)
+	void Prompt::setSize(const sf::Vector2f & size)
 	{
         TextBox::setSize(size);
         m_shouldUpdateButtonPlacing = true;
