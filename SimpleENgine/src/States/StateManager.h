@@ -80,7 +80,24 @@ namespace sen {
 		 *	the previous one
 		 */
 		static void popState();
+		/** 
+		 * @brief  Lets you push a new prompt (if there isn't already pushed)
+		 * @note   It uses shared_ptr because that way it allows
+		 * you to manage prompts response, if a response is ready
+		 * StateManager stops updating the prompt and set's its
+		 * PromptPointer to null (but you can still do something with it)
+		 * @param  Prompt: new Prompt
+		 * @retval None
+		 */
 		static void pushPrompt(PromptPointer& Prompt);
+		/** 
+		 * @brief  Lets you push a new popup which is 
+		 * a simple notification block
+		 * @note   When it's duration passes it's immediately
+		 * removed from memory (hence c-style pointer)
+		 * @param  popup: new Popup to be displayed
+		 * @retval None
+		 */
 		static void pushPopup(Popup* popup);
 		~StateManager();
 	};

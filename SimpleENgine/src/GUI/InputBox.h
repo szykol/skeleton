@@ -24,7 +24,7 @@ namespace sen {
 		 * @param  &window: Window needed to get position of mouse
 		 * @retval None
 		 */
-		virtual void update(sf::RenderWindow &window) override;
+		//virtual void update(sf::RenderWindow &window) override;
 		/** 
 		 * @brief  Performs an action when mouse hovers over box
 		 * @note   This method is overriden from Button class.
@@ -59,6 +59,9 @@ namespace sen {
 		 * @retval None
 		 */
 		void render(sf::RenderTarget &target);
+		/** 
+		 * @brief  Returns true if the input has focus
+		 */
 		bool hasFocus() const {return m_hasFocus;}
 		virtual ~InputBox();
 	};

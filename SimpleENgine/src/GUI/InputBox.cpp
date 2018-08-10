@@ -8,37 +8,14 @@ namespace sen {
 		  Button(placeholder), m_hasFocus(false)
 	{
 		Button::setFitTextSize(false);
+
+		//default validation function checks if input
+		//is less than 30 character long
 		InputController::setValidateFunction(
 			[](const sf::String& string) -> bool {
 				return string.getSize() <= 30;
 			}
 		);
-	}
-	void InputBox::update(sf::RenderWindow & window)
-	{
-		// create a cooldown to avoid calling the callback function every frame
-		if (m_timer.getElapsedTime().asSeconds() > 0.5f
-			&& !sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			clickable = true;
-			m_timer.restart();
-		}
-
-		if (mouseOver(window))
-		{
-			onHover();
-			if (clickable && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			{
-				onClick();
-				if (m_clickCallback)
-					m_clickCallback();
-				clickable = false;
-			}
-		}
-		else
-		{
-			onUnhover();
-		}
 	}
 	void InputBox::onHover()
 	{
@@ -47,6 +24,9 @@ namespace sen {
 	}
 	void InputBox::onUnhover()
 	{
+		// if it doesn't have focus: unbind the InputController
+		// if user typed something display what he wrote
+		// if input is empty show placeholder string instead.
 		if (!m_hasFocus)
 		{
 			Button::onUnhover();
@@ -58,6 +38,7 @@ namespace sen {
 	}
 	void InputBox::onClick()
 	{
+		// toggle between focus
 		if (!m_hasFocus)
 			onFocus();
 		else
@@ -69,6 +50,7 @@ namespace sen {
 	}
 	void InputBox::onFocus()
 	{
+		// binds InputController
 		InputController::bindText(m_message);
 		m_hasFocus = true;
 		Button::setOutlineThickness(-3.5);

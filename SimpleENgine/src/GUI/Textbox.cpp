@@ -21,6 +21,7 @@ namespace sen {
 	}
 	void TextBox::render(sf::RenderTarget & target)
 	{
+		// change size of text to fit the box
 		if(m_fitTextSize)
 		{
 			// set text size to fix in the box

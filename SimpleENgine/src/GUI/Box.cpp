@@ -4,13 +4,13 @@ namespace sen {
 	Box::Box(const sf::Vector2f & size)
 	{
 		setSize(size);
-		setOriginMode(OriginMode::CENTER);
+		setOrigin(getSize() / 2.f);
 	}
 	Box::Box(const sf::Vector2f & size, const sf::Vector2f & pos)
 	{
 		setSize(size);
 		setPosition(pos);
-		setOriginMode(OriginMode::CENTER);
+		setOrigin(getSize() / 2.f);
 	}
 	void Box::render(sf::RenderTarget & target)
 	{

@@ -64,9 +64,19 @@ namespace sen {
 		 *	@param string New string.
 		 */
 		void setString(const sf::String &string);
+		/** 
+		 * @brief  This method will return true
+		 * if size of text have changed
+		 * @note   It's used for the implementation
+		 * of textBox and inputText which are able
+		 * to change size of text if used specified
+		 * that behaviour
+		 * @retval 
+		 */
 		bool haveBoundsChanged() const;
 		virtual ~Text();
 	private:
+		// sets origin in the middle if origin mode is set
 		void originSet();
 	};
 }

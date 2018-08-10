@@ -54,7 +54,17 @@ namespace sen {
 		 *	@param window Window is needed for placing the buttons
 		 */
 		ButtonController(const ButtonPointerVector& buttons, const sf::RenderWindow &window);
+		/** 
+		 * @brief  Changes placing buttons to Horizontaly/Verticaly
+		 * @note   Default setting is vertical
+		 * @param  placing: Either VERTICAL/HORIZONTAL
+		 * @retval None
+		 */
 		inline void setButtonPlacing(ButtonPlacing placing) {m_buttonPlacing = placing;}
+		/** 
+		 * @brief  Returns current ButtonPlacing (HORIZONTAL/VERTICAL)
+		 * @retval 
+		 */
 		inline ButtonPlacing getButtonPlacing() const {return m_buttonPlacing;}
 		/**
 		 *	Adds the button pointer to the vector
@@ -118,12 +128,27 @@ namespace sen {
 		 * @retval None
 		 */
 		void placeButtons(const sf::FloatRect& bounds, float gap = 30.f);
-		/**
-		 *	Sets the X position of all buttons.
- 		 *
-		 *	@param x X position.
+		/** 
+		 * @brief  Set baseline of buttons (either START/CENTER/END).
+		 * If ButtonPlacing is set to vertical those buttons will be
+		 * placed according to y axis else they will be placed
+		 * according to x axis.
+		 * For example: setting Baseline to START while ButtonPlacing
+		 * is set to vertical -> pushes all buttons to the left side
+		 * of bounding box, but setting same baseline while ButtinPlacing
+		 * is set to horizontal -> pushes all buttons to the top.
+		 * @note   It acts similiar to css flexbox
+		 * @param  baseline: 
+		 * @retval None
 		 */
 		void setButtonBaseline(ButtonBaseline baseline) {m_baseline = baseline;}
+		/** 
+		 * @brief  Sets either x/y coordinate (based on ButtonPlacing mode)
+		 * @note   Use it if you want place all buttons x/y coord to a specific
+		 * value (x/y coord now will be set to new position)
+		 * @param  coord: Coord new coordinate value
+		 * @retval None
+		 */
 		void setCoord(float coord);
 		/** 
 		 * @brief  Move every button by the offset based on the 
@@ -155,7 +180,20 @@ namespace sen {
 		 */
 		void map(const std::function<void(ButtonPointer&)> &function);
 	private:
+		/** 
+		 * @brief  Returns biggest size of all
+		 * buttons that it controlls
+		 * @note   It's used for implementation only
+		 * @retval sf::Vector2f size of biggest button
+		 */
 		sf::Vector2f getBiggestSizeOfButton();
+		/** 
+		 * @brief  If user specified that buttons
+		 * should all have the same size it sets it
+		 * @note   It's used for implementation only
+		 * @param  biggestSize: 
+		 * @retval None
+		 */
 		void  checkIfSameSize(float biggestSize);
 	};
 }

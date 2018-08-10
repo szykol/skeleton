@@ -43,11 +43,49 @@ namespace sen {
 		 *	@return Text object inside of the box
 		 */
 		Text& getTextObject() { return m_message; }
+		/** 
+		 * @brief  Fits the text size if it would 
+		 * come out of bounds of the TextBox
+		 * @note This will override setting 
+		 * custom character size as it will 
+		 * be setting the smallest character 
+		 * size possible
+		 * @param  fit: If true the text will be
+		 * controlled to fit inside of the box
+		 * @retval None
+		 */
 		inline void setFitTextSize(bool fit = false) {m_fitTextSize = fit;}
+		/** 
+		 * @brief  Sets texts offset from center.
+		 * @param  offset: new offset (set {0.f,0.f} to make it 
+		 * again at the center)
+		 * @retval None
+		 */
 		inline void setTextOffset(const sf::Vector2f& offset) {m_textOffset = offset;}
+		/** 
+		 * @brief  Returns true if text is outside of
+		 * TextBox bounds
+		 * @note   Needed for implementation
+		 * @retval 
+		 */
 		bool isTextOutOfBounds();
 		virtual ~TextBox() = default;
+		/** 
+		 * @brief  Let's you move this object
+		 * as every other one, it moves the
+		 * text by it's offset (default is {0.f,0.f})
+		 * @param  offsetX: x coord of offset
+		 * @param  offsetY: y coord of offset
+		 * @retval None
+		 */
 		void move(float offsetX, float offsetY);
+		/** 
+		 * @brief  Let's you move this object
+		 * as every other one, it moves the
+		 * text by it's offset (default is {0.f,0.f})
+		 * @param  offset new offset
+		 * @retval None
+		 */
 		void move(const sf::Vector2f& offset);
 	};
 }

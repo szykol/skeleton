@@ -4,7 +4,7 @@
     For testing purposes.
 
     @author: szykol
-    @version 0.0.3
+    @version 0.0.4
 */
 #include "vendor/nlohmann/json.hpp"
 
@@ -24,7 +24,7 @@
 
 int main()
 {	
-    sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.3");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.4");
     window.setFramerateLimit(60U);
     const sf::Vector2f centerPos(window.getSize().x / 2.f, window.getSize().y / 2.f);
 

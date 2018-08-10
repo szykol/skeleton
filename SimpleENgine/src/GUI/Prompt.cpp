@@ -17,6 +17,9 @@ namespace sen {
         setButtonBaseline(ButtonBaseline::END);
         auto okButton = std::make_shared<Button>("OK");
         
+        // if user presses ok/yes the response 
+        // will be true, if presses cancel/no
+        // the response will be false
         okButton->setOnClickCalback(
             [this] {
                 m_response["Response"] = true;
@@ -56,7 +59,9 @@ namespace sen {
             m_input->onFocus();
             m_input->setFitTextSize(true);
 
+            // prompt message will act as a placeholder when a input has focus
             setTextOffset({0.f, -50.f});
+            // the response will be whatever was placed inside of the input
             okButton->setOnClickCalback(
             [this] {
                 m_response["Response"] = std::string(m_input->getTextObject().getString());
@@ -84,6 +89,7 @@ namespace sen {
         ButtonController::update(window);
         if(hasResponse() && m_callback)
             m_callback(m_response);
+        // if size/position changed..
         if(m_shouldUpdateButtonPlacing)
         {
             placeButtons();

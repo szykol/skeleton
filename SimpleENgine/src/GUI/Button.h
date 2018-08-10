@@ -56,14 +56,13 @@ namespace sen {
 		 */
 		void setOnClickCalback(const OnClickCallback &callback) { m_clickCallback = callback; }
 		/** 
-		 * @brief  sets a callback function and calls it when an event occurs
+		 * @brief  Used for changin the look of a button.
+		 * Sets a callback function and calls it when an event occurs
 		 * @note   if you change the button when the "hover" or "click"
 		 * event occurs, you need to explicitly specify all standard 
 		 * looks of the button in the "standard" event for example:
 		 * if you change the size of a button, you need to set its 
 		 * basic size in "standard" callback
-		 * --- You do not need to specify the standard text which 
-		 * is passed in the constructor ---.
 		 * 
 		 * @param  event: either one of HOVER, CLICK, STANDARD
 		 * @param  callback: function to perform an action on button
@@ -75,6 +74,14 @@ namespace sen {
         void addListener(ButtonEvent state, const Callback& callback, bool preventDefault = false);
 		virtual ~Button();
     private:
+		/** 
+		 * @brief  Returns callbacks changing the looks of button
+		 * specified by user
+		 * @note   It's used for implementation of button but doesn't
+		 * need to be used outside of the class
+		 * @param  state: either HOVER/CLICK/STANDARD
+		 * @retval ButtonAction action to perform on button
+		 */
         const ButtonAction* getCallbackForState(ButtonEvent state) const;
     };
 }

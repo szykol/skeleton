@@ -3,14 +3,19 @@
 namespace sen {
 	void Button::onHover()
 	{
+		// gets on hover action (if exists)
         const ButtonAction* action = getCallbackForState(ButtonEvent::HOVER);
 
+		// if it doesn't exist or if it doesn't have "preventDefault" parameter
+		// set to true it changes looks of button in the standard way
         if(!action || !action->second)
         {
             setFillColor(sf::Color(sf::Color(25, 25, 25, 50)));
             setOutlineColor(sf::Color(222, 222, 222, 240));
             m_message.setFillColor(getOutlineColor());
         }
+		// if a hover action is specified by a user
+		// the callback is called here
         if(action) action->first(*this);
 	}
 	void Button::onUnhover()
@@ -28,8 +33,6 @@ namespace sen {
 			action->first(*this);
 			m_message.setString(m_standardString);
 		}
-
-		
 	}
 	void Button::onClick()
 	{
@@ -95,7 +98,7 @@ namespace sen {
 	const ButtonAction* Button::getCallbackForState(ButtonEvent state) const
 	{
 		if(!m_callbacks) return nullptr;
-
+		
         if(m_callbacks->find(state) != m_callbacks->end())
         {
             return &m_callbacks->at(state);

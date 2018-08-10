@@ -15,6 +15,7 @@ namespace sen {
 
 		if (m_timer.getElapsedTime().asSeconds() > m_delay)
 		{
+			// blinking animation
 			m_alpha+= 4;
 			if (m_alpha >= 255)
 			{
@@ -36,6 +37,7 @@ namespace sen {
 	{
 		if(!m_text)	 return;
 
+		// places it at the end of text
 		const float width = 1.5f;
 		const sf::FloatRect textBounds = m_text->getGlobalBounds();
 		const sf::Vector2f textPos = m_text->getPosition();
