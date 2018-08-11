@@ -21,6 +21,8 @@
 #include "States/StateHeaders.h"
 #include "Util/UtilHeaders.h"
 #include "GUI/Button.h"
+#include "Managers/Cacheable.h"
+#include "Managers/CacheSystem.h"
 
 int main()
 {	
@@ -30,8 +32,17 @@ int main()
 
 	sen::StateManager::pushState<sen::TestState>(window);
 
+	
     sf::Clock timer;
     sen::FPSCounter counter;
+
+	sen::CacheSystem system;
+	
+	auto font = system.getFont("Fonts/Roboto.ttf");
+
+	sen::Text welcome("Welcome\nTo Simple ENgine", 30U,*font);
+	welcome.setStyle(sf::Text::StrikeThrough);
+	welcome.setPosition(centerPos);
 
     while (window.isOpen())
     {
@@ -58,9 +69,10 @@ int main()
         counter.render(window);
 
         sen::InputController::render(window);
-
-        sen::StateManager::run(window);
-
+		welcome.render(window);
+		system.update();
+		//sen::StateManager::run(window);
+	
         window.display();
     }
     return 0;
