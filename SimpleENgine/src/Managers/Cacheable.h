@@ -5,9 +5,10 @@
 
 #include <memory>
 #include <chrono>
+#include <iostream>
 
 namespace sen {
-	typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
+	using TimePoint = std::chrono::time_point<std::chrono::system_clock>;
 	template<typename T>
 	class Cacheable
 	{
@@ -51,7 +52,7 @@ namespace sen {
 
 			std::chrono::duration<float> timePassed = now - m_lastAccessed;
 
-			return (timePassed.count() > 10.f && m_instance.use_count() < 2);
+			return (timePassed.count() > 60.f && m_instance.use_count() < 2);
 		}
 	};
 }
