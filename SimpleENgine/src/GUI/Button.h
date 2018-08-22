@@ -10,10 +10,10 @@ namespace sen {
     enum class ButtonEvent {STANDARD, HOVER, CLICK};
     class Button;
 
-    typedef std::function<void(void)> OnClickCallback;
-    typedef std::function<void(Button&)> Callback;
-    typedef std::pair<Callback, bool> ButtonAction;
-    typedef std::unordered_map<ButtonEvent, ButtonAction> CallbackMap; 
+    using OnClickCallback = std::function<void(void)>;
+    using Callback = std::function<void(Button&)>;
+    using ButtonAction = std::pair<Callback, bool>;
+    using CallbackMap = std::unordered_map<ButtonEvent, ButtonAction>;
 
     class Button : public TextBox
     {

@@ -1,13 +1,21 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <unordered_map>
-class ResourceManager
-{
-private:
-	static std::unordered_map<std::string, sf::Texture> map;
-public:
-	static const sf::Texture& get(const std::string &key);
-	static void setDefault();
-};
 
+#include "CacheSystem.h"
+#include "AudioProviderInterface.h"
+#include "SFMLAudioProvider.h"
+#include <memory>
+
+namespace sen {
+    class ResourceManager
+    {
+    private:
+        CacheSystem m_cache;
+        // AudioProviderInterface* m_audioProvider;
+        SFMLAudioProvider m_audioProvider;
+    public:
+        ResourceManager();
+        const sf::Font& getFont(const std::string& pathFile);
+        const sf::Texture& getTexture(const std::string& pathFile);
+        AudioProviderInterface& getAudioProvider() { return m_audioProvider; }
+    };
+}

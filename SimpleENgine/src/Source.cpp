@@ -21,6 +21,9 @@
 #include "States/StateHeaders.h"
 #include "Util/UtilHeaders.h"
 #include "GUI/Button.h"
+#include "Managers/Cacheable.h"
+#include "Managers/CacheSystem.h"
+#include "Managers/ResourceManager.h"
 
 int main()
 {	
@@ -33,6 +36,15 @@ int main()
     sf::Clock timer;
     sen::FPSCounter counter;
 
+    sen::ResourceManager manager;
+
+	auto font = manager.getFont("Fonts/Roboto.ttf");
+    sen::Text text("Welcome", 30U, font);
+    text.setPosition(centerPos);
+
+    manager.getAudioProvider().playSound("Sounds/blad.wav");
+    
+//	text.setPosition(centerPos);
     while (window.isOpen())
     {
         sf::Event evnt;
@@ -58,9 +70,11 @@ int main()
         counter.render(window);
 
         sen::InputController::render(window);
+		text.render(window);
 
-        sen::StateManager::run(window);
+        //window.draw(sprajt);
 
+		//sen::StateManager::run(window);
         window.display();
     }
     return 0;
