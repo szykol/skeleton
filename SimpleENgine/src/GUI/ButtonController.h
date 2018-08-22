@@ -8,8 +8,10 @@
 
 namespace sen {
 	class Button;
-	typedef std::shared_ptr<Button> ButtonPointer;
-	typedef std::vector<ButtonPointer> ButtonPointerVector;
+
+	using ButtonPointer = std::shared_ptr<Button>;
+	using ButtonPointerVector = std::vector<ButtonPointer>;
+	
 	enum class ButtonPlacing {HORIZONTAL, VERTICAL};
 	enum class ButtonBaseline {START, CENTER, END};
 	/**

@@ -16,6 +16,7 @@
 *.vcxproj.filters
 *.dll
 Dependencies/
+SimpleENgine/Sounds/*.wav
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

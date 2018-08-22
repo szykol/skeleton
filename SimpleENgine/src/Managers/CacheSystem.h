@@ -16,10 +16,46 @@ namespace sen {
 		std::unordered_map<std::string, Cacheable<sf::SoundBuffer>> m_soundBuffers;
 		sf::Clock m_timer;
 	public:
-		std::shared_ptr<sf::Font> getFont(const std::string& pathFile);
-		std::shared_ptr<sf::Texture> getTexture(const std::string& pathFile);
-		std::shared_ptr<sf::Music> getMusic(const std::string& pathFile);
-		std::shared_ptr<sf::SoundBuffer> getSoundBuffer(const std::string& pathFile);
+		template<typename T>
+		std::shared_ptr<T> get(const std::string& pathFile)
+		{
+			auto& map = getMap<T>();
+			auto find = map.find(pathFile);
+			if (find != map.end())
+				return find->second.getInstance();
+
+			Cacheable<T> newInstance(pathFile);
+			auto instance = newInstance.getInstance();
+			map.insert({ pathFile, newInstance });
+			return instance;	
+		}
+	private:
+		template<typename T>
+		std::unordered_map<std::string, Cacheable<T>>& getMap()
+		{
+			static_assert(false);
+		}
+		template<>
+		std::unordered_map<std::string, Cacheable<sf::Font>>& getMap<sf::Font>()
+		{
+			return m_fonts;
+		}
+		template<>
+		std::unordered_map<std::string, Cacheable<sf::Texture>>& getMap<sf::Texture>()
+		{
+			return m_textures;
+		}
+		template<>
+		std::unordered_map<std::string, Cacheable<sf::Music>>& getMap<sf::Music>()
+		{
+			return m_music;
+		}
+		template<>
+		std::unordered_map<std::string, Cacheable<sf::SoundBuffer>>& getMap<sf::SoundBuffer>()
+		{
+			return m_soundBuffers;
+		}
+
 		void update();
 	};
 	

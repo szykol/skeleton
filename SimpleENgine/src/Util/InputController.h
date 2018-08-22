@@ -4,7 +4,7 @@
 #include "../GUI/Text.h"
 #include <functional>
 
-typedef std::function<bool(const sf::String& string)> stringValidateFunc;
+using stringValidateFunc = std::function<bool(const sf::String& string)>;
 
 namespace sen {
 	class InputController : sf::NonCopyable

@@ -4,7 +4,7 @@
     For testing purposes.
 
     @author: szykol
-    @version 0.0.3
+    @version 0.0.4
 */
 #include "vendor/nlohmann/json.hpp"
 
@@ -23,27 +23,28 @@
 #include "GUI/Button.h"
 #include "Managers/Cacheable.h"
 #include "Managers/CacheSystem.h"
+#include "Managers/ResourceManager.h"
 
 int main()
 {	
-    sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.3");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.4");
     window.setFramerateLimit(60U);
     const sf::Vector2f centerPos(window.getSize().x / 2.f, window.getSize().y / 2.f);
 
 	sen::StateManager::pushState<sen::TestState>(window);
 
-	
     sf::Clock timer;
     sen::FPSCounter counter;
 
-	sen::CacheSystem system;
-	
-	auto font = system.getFont("Fonts/Roboto.ttf");
+    sen::ResourceManager manager;
 
-	sen::Text welcome("Welcome\nTo Simple ENgine", 30U,*font);
-	welcome.setStyle(sf::Text::StrikeThrough);
-	welcome.setPosition(centerPos);
+	auto font = manager.getFont("Fonts/Roboto.ttf");
+    sen::Text text("Welcome", 30U, font);
+    text.setPosition(centerPos);
 
+    manager.getAudioProvider().playSound("Sounds/blad.wav");
+    
+//	text.setPosition(centerPos);
     while (window.isOpen())
     {
         sf::Event evnt;
@@ -69,10 +70,11 @@ int main()
         counter.render(window);
 
         sen::InputController::render(window);
-		welcome.render(window);
-		system.update();
+		text.render(window);
+
+        //window.draw(sprajt);
+
 		//sen::StateManager::run(window);
-	
         window.display();
     }
     return 0;

@@ -17,7 +17,7 @@
 using json = nlohmann::json;
 
 namespace sen {
-    typedef std::function<void(const json&)> OnResponseCallback;
+    using OnResponseCallback = std::function<void(const json&)>;
     enum class PromptStyle {UNARY, BINARY, TERNARY, INPUT, CUSTOM};
     class Prompt : public TextBox, public ButtonController
     {

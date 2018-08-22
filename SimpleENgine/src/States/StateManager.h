@@ -10,9 +10,9 @@
 #include "../GUI/Popup.h"
 
 namespace sen {
-	typedef std::shared_ptr<State> StatePointer;
-	typedef std::vector<StatePointer> StatePointerVector;
-	typedef std::shared_ptr<Prompt> PromptPointer;
+	using StatePointer = std::shared_ptr<State>;
+	using StatePointerVector = std::vector<StatePointer>;
+	using PromptPointer = std::shared_ptr<Prompt>;
 	/**
 	 *	Basic state manager. Works with classes 
 	 *	that derive from State class.
