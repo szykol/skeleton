@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 namespace sen {
-	class CacheSystem
+	class SFMLCacheSystem
 	{
 	private:
 		std::unordered_map<std::string, Cacheable<sf::Font>> m_fonts;
@@ -27,6 +27,16 @@ namespace sen {
 			Cacheable<T> newInstance(pathFile);
 			auto instance = newInstance.getInstance();
 			map.insert({ pathFile, newInstance });
+
+			// check if some cache needs to be deleted
+			// if cache system is heavily used this makes
+			// sure that update doesn't happen everytime
+			// user gets something from it 
+			if(m_timer.getElapsedTime().asSeconds() > 30.f)
+			{
+				update();
+				m_timer.restart();
+			}
 			return instance;	
 		}
 	private:
