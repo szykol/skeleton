@@ -1,7 +1,7 @@
 #include "SFMLAudioProvider.h"
 
 namespace sen {
-	SFMLAudioProvider::SFMLAudioProvider(CacheSystem & cache)
+	SFMLAudioProvider::SFMLAudioProvider(SFMLCacheSystem & cache)
 		: m_cache(cache)
 	{
 	}

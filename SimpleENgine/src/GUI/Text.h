@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "../Managers/FontManager.h"
+#include "../Managers/ResourceManager.h"
 
 namespace sen {
 	/**
@@ -26,7 +26,7 @@ namespace sen {
 		 *	@param font Font used to display the text. Default font is Roboto.
 		 */
 		explicit Text(const sf::String &string, unsigned int fontSize = 30U, 
-			 const sf::Font &font = FontManager::get("default"));
+			 const sf::Font &font = ResourceManager::getFont("Fonts/Roboto.ttf"));
 		/**
 		 *	Draws the box on the target
 		 *

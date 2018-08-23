@@ -52,7 +52,7 @@ namespace sen {
 
 			std::chrono::duration<float> timePassed = now - m_lastAccessed;
 
-			return (timePassed.count() > 60.f && m_instance.use_count() < 2);
+			return (timePassed.count() > 3*60.f && m_instance.use_count() < 2);
 		}
 	};
 }
