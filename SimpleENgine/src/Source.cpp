@@ -15,6 +15,7 @@
 #include <functional>
 #include <vector>
 #include <memory>
+#include <random>
 
 #include "Managers/ResourceManager.h"
 #include "GUI/GUIheaders.h"
@@ -24,9 +25,18 @@
 #include "Managers/Cacheable.h"
 #include "Managers/SFMLCacheSystem.h"
 #include "Managers/ResourceManager.h"
+#include "Util/Random.h"
 
 int main()
 {
+	sen::Random r;
+
+	for(int i=0;i<1000;i++)
+		std::cout<<"random num <-11;6>: " << r.get<long>(-11, 6)<<"\n";
+    
+    while(1);
+
+
     using Manager = sen::ResourceManager;
     sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.4");
     const sf::Vector2f centerPos(window.getSize().x / 2.f, window.getSize().y / 2.f);
@@ -38,6 +48,7 @@ int main()
     sf::Clock timer;
     sf::Clock timer2;
     sen::FPSCounter counter;
+
 
     window.setFramerateLimit(60U);
     while (window.isOpen())
