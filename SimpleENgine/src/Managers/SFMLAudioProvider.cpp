@@ -14,14 +14,17 @@ namespace sen {
 			m_currentSound->play();
 		}
 	}
-	void SFMLAudioProvider::playMusic(const std::string & pathFile)
+	void SFMLAudioProvider::playMusic(const std::string & pathFile, bool looping)
 	{
 		if(m_currentMusic && m_currentMusic->getStatus() != sf::Music::Stopped)
 			m_currentMusic->stop();
 		
 		m_currentMusic = m_cache.get<sf::Music>(pathFile);
 		if(m_currentMusic)
+		{
+			m_currentMusic->setLoop(looping);
 			m_currentMusic->play();
+		}
 	}
 	void SFMLAudioProvider::setVolume(int vol)
 	{

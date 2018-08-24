@@ -26,16 +26,14 @@
 #include "Managers/SFMLCacheSystem.h"
 #include "Managers/ResourceManager.h"
 #include "Util/Random.h"
+#include "Util/Math.h"
 
 int main()
 {
-	sen::Random r;
-
 	for(int i=0;i<1000;i++)
-		std::cout<<"random num <-11;6>: " << r.get<long>(-11, 6)<<"\n";
+		std::cout<<"random num <-11;6>: " << sen::Random::get<long>(-11, 6)<<"\n";
     
     while(1);
-
 
     using Manager = sen::ResourceManager;
     sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.4");

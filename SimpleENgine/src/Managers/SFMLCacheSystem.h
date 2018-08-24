@@ -7,6 +7,13 @@
 #include <SFML/Graphics.hpp>
 
 namespace sen {
+	/** 
+	 * @brief  Keeps track of sfml objects that can be loaded
+	 * from files. It introduces simple cache management that
+	 * will be responsible for removing no longer used 
+	 * objects from memory
+	 * @note   It's used for implementation of the engine
+	 */
 	class SFMLCacheSystem
 	{
 	private:
@@ -16,6 +23,14 @@ namespace sen {
 		std::unordered_map<std::string, Cacheable<sf::SoundBuffer>> m_soundBuffers;
 		sf::Clock m_timer;
 	public:
+		/** 
+		 * @brief  tries to locate an object
+		 * in memory, if it's not there it will
+		 * try to load the object from file
+		 * @note   Can return nullptr
+		 * @param  pathFile: path to file
+		 * @retval 
+		 */
 		template<typename T>
 		std::shared_ptr<T> get(const std::string& pathFile)
 		{
@@ -65,7 +80,10 @@ namespace sen {
 		{
 			return m_soundBuffers;
 		}
-
+		/** 
+		 * @brief  Checks for music and soundbuffer objects
+		 * that need to be removed from memory
+		 */
 		void update();
 	};
 	

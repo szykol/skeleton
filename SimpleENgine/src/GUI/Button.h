@@ -15,6 +15,13 @@ namespace sen {
     using ButtonAction = std::pair<Callback, bool>;
     using CallbackMap = std::unordered_map<ButtonEvent, ButtonAction>;
 
+	/** 
+	 * @brief  extends TextBox class and 
+	 * provides a simple button functionality
+	 * (changes on hover etc). Let's the user
+	 * specify how the button should behave on
+	 * certain events (see Button::addListener)
+	 */
     class Button : public TextBox
     {
 	friend class ButtonController;
@@ -56,7 +63,7 @@ namespace sen {
 		 */
 		void setOnClickCalback(const OnClickCallback &callback) { m_clickCallback = callback; }
 		/** 
-		 * @brief  Used for changin the look of a button.
+		 * @brief  Used for changing the look of a button.
 		 * Sets a callback function and calls it when an event occurs
 		 * @note   if you change the button when the "hover" or "click"
 		 * event occurs, you need to explicitly specify all standard 
