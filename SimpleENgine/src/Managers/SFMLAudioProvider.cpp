@@ -1,16 +1,18 @@
 #include "SFMLAudioProvider.h"
 
 namespace sen {
-	SFMLAudioProvider::SFMLAudioProvider(CacheSystem & cache)
+	SFMLAudioProvider::SFMLAudioProvider(SFMLCacheSystem & cache)
 		: m_cache(cache)
 	{
 	}
 	void SFMLAudioProvider::playSound(const std::string & pathFile)
 	{
 		auto sbf = m_cache.get<sf::SoundBuffer>(pathFile);
-		sf::SoundBuffer& sbfr = *sbf;
-		m_currentSound = std::make_shared<sf::Sound>(sbfr);
-		m_currentSound->play();
+		if(sbf)
+		{
+			m_currentSound = std::make_shared<sf::Sound>(*sbf);
+			m_currentSound->play();
+		}
 	}
 	void SFMLAudioProvider::playMusic(const std::string & pathFile)
 	{

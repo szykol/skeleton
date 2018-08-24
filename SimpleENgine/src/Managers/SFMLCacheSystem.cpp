@@ -1,9 +1,9 @@
-#include "CacheSystem.h"
+#include "SFMLCacheSystem.h"
 
 #include <iostream>
 
 namespace sen {
-	void CacheSystem::update()
+	void SFMLCacheSystem::update()
 	{
 		// only soundBuffers and music are removed if not being used
 		// textures and fonts are stored in the memory and not being

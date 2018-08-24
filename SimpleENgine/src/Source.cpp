@@ -15,6 +15,7 @@
 #include <functional>
 #include <vector>
 #include <memory>
+#include <random>
 
 #include "Managers/ResourceManager.h"
 #include "GUI/GUIheaders.h"
@@ -22,29 +23,34 @@
 #include "Util/UtilHeaders.h"
 #include "GUI/Button.h"
 #include "Managers/Cacheable.h"
-#include "Managers/CacheSystem.h"
+#include "Managers/SFMLCacheSystem.h"
 #include "Managers/ResourceManager.h"
+#include "Util/Random.h"
 
 int main()
-{	
+{
+	sen::Random r;
+
+	for(int i=0;i<1000;i++)
+		std::cout<<"random num <-11;6>: " << r.get<long>(-11, 6)<<"\n";
+    
+    while(1);
+
+
+    using Manager = sen::ResourceManager;
     sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.4");
-    window.setFramerateLimit(60U);
     const sf::Vector2f centerPos(window.getSize().x / 2.f, window.getSize().y / 2.f);
 
 	sen::StateManager::pushState<sen::TestState>(window);
 
+    Manager::getAudioProvider().playSound("Sounds/dobrze.wav");
+
     sf::Clock timer;
+    sf::Clock timer2;
     sen::FPSCounter counter;
 
-    sen::ResourceManager manager;
 
-	auto font = manager.getFont("Fonts/Roboto.ttf");
-    sen::Text text("Welcome", 30U, font);
-    text.setPosition(centerPos);
-
-    manager.getAudioProvider().playSound("Sounds/blad.wav");
-    
-//	text.setPosition(centerPos);
+    window.setFramerateLimit(60U);
     while (window.isOpen())
     {
         sf::Event evnt;
@@ -70,11 +76,14 @@ int main()
         counter.render(window);
 
         sen::InputController::render(window);
-		text.render(window);
 
-        //window.draw(sprajt);
+        if(timer2.getElapsedTime().asSeconds() > 5.f)
+        {
+            Manager::getAudioProvider().playSound("Sounds/dobrze.wav");
+            timer2.restart();
+        }
 
-		//sen::StateManager::run(window);
+		sen::StateManager::run(window);
         window.display();
     }
     return 0;

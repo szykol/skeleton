@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CacheSystem.h"
+#include "SFMLCacheSystem.h"
 #include "AudioProviderInterface.h"
 #include "SFMLAudioProvider.h"
 #include <memory>
@@ -9,13 +9,12 @@ namespace sen {
     class ResourceManager
     {
     private:
-        CacheSystem m_cache;
+        static SFMLCacheSystem m_cache;
         // AudioProviderInterface* m_audioProvider;
-        SFMLAudioProvider m_audioProvider;
+        static SFMLAudioProvider m_audioProvider;
     public:
-        ResourceManager();
-        const sf::Font& getFont(const std::string& pathFile);
-        const sf::Texture& getTexture(const std::string& pathFile);
-        AudioProviderInterface& getAudioProvider() { return m_audioProvider; }
+        static const sf::Font& getFont(const std::string& pathFile);
+        static const sf::Texture& getTexture(const std::string& pathFile);
+        static AudioProviderInterface& getAudioProvider() { return m_audioProvider; }
     };
 }
