@@ -27,28 +27,31 @@
 #include "Managers/ResourceManager.h"
 #include "Util/Random.h"
 #include "Util/Math.h"
+#include "Managers/AnimationController.h"
 
 int main()
 {
-	for(int i=0;i<1000;i++)
-		std::cout<<"random num <-11;6>: " << sen::Random::get<long>(-11, 6)<<"\n";
-    
-    while(1);
-
     using Manager = sen::ResourceManager;
+	using AC = sen::AnimationController;
+
     sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.4");
+
     const sf::Vector2f centerPos(window.getSize().x / 2.f, window.getSize().y / 2.f);
 
 	sen::StateManager::pushState<sen::TestState>(window);
 
-    Manager::getAudioProvider().playSound("Sounds/dobrze.wav");
+    //Manager::getAudioProvider().playSound("Sounds/dobrze.wav");
 
     sf::Clock timer;
     sf::Clock timer2;
     sen::FPSCounter counter;
 
+	sen::Text text("Welcome");
+	sen::Text text2 = text;
 
-    window.setFramerateLimit(60U);
+	AC::add(&text, centerPos, 1.f);
+	AC::add(&text2, sf::Vector2f(700.f, 200.f), 1.f);
+
     while (window.isOpen())
     {
         sf::Event evnt;
@@ -74,14 +77,13 @@ int main()
         counter.render(window);
 
         sen::InputController::render(window);
+		
+		AC::update();
+		text.render(window);
+		text2.render(window);
 
-        if(timer2.getElapsedTime().asSeconds() > 5.f)
-        {
-            Manager::getAudioProvider().playSound("Sounds/dobrze.wav");
-            timer2.restart();
-        }
+		//sen::StateManager::run(window);
 
-		sen::StateManager::run(window);
         window.display();
     }
     return 0;
