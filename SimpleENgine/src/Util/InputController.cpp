@@ -1,6 +1,5 @@
 #include "InputController.h"
 
-
 namespace sen {
 	Text* InputController::s_text = nullptr;
 	Cursor InputController::s_cursor;
@@ -21,16 +20,18 @@ namespace sen {
 
 		{
 			string += char(evnt.key.code);
-			if(validate())
-				s_text->setString(string);
+			if (!validate())
+			{
+				string.erase(string.getSize() - 1);
+			}
+			
 		}
 		else if (unicode == '\b' && !string.isEmpty())
 		{
 			string.erase(string.getSize() - 1);
-			if(validate())
-				s_text->setString(string);
 		}
 		
+		s_text->setString(string);
 	}
 
 	void InputController::bindText(Text& text)

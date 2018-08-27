@@ -49,8 +49,8 @@ int main()
 	sen::Text text("Welcome");
 	sen::Text text2 = text;
 
-	AC::add(&text, centerPos, 1.f);
-	AC::add(&text2, sf::Vector2f(700.f, 200.f), 1.f);
+	//AC::add(&text, centerPos, 1.f);
+	//AC::add(&text2, sf::Vector2f(700.f, 200.f), 1.f);
 
     while (window.isOpen())
     {
@@ -79,10 +79,10 @@ int main()
         sen::InputController::render(window);
 		
 		AC::update();
-		text.render(window);
+		/*text.render(window);
 		text2.render(window);
-
-		//sen::StateManager::run(window);
+*/
+		sen::StateManager::run(window);
 
         window.display();
     }

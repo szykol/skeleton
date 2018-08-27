@@ -4,7 +4,6 @@
 #include "../GUI/Text.h"
 #include <functional>
 
-
 namespace sen {
 	using stringValidateFunc = std::function<bool(const sf::String& string)>;
 	/** 

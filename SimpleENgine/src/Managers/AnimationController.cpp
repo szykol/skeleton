@@ -1,6 +1,7 @@
 #include "AnimationController.h"
 
 #include <iostream>
+#include <cmath>
 
 namespace sen {
 	float AnimationController::s_stepTime = 0.001f;
@@ -50,7 +51,7 @@ namespace sen {
 			{
 				sf::Vector2f dist = transformable.goToPosition - transformable.address->getPosition();
 				// close to the goal position
-				if (dist.x + dist.y < 1.f)
+				if (std::abs(dist.x + dist.y) < 1.f)
 				{
 					transformable.address->setPosition(transformable.goToPosition);
 					remove(transformable.address);
