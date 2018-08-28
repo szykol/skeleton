@@ -18,6 +18,7 @@
 #include "States/StateHeaders.h"
 #include "Util/UtilHeaders.h"
 
+#include "Util/Animation.h"
 
 int main()
 {
@@ -39,8 +40,10 @@ int main()
 	sen::Text text("Welcome");
 	sen::Text text2 = text;
 
-	//AC::add(&text, centerPos, 1.f);
-	//AC::add(&text2, sf::Vector2f(700.f, 200.f), 1.f);
+	sen::Animation animation(Manager::getTexture("Images/zombie.png"), { 6,1 }, 0.1f);
+
+	sf::Sprite sprite(Manager::getTexture("Images/zombie.png"));
+	sprite.setTextureRect(animation.getTextureRect());
 
     while (window.isOpen())
     {
@@ -65,6 +68,10 @@ int main()
         float deltaTime = timer.restart().asSeconds();
         counter.update(deltaTime);
         counter.render(window);
+
+		animation.update(deltaTime);
+		sprite.setTextureRect(animation.getTextureRect());
+		window.draw(sprite);
 
         sen::InputController::render(window);
 		
