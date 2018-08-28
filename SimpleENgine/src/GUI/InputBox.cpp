@@ -1,6 +1,6 @@
 #include "InputBox.h"
 
-#include "../Util/InputController.h"
+#include "../Managers/InputController.h"
 
 namespace sen {
 	InputBox::InputBox(const sf::String & placeholder)

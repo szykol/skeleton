@@ -35,7 +35,7 @@ namespace sen {
 
 		// if user holds the up/down arrow the buttons won't
 		// scroll so fast
-		if (m_timer.getElapsedTime().asSeconds() > 0.15f)
+		if (m_timer.getElapsedTime().asSeconds() > 0.2f)
 		{
 			// check for keyboard input
 			if (sf::Keyboard::isKeyPressed(next))
@@ -145,7 +145,7 @@ namespace sen {
 		if (m_buttons.size() % 2 != 0)
 			offset = temp * (buttonSize + gap);
 		else
-			offset = temp * gap + (temp - 0.5f) * buttonSize;
+			offset = (temp - 0.5f) * (buttonSize + gap);
 		
 		
 

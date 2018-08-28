@@ -11,30 +11,20 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
-#include <unordered_map>
-#include <functional>
-#include <vector>
 #include <memory>
-#include <random>
 
-#include "Managers/ResourceManager.h"
+#include "Managers/ManagerHeaders.h"
 #include "GUI/GUIheaders.h"
 #include "States/StateHeaders.h"
 #include "Util/UtilHeaders.h"
-#include "GUI/Button.h"
-#include "Managers/Cacheable.h"
-#include "Managers/SFMLCacheSystem.h"
-#include "Managers/ResourceManager.h"
-#include "Util/Random.h"
-#include "Util/Math.h"
-#include "Managers/AnimationController.h"
+
 
 int main()
 {
     using Manager = sen::ResourceManager;
 	using AC = sen::AnimationController;
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "sen v.0.0.4");
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "sen v.0.0.4");
 
     const sf::Vector2f centerPos(window.getSize().x / 2.f, window.getSize().y / 2.f);
 

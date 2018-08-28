@@ -6,7 +6,7 @@
 #include <memory>
 
 #include "../GUI/Prompt.h"
-#include "State.h"
+#include "../States/State.h"
 #include "../GUI/Popup.h"
 
 namespace sen {

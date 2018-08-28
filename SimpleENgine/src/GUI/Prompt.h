@@ -3,9 +3,9 @@
 #include "Box.h"
 #include "Button.h"
 #include "Text.h"
-#include "ButtonController.h"
+#include "../Managers/ButtonController.h"
 #include "InputBox.h"
-#include "../Util/InputController.h"
+#include "../Managers/InputController.h"
 
 #include "../vendor/nlohmann/json.hpp"
 

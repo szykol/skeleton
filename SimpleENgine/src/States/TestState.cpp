@@ -1,5 +1,5 @@
 #include "TestState.h"
-#include "StateManager.h"
+#include "../Managers/StateManager.h"
 #include "../GUI/Prompt.h"
 #include "../GUI/Popup.h"
 
@@ -9,10 +9,30 @@ namespace sen {
 	TestState::TestState(sf::RenderWindow & window)
 		: m_info("Amount of states: ")
 	{
+
 		std::shared_ptr<Button> popState(new Button("Pop State"));
 		std::shared_ptr<Button> pushState(new Button("Push State"));
 		std::shared_ptr<Button> spawnPopup(new Button("Spawn Prompt"));
+		std::shared_ptr<Button> quit(new Button("Quit"));
+
 		//std::shared_ptr<Button> box(new InputBox());
+
+		quit->setOnClickCalback(
+			[this, &window] {
+				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
+				m_prompt->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				StateManager::pushPrompt(m_prompt);
+				m_prompt->setOnResponseCallback(
+					[&](const json& j) {
+						if (j["Response"])
+						{
+							window.close();
+						}
+					}
+				);
+			}
+		);
+
 
 		pushState->setOnClickCalback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
@@ -66,7 +86,7 @@ namespace sen {
 
 		// setup button controller
 		//m_buttonController.setButtonPlacing(ButtonPlacing::HORIZONTAL);
-		m_buttonController.pushButtons(popState, pushState, spawnPopup);
+		m_buttonController.pushButtons(popState, pushState, spawnPopup, quit);
 		m_buttonController.placeButtons(window);
 		m_buttonController.setButtonFixedSize(
 			sf::Vector2f(185.f, 50.f)
