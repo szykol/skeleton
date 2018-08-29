@@ -43,7 +43,7 @@ namespace sen {
 		 *	@param window Window is needed for
 		 *	       current state
 		 */
-		static void run(sf::RenderWindow &window);
+		static void update(float deltaTime, sf::RenderWindow &window);
 		/**
 		 *	Lets you push a new state - it stops updating
 		 *	current state and switches to a new one.

@@ -15,7 +15,7 @@ namespace sen {
 	class Cursor : public Box, sf::NonCopyable
 	{
 	private:
-		sf::Clock m_timer;
+		float m_time = 0.f;
 		unsigned char m_alpha;
 		const Text* m_text;
 		float m_delay;
@@ -32,6 +32,7 @@ namespace sen {
 		 * @param  target: Target you want to draw on
 		 * @retval None
 		 */
+		void update(float deltaTime);
 		void render(sf::RenderTarget& target);
 		/** 
 		 * @brief  Changes the text addres. If not null

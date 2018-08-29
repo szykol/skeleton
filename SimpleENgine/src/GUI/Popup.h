@@ -19,7 +19,7 @@ namespace sen {
     {
     private:
         float m_duration;
-        sf::Clock m_timer;
+		float m_time = 0.f;
         bool m_shouldVanish;
     public:
         /** 
@@ -42,7 +42,7 @@ namespace sen {
          * @note   
          * @retval 
          */
-        bool shouldVanish();
+        bool shouldVanish(float deltaTime);
     private:
         /** 
          * Those functions are private because popup shouldn't 

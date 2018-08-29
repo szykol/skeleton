@@ -93,21 +93,14 @@ namespace sen {
 		);
 		
 	}
-	void TestState::handleEvents(sf::Event &evnt)
+	void TestState::update(float deltaTime, sf::RenderWindow & window)
 	{
-		
-	}
-	void TestState::update(sf::RenderWindow & window)
-	{
-		m_buttonController.update(window);
+		m_buttonController.update(deltaTime, window);
 		if (m_prompt && m_prompt->hasResponse())
 		{
 			std::cout<<"Response: "<<m_prompt->getResponse()["Response"]<<std::endl;
 			m_prompt = nullptr;
 		}
-	}
-	void TestState::input(sf::RenderWindow & window)
-	{
 	}
 	void TestState::render(sf::RenderTarget & target)
 	{

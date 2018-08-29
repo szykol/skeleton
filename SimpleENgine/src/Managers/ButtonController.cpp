@@ -19,7 +19,7 @@ namespace sen {
 	{
 		m_buttons.pop_back();
 	}
-	void ButtonController::update(sf::RenderWindow & window)
+	void ButtonController::update(float deltaTime, sf::RenderWindow & window)
 	{
 		auto prev = sf::Keyboard::Up;
 		auto next = sf::Keyboard::Down;
@@ -35,7 +35,11 @@ namespace sen {
 
 		// if user holds the up/down arrow the buttons won't
 		// scroll so fast
-		if (m_timer.getElapsedTime().asSeconds() > 0.2f)
+		m_time += deltaTime;
+
+		float timeSwitch = 0.2f;
+
+		if (m_time > timeSwitch)
 		{
 			// check for keyboard input
 			if (sf::Keyboard::isKeyPressed(next))
@@ -44,7 +48,7 @@ namespace sen {
 					m_activeIndex = 0;
 				else
 					m_activeIndex++;
-				m_timer.restart();
+				m_time = 0.f;
 			}
 			else if (sf::Keyboard::isKeyPressed(prev))
 			{
@@ -52,10 +56,10 @@ namespace sen {
 					m_activeIndex = m_buttons.size() - 1;
 				else
 					m_activeIndex--;
-				m_timer.restart();
+				m_time = 0.f;
 			}
 			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
-			&& !sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				&& !sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				m_canClick = true;
 			}

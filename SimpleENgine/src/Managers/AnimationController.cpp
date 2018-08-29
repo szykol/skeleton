@@ -1,14 +1,14 @@
 #include "AnimationController.h"
+#include "../Util/Math.h"
 
 #include <iostream>
-#include <cmath>
 
 namespace sen {
-	float AnimationController::s_stepTime = 0.001f;
+	float AnimationController::s_stepTime = 0.01f;
 	std::vector<AnimationController::Transformable> AnimationController::s_transformables;
-	sf::Clock AnimationController::s_animationClock;
+	float AnimationController::s_time = 0.f;
 
-	void AnimationController::add(sf::Transformable* address, const sf::Vector2f& goToPosition, float timeNeeded)
+	void AnimationController::add(sf::Transformable* address, const sf::Vector2f& goToPosition, float speed)
 	{
 		if (isMaintained(address)) return;
 
@@ -16,7 +16,7 @@ namespace sen {
 
 		sf::Vector2f stepVect = goToPosition - address->getPosition();
 		stepVect *= s_stepTime;
-		stepVect /= timeNeeded;
+		stepVect /= speed;
 
 		Transformable temp{ address, goToPosition, stepVect };
 
@@ -41,24 +41,23 @@ namespace sen {
 			return t.address == address;
 		}) != s_transformables.end();
 	}
-	void AnimationController::update()
+	void AnimationController::update(float deltaTime)
 	{
-		static unsigned ticks = 0;
-		if (s_animationClock.getElapsedTime().asSeconds() > s_stepTime)
+		s_time += deltaTime;
+		if (s_time > s_stepTime)
 		{
-			s_animationClock.restart();
+			s_time = 0.f;
 			for (auto& transformable : s_transformables)
 			{
-				sf::Vector2f dist = transformable.goToPosition - transformable.address->getPosition();
+				float dist = getInexactDistance(transformable.goToPosition, transformable.address->getPosition());
 				// close to the goal position
-				if (std::abs(dist.x + dist.y) < 1.f)
+				if (dist < 1.f)
 				{
 					transformable.address->setPosition(transformable.goToPosition);
 					remove(transformable.address);
 				}
 				else
 				{
-					ticks++;
 					transformable.address->move(transformable.stepVect);
 				}
 			}

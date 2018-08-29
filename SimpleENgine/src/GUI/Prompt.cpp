@@ -84,9 +84,9 @@ namespace sen {
         ButtonController::render(target);
     }
 
-    void Prompt::update(sf::RenderWindow & window)
+    void Prompt::update(float deltaTime, sf::RenderWindow & window)
     {
-        ButtonController::update(window);
+        ButtonController::update(deltaTime, window);
         if(hasResponse() && m_callback)
             m_callback(m_response);
         // if size/position changed..
@@ -97,7 +97,7 @@ namespace sen {
                 m_input->setPosition(getPosition());
         }   
         if(m_input)
-            m_input->update(window);
+            m_input->update(deltaTime, window);
     }
     bool Prompt::hasResponse() const
     {

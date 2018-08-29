@@ -29,21 +29,7 @@ namespace sen {
 		 *	
 		 *	@param window Window needed for button controller
 		 */
-		virtual void update(sf::RenderWindow &window) override;
-		/** 
-		 * @brief  Handles events that have occured in the window
-		 * @note   This method overrides from State class
-		 * which is a base class for States
-		 * @param  &evnt: Event from the window
-		 * @retval None
-		 */
-	    virtual void handleEvents(sf::Event &evnt) 	  override;
-		/**
-		 *	Handles input (nothing here)
-         *
-		 *	@param window
-		 */
-		virtual void input(sf::RenderWindow &window)  override;
+		virtual void update(float deltaTime, sf::RenderWindow &window) override;
 		/**
 		 *	Renders the state
          *

@@ -21,11 +21,12 @@ namespace sen {
 		AnimationController::add(this, sf::Vector2f(window.getSize().x / 2.f, yPos), 0.35f);
 		AnimationController::add(&m_message, sf::Vector2f(window.getSize().x / 2.f, yPos), 0.35f);
 	}
-	bool Popup::shouldVanish()
+	bool Popup::shouldVanish(float deltaTime)
 	{
-        if(m_timer.getElapsedTime().asSeconds() > m_duration)
+		m_time += deltaTime;
+        if(m_time > m_duration)
 		{
-			m_timer.restart();
+			m_time = 0.f;
 			return true;
         }   
 		return false;

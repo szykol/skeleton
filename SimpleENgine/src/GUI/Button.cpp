@@ -45,14 +45,15 @@ namespace sen {
         }
         if(action) action->first(*this);
 	}
-	void Button::update(sf::RenderWindow & window)
+	void Button::update(float deltaTime, sf::RenderWindow & window)
 	{
         // create a cooldown to avoid calling the callback function every frame
-		if (m_timer.getElapsedTime().asSeconds() > 0.5f
+		m_time += deltaTime;
+		if (m_time > 0.5f
 			&& !sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			clickable = true;
-			m_timer.restart();
+			m_time = 0.f;
 		}
 
 		if (mouseOver(window))

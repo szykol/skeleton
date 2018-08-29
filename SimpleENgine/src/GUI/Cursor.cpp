@@ -3,9 +3,30 @@
 namespace sen {
 	Cursor::Cursor(const Text * text)
 		: m_text(text), m_alpha(0),
-		  m_delay(0.005f)
+		  m_delay(0.02f)
 	{
 		setCursor();
+	}
+	void Cursor::update(float deltaTime)
+	{
+		m_time += deltaTime;
+		if (m_time > m_delay)
+		{
+			// blinking animation
+			m_alpha += 4;
+			if (m_alpha >= 255)
+			{
+				m_alpha = 0;
+			}
+			/*else if (m_alpha <= 0)
+			{
+			m_alpha = 255;
+			}*/
+			sf::Color color = Box::getFillColor();
+			color.a = m_alpha;
+			Box::setFillColor(color);
+			m_time -= m_delay;
+		}
 	}
 	void Cursor::render(sf::RenderTarget & target)
 	{
@@ -13,23 +34,6 @@ namespace sen {
 
 		Box::render(target);
 
-		if (m_timer.getElapsedTime().asSeconds() > m_delay)
-		{
-			// blinking animation
-			m_alpha+= 4;
-			if (m_alpha >= 255)
-			{
-				m_alpha = 0;
-			}
-			/*else if (m_alpha <= 0)
-			{
-				m_alpha = 255;
-			}*/
-			sf::Color color = Box::getFillColor();
-			color.a = m_alpha;
-			Box::setFillColor(color);
-			m_timer.restart();
-		}
 		if (m_text->haveBoundsChanged())
 			setCursor();
 	}

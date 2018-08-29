@@ -31,7 +31,7 @@ namespace sen {
 		float m_coord;
 		ButtonPointerVector m_buttons;
 		int m_activeIndex = 0;
-		sf::Clock m_timer;
+		float m_time = 0.f;
 		bool m_canClick = false;
 		ButtonPlacing m_buttonPlacing = ButtonPlacing::VERTICAL;
 		ButtonBaseline m_baseline = ButtonBaseline::CENTER;
@@ -107,7 +107,7 @@ namespace sen {
 		 *
 		 *	@param window Window needed to get the mouse position.
 		 */
-		void update(sf::RenderWindow &window);
+		void update(float deltaTime, sf::RenderWindow &window);
 		/**
 		 *	Renders all buttons.
          *

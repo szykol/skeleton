@@ -14,15 +14,15 @@ namespace sen {
 			sf::Vector2f stepVect;
 		};
 		static std::vector<Transformable> s_transformables;
-		static sf::Clock s_animationClock;
+		static float s_time;
 		static float s_stepTime;
 	public:
 		static void add(sf::Transformable* address,
-			const sf::Vector2f& goToPosition, float timeNeeded
+			const sf::Vector2f& goToPosition, float speed
 		);
 		static void remove(sf::Transformable* address);
 		static bool isMaintained(sf::Transformable* address);
-		static void update();
+		static void update(float deltaTime);
 	};
 }
 

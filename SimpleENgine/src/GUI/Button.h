@@ -26,7 +26,7 @@ namespace sen {
     {
 	friend class ButtonController;
     protected:
-		sf::Clock m_timer;
+		float m_time = 0.f;
 		bool clickable = false;
         OnClickCallback m_clickCallback;
         CallbackMap* m_callbacks;
@@ -53,7 +53,7 @@ namespace sen {
 		 *
 		 *	@param window Window needed to get the position of Mouse
 		 */
-		virtual void update(sf::RenderWindow &window);
+		virtual void update(float deltaTime, sf::RenderWindow &window);
 		/**
 		 *	Checks if a Mouse hovers over the button
 		 */

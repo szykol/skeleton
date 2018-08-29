@@ -57,6 +57,10 @@ namespace sen {
 		if(s_isBound)
 			s_cursor.render(target);
 	}
+	void InputController::update(float deltaTime)
+	{
+		s_cursor.update(deltaTime);
+	}
 	bool InputController::validate()
 	{
 		if (s_validateFunc)

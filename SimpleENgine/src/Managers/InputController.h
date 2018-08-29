@@ -55,6 +55,7 @@ namespace sen {
 		 * @retval None
 		 */
 		static void render(sf::RenderTarget& target);
+		static void update(float deltaTime);
 		/** 
 		 * @brief  validates the input, returns
 		 * true if input is correct.
