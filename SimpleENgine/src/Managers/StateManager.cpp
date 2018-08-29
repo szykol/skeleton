@@ -92,6 +92,22 @@ namespace sen {
         
         m_popup = popup;
 	}
+	void StateManager::popPopup()
+	{
+		m_popup = nullptr;
+	}
+	void StateManager::handleEvent(const sf::Event & evnt)
+	{
+		if(m_currentState)
+			m_currentState->handleEvents(evnt);
+	}
+	void StateManager::clearStates(bool clearCurrent)
+	{
+		m_states.clear();
+
+		if (clearCurrent)
+			popState();
+	}
 	StateManager::~StateManager()
     {
     }

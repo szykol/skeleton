@@ -63,6 +63,10 @@ namespace sen {
 		 * @brief  Returns true if the input has focus
 		 */
 		bool hasFocus() const {return m_hasFocus;}
+		/**
+		 * @brief Returns the placeholder of inputbox
+		 */
+		const sf::String& getPlaceholder() const { return m_placeholder; }
 		virtual ~InputBox();
 	};
 }

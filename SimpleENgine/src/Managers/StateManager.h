@@ -99,6 +99,10 @@ namespace sen {
 		 * @retval None
 		 */
 		static void pushPopup(Popup* popup);
+		static bool maintainsPopup() { return (bool)m_popup; }
+		static void popPopup();
+		static void handleEvent(const sf::Event& evnt);
+		static void clearStates(bool clearCurrent = false);
 		~StateManager();
 	};
 }

@@ -18,6 +18,7 @@
 Dependencies/
 SimpleENgine/Sounds/*.wav
 SimpleENgine/Images/zombie.png
+SimpleENgine/Images/bigger.png
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

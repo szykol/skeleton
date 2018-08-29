@@ -64,11 +64,16 @@ namespace sen {
             // the response will be whatever was placed inside of the input
             okButton->setOnClickCalback(
             [this] {
-                m_response["Response"] = std::string(m_input->getTextObject().getString());
+				std::string tempString = m_input->getTextObject().getString();
+				if (tempString == "" || tempString == m_input->getPlaceholder())
+					m_response["Response"] = false;
+				else 
+					m_response["Response"] = std::string(m_input->getTextObject().getString());
             }
         );
         }
         setSize(sf::Vector2f(400.f, 300.f));
+		setFillColor(sf::Color(25, 25, 25, 245));
         placeButtons();
 	}
 	void Prompt::render(sf::RenderTarget & target)

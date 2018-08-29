@@ -30,7 +30,7 @@ namespace sen {
           * @note   This method needs to be overriden.
           * @param  &evnt: Event from poll event method 
           */
-		virtual void handleEvents(sf::Event& evnt) {}
+		virtual void handleEvents(const sf::Event& evnt) {}
 		/**
 		 * Needs to be overriden. Renders all entities.
 	     * 

@@ -1,5 +1,8 @@
 #include "InputController.h"
 
+#include "StateManager.h"
+#include "../Application.h"
+
 namespace sen {
 	Text* InputController::s_text = nullptr;
 	Cursor InputController::s_cursor;
@@ -23,6 +26,9 @@ namespace sen {
 			if (!validate())
 			{
 				string.erase(string.getSize() - 1);
+				StateManager::pushPopup(
+					new Popup(Application::getWindow(), "Wrong input!")
+				);
 			}
 			
 		}

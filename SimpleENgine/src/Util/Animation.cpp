@@ -5,7 +5,7 @@ namespace sen {
 		: m_delay(delay), m_size(size)
 	{
 		m_total = 0.f;
-		m_currentFrame = { 0, 0 };
+		m_currentFrameX = 0;
 		m_frameRect.width = texture.getSize().x / size.x;
 		m_frameRect.height = texture.getSize().y / size.y;
 		m_frameRect.top = m_frameRect.left = 0;
@@ -22,12 +22,25 @@ namespace sen {
 		{
 			m_total -= m_delay;
 
-			m_currentFrame.x++;
-			if (m_currentFrame.x >= m_size.x)
-				m_currentFrame.x = 0;
+			m_currentFrameX++;
+			if (m_currentFrameX >= m_size.x)
+				m_currentFrameX = 0;
 
-			m_frameRect.left = m_currentFrame.x * m_frameRect.width;
+			if (m_flipped)
+			{
+				m_frameRect.left = (m_currentFrameX + 1) * std::abs(m_frameRect.width);
+				m_frameRect.width = -std::abs(m_frameRect.width);
+			}
+			else
+			{
+				m_frameRect.left = m_currentFrameX * m_frameRect.width;
+				m_frameRect.width = std::abs(m_frameRect.width);
+			}
 		}
-
+	}
+	void Animation::setRow(unsigned int row)
+	{
+		if (row < m_size.y)
+			m_frameRect.top = row * m_frameRect.height;
 	}
 }
