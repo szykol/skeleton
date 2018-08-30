@@ -21,7 +21,7 @@ namespace sen {
 		quit->setOnClickCalback(
 			[this, &window] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
-				m_prompt->setPosition(sf::Vector2f(Application::getInitialResolution()) / 2.f);
+				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 				m_prompt->setOnResponseCallback(
 					[&](const json& j) {
@@ -37,7 +37,7 @@ namespace sen {
 
 		pushState->setOnClickCalback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
-				m_prompt->setPosition(sf::Vector2f(Application::getInitialResolution()) / 2.f);
+				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 
 				m_prompt->setOnResponseCallback(
@@ -53,7 +53,7 @@ namespace sen {
 		});
 		popState->setOnClickCalback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
-				m_prompt->setPosition(sf::Vector2f(Application::getInitialResolution()) / 2.f);
+				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 				m_prompt->setOnResponseCallback(
 					[&](const json& j) {
@@ -70,7 +70,7 @@ namespace sen {
 
 		spawnPopup->setOnClickCalback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::INPUT, "Type something..");
-				m_prompt->setPosition(sf::Vector2f(Application::getInitialResolution()) / 2.f);
+				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 		});
 
@@ -81,7 +81,7 @@ namespace sen {
 		sf::String ammount = tObject.getString();
 		ammount += std::to_string(s_pushedStates);
 		tObject.setString(ammount);
-		m_info.setPosition(sf::Vector2f(Application::getInitialResolution().x / 2.f, 50.f));
+		m_info.setPosition(sf::Vector2f(Application::getInitialWindowSize().x / 2.f, 50.f));
 
 		s_pushedStates++;
 

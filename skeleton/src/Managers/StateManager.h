@@ -99,9 +99,29 @@ namespace sen {
 		 * @retval None
 		 */
 		static void pushPopup(Popup* popup);
+		/** 
+		 * @brief  Checks if there is any popup
+		 * maintained by the manager
+		 */
 		static bool maintainsPopup() { return (bool)m_popup; }
+		/** 
+		 * @brief  Removes the current popup
+		 * @retval None
+		 */
 		static void popPopup();
+		/** 
+		 * @brief  calls the current state
+		 * handleEvents method
+		 * @param  evnt: evnt from pollEvent loop
+		 */
 		static void handleEvent(const sf::Event& evnt);
+		/** 
+		 * @brief  Clears all the states that were 
+		 * pushed before
+		 * @param  clearCurrent: if true, also deletes the
+		 * current state
+		 * @retval None
+		 */
 		static void clearStates(bool clearCurrent = false);
 		~StateManager();
 	};

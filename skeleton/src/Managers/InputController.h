@@ -55,6 +55,11 @@ namespace sen {
 		 * @retval None
 		 */
 		static void render(sf::RenderTarget& target);
+		/** 
+		 * @brief  Updates the cursor
+		 * @param  deltaTime: time since last frame
+		 * @retval None
+		 */
 		static void update(float deltaTime);
 		/** 
 		 * @brief  validates the input, returns

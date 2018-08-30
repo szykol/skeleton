@@ -112,7 +112,7 @@ namespace sen {
 	}
 	void ButtonController::placeButtons(float gap)
 	{
-		sf::FloatRect bounds(0.f,0.f,Application::getInitialResolution().x, Application::getInitialResolution().y);
+		sf::FloatRect bounds(0.f,0.f,Application::getInitialWindowSize().x, Application::getInitialWindowSize().y);
 		placeButtons(bounds, gap);
 	}
 	void ButtonController::placeButtons(const sf::FloatRect& bounds, float gap)
