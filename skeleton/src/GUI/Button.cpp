@@ -1,5 +1,7 @@
 #include "Button.h"
 
+#include "../Application.h"
+
 namespace sen {
 	void Button::onHover()
 	{
@@ -45,7 +47,7 @@ namespace sen {
         }
         if(action) action->first(*this);
 	}
-	void Button::update(float deltaTime, sf::RenderWindow & window)
+	void Button::update(float deltaTime)
 	{
         // create a cooldown to avoid calling the callback function every frame
 		m_time += deltaTime;
@@ -56,7 +58,7 @@ namespace sen {
 			m_time = 0.f;
 		}
 
-		if (mouseOver(window))
+		if (mouseOver())
 		{
 			if (clickable && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
@@ -71,13 +73,9 @@ namespace sen {
 		else
 			onUnhover();
 	}
-	bool Button::mouseOver(const sf::RenderWindow & window)
+	bool Button::mouseOver()
 	{
-        // get position of mouse
-		const sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
-
-		// return whether the mouse is in bounds of button
-		return (getGlobalBounds().contains(mousePos));
+		return (getGlobalBounds().contains(Application::getMappedMousePosition()));
 	}
 	void Button::addListener(ButtonEvent state, 
         const Callback & callback, bool preventDefault)

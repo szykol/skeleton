@@ -1,14 +1,12 @@
 #include "ButtonController.h"
 
+#include "../Application.h"
+
 namespace sen {
 	ButtonController::ButtonController(const ButtonPointerVector& buttons)
 		: m_buttons(buttons)
 	{
-	}
-	ButtonController::ButtonController(const ButtonPointerVector& buttons, const sf::RenderWindow & window)
-		: m_buttons(buttons)
-	{
-		placeButtons(window);
+		placeButtons();
 	}
 	void ButtonController::pushButtons(ButtonPointer& button)
 	{
@@ -19,7 +17,7 @@ namespace sen {
 	{
 		m_buttons.pop_back();
 	}
-	void ButtonController::update(float deltaTime, sf::RenderWindow & window)
+	void ButtonController::update(float deltaTime)
 	{
 		auto prev = sf::Keyboard::Up;
 		auto next = sf::Keyboard::Down;
@@ -68,7 +66,7 @@ namespace sen {
 		for (int i = 0; i < m_buttons.size(); ++i)
 		{
 			// if mouse hovers over a button
-			if (m_buttons[i]->mouseOver(window))
+			if (m_buttons[i]->mouseOver())
 			{
 				// the button now is active
 				m_activeIndex = i;
@@ -112,9 +110,9 @@ namespace sen {
 			button->render(target);
 		}
 	}
-	void ButtonController::placeButtons(const sf::RenderWindow &window, float gap)
+	void ButtonController::placeButtons(float gap)
 	{
-		sf::FloatRect bounds(0.f,0.f,window.getSize().x, window.getSize().y);
+		sf::FloatRect bounds(0.f,0.f,Application::getInitialResolution().x, Application::getInitialResolution().y);
 		placeButtons(bounds, gap);
 	}
 	void ButtonController::placeButtons(const sf::FloatRect& bounds, float gap)

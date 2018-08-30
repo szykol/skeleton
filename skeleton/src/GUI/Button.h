@@ -53,11 +53,11 @@ namespace sen {
 		 *
 		 *	@param window Window needed to get the position of Mouse
 		 */
-		virtual void update(float deltaTime, sf::RenderWindow &window);
+		virtual void update(float deltaTime);
 		/**
 		 *	Checks if a Mouse hovers over the button
 		 */
-		virtual bool mouseOver(const sf::RenderWindow &window);
+		virtual bool mouseOver();
 		/**
 		 *	Sets a callback function called on mouse click
 		 */

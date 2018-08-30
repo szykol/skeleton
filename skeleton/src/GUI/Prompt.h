@@ -66,7 +66,7 @@ namespace sen {
          * prompt to work properly
          * @retval None
          */
-        virtual void update(float deltaTime, sf::RenderWindow& window);
+        virtual void update(float deltaTime);
         /** 
          * @brief  If prompt has update this function returns true
          * @note You can use this function to check if your pointer

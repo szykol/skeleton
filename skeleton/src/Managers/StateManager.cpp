@@ -21,7 +21,7 @@ namespace sen {
     {
         m_wannaPop = true;
     }
-    void StateManager::update(float deltaTime, sf::RenderWindow & window)
+    void StateManager::update(float deltaTime, sf::RenderWindow& window)
     {
         // if there's awaiting state - make it 
         // current state. push the previous state
@@ -51,7 +51,7 @@ namespace sen {
         }
         if(m_prompt)
         {
-            m_prompt->update(deltaTime, window);
+            m_prompt->update(deltaTime);
             m_prompt->render(window);
             if(m_prompt->hasResponse())
                 m_prompt = nullptr;

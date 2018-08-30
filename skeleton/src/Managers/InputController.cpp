@@ -27,7 +27,7 @@ namespace sen {
 			{
 				string.erase(string.getSize() - 1);
 				StateManager::pushPopup(
-					new Popup(Application::getWindow(), "Wrong input!")
+					new Popup("Wrong input!")
 				);
 			}
 			

@@ -2,6 +2,7 @@
 #include "../Managers/StateManager.h"
 #include "../GUI/Prompt.h"
 #include "../GUI/Popup.h"
+#include "../Application.h"
 
 namespace sen {
 	unsigned int TestState::s_pushedStates = 0;
@@ -20,7 +21,7 @@ namespace sen {
 		quit->setOnClickCalback(
 			[this, &window] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
-				m_prompt->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_prompt->setPosition(sf::Vector2f(Application::getInitialResolution()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 				m_prompt->setOnResponseCallback(
 					[&](const json& j) {
@@ -36,7 +37,7 @@ namespace sen {
 
 		pushState->setOnClickCalback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
-				m_prompt->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_prompt->setPosition(sf::Vector2f(Application::getInitialResolution()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 
 				m_prompt->setOnResponseCallback(
@@ -44,7 +45,7 @@ namespace sen {
 						if(j["Response"])
 						{
 							StateManager::pushState<TestState>(window);
-							auto popup = new Popup(window, "Pushed State");
+							auto popup = new Popup("Pushed State");
 							StateManager::pushPopup(popup);
 						}
 					}
@@ -52,14 +53,14 @@ namespace sen {
 		});
 		popState->setOnClickCalback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
-				m_prompt->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_prompt->setPosition(sf::Vector2f(Application::getInitialResolution()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 				m_prompt->setOnResponseCallback(
 					[&](const json& j) {
 						if(j["Response"])
 						{
 							StateManager::popState();
-							auto popup = new Popup(window, "Popped State");
+							auto popup = new Popup("Popped State");
 							StateManager::pushPopup(popup);
 						}
 					}
@@ -69,7 +70,7 @@ namespace sen {
 
 		spawnPopup->setOnClickCalback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::INPUT, "Type something..");
-				m_prompt->setPosition(sf::Vector2f(window.getSize()) / 2.f);
+				m_prompt->setPosition(sf::Vector2f(Application::getInitialResolution()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 		});
 
@@ -80,14 +81,14 @@ namespace sen {
 		sf::String ammount = tObject.getString();
 		ammount += std::to_string(s_pushedStates);
 		tObject.setString(ammount);
-		m_info.setPosition(sf::Vector2f(window.getSize().x / 2.f, 50.f));
+		m_info.setPosition(sf::Vector2f(Application::getInitialResolution().x / 2.f, 50.f));
 
 		s_pushedStates++;
 
 		// setup button controller
 		//m_buttonController.setButtonPlacing(ButtonPlacing::HORIZONTAL);
 		m_buttonController.pushButtons(popState, pushState, spawnPopup, quit);
-		m_buttonController.placeButtons(window);
+		m_buttonController.placeButtons();
 		m_buttonController.setButtonFixedSize(
 			sf::Vector2f(185.f, 50.f)
 		);
@@ -95,7 +96,7 @@ namespace sen {
 	}
 	void TestState::update(float deltaTime, sf::RenderWindow & window)
 	{
-		m_buttonController.update(deltaTime, window);
+		m_buttonController.update(deltaTime);
 		if (m_prompt && m_prompt->hasResponse())
 		{
 			std::cout<<"Response: "<<m_prompt->getResponse()["Response"]<<std::endl;

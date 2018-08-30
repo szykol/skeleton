@@ -36,7 +36,7 @@ namespace sen {
 	/*void Box::blurBackground(float ammount, sf::RenderWindow &window)
 	{
 		texture = new sf::Texture();
-		texture->create(window.getSize().x, window.getSize().y);
+		texture->create(Application::getInitialResolution().x, Application::getInitialResolution().y);
 		texture->update(window);
 
 		setTexture(texture);

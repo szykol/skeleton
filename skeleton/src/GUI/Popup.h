@@ -33,7 +33,7 @@ namespace sen {
          * @param  baseline: Top or Bottom
          * @param  duration: Duration in which the popup will be displayed
          */
-        Popup(const sf::RenderWindow& window,const sf::String& string,
+        Popup(const sf::String& string,
               PopupBaseline baseline = PopupBaseline::BOTTOM, float duration = 5.f);
         /** 
          * @brief  If the time passed from creating notification to

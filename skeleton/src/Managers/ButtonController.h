@@ -42,20 +42,13 @@ namespace sen {
 		ButtonController() = default;
 		/**
 		 *	Constructor that takes the vector of button pointers
-		 *	and makes a copy.
-         *
-		 *	@param buttons A vector of button pointers
-		 */
-		explicit ButtonController(const ButtonPointerVector &buttons);
-		/**
-		 *	Constructor that takes the vector of button pointers
 		 *	and makes a copy. It places all buttons evenly on the
 		 *	screen.
 		 *	
 		 *	@param buttons A vector of button pointers
-		 *	@param window Window is needed for placing the buttons
+		 *	@param window Window is needed for placing the button
 		 */
-		ButtonController(const ButtonPointerVector& buttons, const sf::RenderWindow &window);
+		explicit ButtonController(const ButtonPointerVector& buttons);
 		/** 
 		 * @brief  Changes placing buttons to Horizontaly/Verticaly
 		 * @note   Default setting is vertical
@@ -107,7 +100,7 @@ namespace sen {
 		 *
 		 *	@param window Window needed to get the mouse position.
 		 */
-		void update(float deltaTime, sf::RenderWindow &window);
+		void update(float deltaTime);
 		/**
 		 *	Renders all buttons.
          *
@@ -120,7 +113,7 @@ namespace sen {
 		 *	@param window Window needed to get it's size.
 		 *	@param gap Gap between buttons
 		 */
-		void placeButtons(const sf::RenderWindow &window, float gap = 30.f);
+		void placeButtons(float gap = 30.f);
 		/** 
 		 * @brief  Places buttons evenly on the screen within the bounds
 		 * @note   If you want to place buttons on the window you can
