@@ -1,8 +1,13 @@
 #include "ResourceManager.h"
 
+
 namespace sen {
 	SFMLCacheSystem ResourceManager::m_cache;
+#ifdef DEFAULT_AUDIO_PROVIDER
 	SFMLAudioProvider ResourceManager::m_audioProvider(ResourceManager::m_cache);
+#else
+	AudioProviderInterface* ResourceManager::m_audioProvider = nullptr;
+#endif
 	const sf::Font& ResourceManager::getFont(const std::string & pathFile)
 	{
 		auto font = m_cache.get<sf::Font>(pathFile); 

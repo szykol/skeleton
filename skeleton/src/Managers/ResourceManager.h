@@ -5,6 +5,8 @@
 #include "SFMLAudioProvider.h"
 #include <memory>
 
+#include "../Config.h"
+
 namespace sen {
     /** 
      * @brief  Basic ResourceManager that
@@ -21,7 +23,11 @@ namespace sen {
     private:
         static SFMLCacheSystem m_cache;
         // AudioProviderInterface* m_audioProvider;
+#ifdef DEFAULT_AUDIO_PROVIDER 
         static SFMLAudioProvider m_audioProvider;
+#else
+		static AudioProviderInterface* m_audioProvider;
+#endif
     public:
         /** 
          * @brief  Returns font that is kept in memory
@@ -42,11 +48,24 @@ namespace sen {
          * @retval 
          */
         static const sf::Texture& getTexture(const std::string& pathFile);
-        /** 
-         * @brief  Returns current AudioProvider (default is SFMLAudioProvider)
-         * @note   AudioProvider can be used for playing sounds and music
-         * @retval 
-         */
-        static AudioProviderInterface& getAudioProvider() { return m_audioProvider; }
+#ifdef DEFAULT_AUDIO_PROVIDER
+		/**
+		* @brief  Returns current AudioProvider (default is SFMLAudioProvider)
+		* @note   AudioProvider can be used for playing sounds and music
+		*/
+        static AudioProviderInterface* getAudioProvider() { return &m_audioProvider; }
+#else
+		/**
+		* @brief  Returns current AudioProvider (default is nullptr)
+		* @note   AudioProvider can be used for playing sounds and music
+		*/
+		static AudioProviderInterface* getAudioProvider() { return m_audioProvider; }
+		/**
+		* @brief  Lets you register other audio provider class that implements
+		* AudioProvider interface
+		*/
+		static void registerAudioProvider(AudioProviderInterface* audioProvider) { m_audioProvider = audioProvider; }
+#endif // !DEFAULT_AUDIO_PROVIDER
+
     };
 }

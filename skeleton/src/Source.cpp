@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Managers/StateManager.h"
 #include "States/TestState.h"
+#include "Managers/ResourceManager.h"
 
 int main()
 {
@@ -11,7 +12,6 @@ int main()
 
 	Application::init(&window);
 	sen::StateManager::pushState<sen::TestState>(window);
-	Application::run();
-    
+	Application::run();    
     return 0;
 }

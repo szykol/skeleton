@@ -35,7 +35,8 @@ namespace sen {
 		static PromptPointer m_prompt;
 		static Popup* m_popup; // stos popupow ? 
 		static bool m_wannaPop;
-		StateManager() = default;
+		static bool m_backButton;
+		static Button* m_back;
 	public:
 		/**
 		 *	Basically updates current state.
@@ -123,6 +124,11 @@ namespace sen {
 		 * @retval None
 		 */
 		static void clearStates(bool clearCurrent = false);
-		~StateManager();
+		/**
+		 * @brief  Lets you switch off/on the button that enables
+		 * you to pop current state (go back to previous one)
+		 * @note  Button is on by default
+		 */
+		static void switchBackButton(bool set) { m_backButton = set; }
 	};
 }

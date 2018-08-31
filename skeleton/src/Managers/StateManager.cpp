@@ -7,7 +7,9 @@ namespace sen {
     PromptPointer StateManager::m_prompt;  
     bool StateManager::m_wannaPop = false;
     Popup* StateManager::m_popup = nullptr;
-    
+	Button* StateManager::m_back = nullptr;
+	bool StateManager::m_backButton = true;
+
     void StateManager::pushState(StatePointer& newState)
     {
         // mark the new state as awaiting state
@@ -31,6 +33,17 @@ namespace sen {
             m_states.push_back(m_currentState);
             m_currentState = m_awaitState;
             m_awaitState = nullptr;
+			if (m_backButton && !m_back && m_states.size() > 1)
+			{
+				m_back = new Button("<-");
+				m_back->setSize(sf::Vector2f(65.f, 30.f));
+				m_back->setPosition(sf::Vector2f(45.f, 40.f));
+				m_back->setOnClickCalback(
+					[] {
+					StateManager::popState();
+				}
+				);
+			}
         }
         // if there's anything to update
         if (m_currentState)
@@ -46,16 +59,18 @@ namespace sen {
 				m_currentState->input(window);
 				m_currentState->update(window);
 				m_currentState->update(deltaTime, window);
+				if (m_back && m_backButton)
+					m_back->update(deltaTime);
 			}
 			m_currentState->render(window);
         }
-        if(m_prompt)
-        {
-            m_prompt->update(deltaTime);
-            m_prompt->render(window);
-            if(m_prompt->hasResponse())
-                m_prompt = nullptr;
-        }
+		if (m_prompt)
+		{
+			m_prompt->update(deltaTime);
+			m_prompt->render(window);
+			if (m_prompt->hasResponse())
+				m_prompt = nullptr;
+		}
         if(m_popup)
         {
             if(m_popup->shouldVanish(deltaTime))
@@ -66,6 +81,10 @@ namespace sen {
             else
                 m_popup->render(window);
         }
+		if (m_back && m_backButton)
+		{
+			m_back->render(window);
+		}
         // if there's a state that need to be
         // popped, pop it
         if (m_wannaPop)
@@ -79,6 +98,12 @@ namespace sen {
             }
             m_wannaPop = false;
         }
+
+		if (!m_backButton || (m_states.size() <= 1 && m_back))
+		{
+			delete m_back;
+			m_back = nullptr;
+		}
     }
     void StateManager::pushPrompt(PromptPointer& Prompt)
     {
@@ -108,7 +133,4 @@ namespace sen {
 		if (clearCurrent)
 			popState();
 	}
-	StateManager::~StateManager()
-    {
-    }
 }
