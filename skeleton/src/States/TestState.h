@@ -17,6 +17,7 @@ namespace sen {
 		TextBox m_info;
 		std::shared_ptr<Prompt> m_prompt;
 		static unsigned int s_pushedStates;
+		sf::RectangleShape m_background;
 	public:
 		/**
 		 *	Sets up buttons, button controller.

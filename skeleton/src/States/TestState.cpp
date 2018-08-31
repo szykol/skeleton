@@ -1,5 +1,6 @@
 #include "TestState.h"
 #include "../Managers/StateManager.h"
+#include "../Managers/ResourceManager.h"
 #include "../GUI/Prompt.h"
 #include "../GUI/Popup.h"
 #include "../Application.h"
@@ -10,6 +11,8 @@ namespace sen {
 	TestState::TestState(sf::RenderWindow & window)
 		: m_info("Amount of states: ")
 	{
+		m_background.setSize((sf::Vector2f)Application::getInitialWindowSize());
+		m_background.setTexture(&ResourceManager::getTexture("Images/Chair.jpeg"));
 
 		std::shared_ptr<Button> popState(new Button("Pop State"));
 		std::shared_ptr<Button> pushState(new Button("Push State"));
@@ -99,12 +102,12 @@ namespace sen {
 		m_buttonController.update(deltaTime);
 		if (m_prompt && m_prompt->hasResponse())
 		{
-			std::cout<<"Response: "<<m_prompt->getResponse()["Response"]<<std::endl;
 			m_prompt = nullptr;
 		}
 	}
 	void TestState::render(sf::RenderTarget & target)
 	{
+		target.draw(m_background);
 		m_info.render(target);
 		m_buttonController.render(target);
 	}
