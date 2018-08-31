@@ -114,7 +114,7 @@ namespace sen {
 		 * handleEvents method
 		 * @param  evnt: evnt from pollEvent loop
 		 */
-		static void handleEvent(const sf::Event& evnt);
+		static void handleEvent(sf::Event& evnt);
 		/** 
 		 * @brief  Clears all the states that were 
 		 * pushed before

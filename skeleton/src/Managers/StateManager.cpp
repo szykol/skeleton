@@ -96,7 +96,7 @@ namespace sen {
 	{
 		m_popup = nullptr;
 	}
-	void StateManager::handleEvent(const sf::Event & evnt)
+	void StateManager::handleEvent(sf::Event & evnt)
 	{
 		if(m_currentState)
 			m_currentState->handleEvents(evnt);

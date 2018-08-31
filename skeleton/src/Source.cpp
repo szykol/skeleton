@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "Managers/StateManager.h"
-#include "States/TestState.h"
+#include "States/FrameworkSplashScreen.h"
 
 int main()
 {
@@ -10,7 +10,7 @@ int main()
 	window.setFramerateLimit(0U);
 
 	Application::init(&window);
-	sen::StateManager::pushState<sen::TestState>(window);
+	sen::StateManager::pushState<sen::FrameworkSplashScreen>();
 	Application::run();
     
     return 0;

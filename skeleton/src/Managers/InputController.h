@@ -48,7 +48,7 @@ namespace sen {
 		 * @param  evnt: event from sf::RenderWindow::pollEvents
 		 * @retval None
 		 */
-		static void handleInput(const sf::Event& evnt);
+		static void handleInput(sf::Event& evnt);
 		/** 
 		 * @brief  Renders the cursor
 		 * @param  target: Target you want to render to 

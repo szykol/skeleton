@@ -9,7 +9,7 @@ namespace sen {
 	stringValidateFunc InputController::s_validateFunc;
 	bool InputController::s_isBound = false;
 
-	void InputController::handleInput(const sf::Event& evnt)
+	void InputController::handleInput(sf::Event& evnt)
 	{
 		if(!s_isBound) return;
 
