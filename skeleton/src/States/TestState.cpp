@@ -11,9 +11,6 @@ namespace sen {
 	TestState::TestState(sf::RenderWindow & window)
 		: m_info("Amount of states: ")
 	{
-		m_background.setSize((sf::Vector2f)Application::getInitialWindowSize());
-		m_background.setTexture(&ResourceManager::getTexture("Images/Chair.jpeg"));
-
 		std::shared_ptr<Button> popState(new Button("Pop State"));
 		std::shared_ptr<Button> pushState(new Button("Push State"));
 		std::shared_ptr<Button> spawnPopup(new Button("Spawn Prompt"));
@@ -107,7 +104,6 @@ namespace sen {
 	}
 	void TestState::render(sf::RenderTarget & target)
 	{
-		target.draw(m_background);
 		m_info.render(target);
 		m_buttonController.render(target);
 	}

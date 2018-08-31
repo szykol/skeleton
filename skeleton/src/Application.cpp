@@ -8,6 +8,7 @@ sf::RenderWindow* Application::s_window;
 unsigned int Application::s_frameRate;
 sf::Clock Application::s_timer;
 sf::Vector2u Application::s_initialWindowSize;
+sf::RectangleShape* Application::s_background = nullptr;
 
 void Application::init(sf::RenderWindow * window)
 {
@@ -35,11 +36,12 @@ void Application::run()
 			{
 				sen::InputController::handleInput(evnt);
 			}
-
 			sen::StateManager::handleEvent(evnt);
 		}
 		s_window->clear(sf::Color::Black);
-		
+		if (s_background)
+			s_window->draw(*s_background);
+
 		float deltaTime = s_timer.restart().asSeconds();
 
 		sen::InputController::update(deltaTime);
@@ -56,5 +58,24 @@ sf::Vector2f Application::getMappedMousePosition()
 	sf::Vector2i pixelPos = sf::Mouse::getPosition(*s_window);
 	sf::Vector2f worldPos = s_window->mapPixelToCoords(pixelPos);
 	return worldPos;
+}
+
+void Application::setBackgroundImage(const sf::Texture & image)
+{
+	if (!s_background)
+	{
+		s_background = new sf::RectangleShape();
+		s_background->setSize((sf::Vector2f)s_initialWindowSize);
+		s_background->setTexture(&image);
+	}
+}
+
+void Application::disableBackgroundImage()
+{
+	if (s_background)
+	{
+		delete s_background;
+		s_background = nullptr;
+	}
 }
 

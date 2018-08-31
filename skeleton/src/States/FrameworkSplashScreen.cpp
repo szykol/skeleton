@@ -9,10 +9,17 @@ namespace sen {
 		: m_mainMessage("SKELETON"),
 		  m_info("Press any key to continue...")
 	{
+		Application::setBackgroundImage(
+			ResourceManager::getTexture(
+				"Images/bg.jpeg"
+			)
+		);
+
 		sf::Vector2f initSize = (sf::Vector2f)Application::getInitialWindowSize();
 		m_mainMessage.setPosition(initSize / 2.f);
 		m_info.setPosition({ initSize.x / 2.f, initSize.y - 100 });
-		m_info.setCharacterSize(24U);
+		m_mainMessage.setCharacterSize(50U);
+		m_info.setCharacterSize(34U);
 	}
 	void FrameworkSplashScreen::update(float deltaTime, sf::RenderWindow & window)
 	{
@@ -20,15 +27,15 @@ namespace sen {
 		if (m_time > m_delay)
 		{
 			StateManager::pushState<TestState>(Application::getWindow());
-			StateManager::clearStates();
+			m_time -= m_delay;
 		}
 	}
 	void FrameworkSplashScreen::handleEvents(sf::Event & evnt)
 	{
-		if(evnt.type == sf::Event::TextEntered)
+		if(evnt.type == sf::Event::KeyPressed)
 		{
 			StateManager::pushState<TestState>(Application::getWindow());
-			StateManager::clearStates();
+			m_time -= m_delay;
 		}
 	}
 	void FrameworkSplashScreen::render(sf::RenderTarget & target)

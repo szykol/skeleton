@@ -18,6 +18,7 @@ private:
 	static unsigned int s_frameRate;
 	static sf::Clock s_timer;
 	static sf::Vector2u s_initialWindowSize;
+	static sf::RectangleShape* s_background;
 public:
 	/** 
 	 * @brief  Initializes the engine
@@ -58,4 +59,16 @@ public:
 	 * @retval 
 	 */
 	static sf::Vector2f getMappedMousePosition();
+	/** 
+	 * @brief  Lets you set a background image that
+	 * is rendered before everything else
+	 * @param  image: background image
+	 * @retval None
+	 */
+	static void setBackgroundImage(const sf::Texture& image);
+	/** 
+	 * @brief  Lets you disable the background image
+	 * @retval None
+	 */
+	static void disableBackgroundImage();
 };
