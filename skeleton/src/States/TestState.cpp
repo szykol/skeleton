@@ -45,7 +45,7 @@ namespace sen {
 						if(j["Response"])
 						{
 							StateManager::pushState<TestState>(window);
-							auto popup = new Popup("Pushed State");
+							auto popup = std::make_unique<Popup>("Pushed State");
 							StateManager::pushPopup(popup);
 						}
 					}
@@ -60,7 +60,7 @@ namespace sen {
 						if(j["Response"])
 						{
 							StateManager::popState();
-							auto popup = new Popup("Popped State");
+							auto popup = std::make_unique<Popup>("Popped State");
 							StateManager::pushPopup(popup);
 						}
 					}

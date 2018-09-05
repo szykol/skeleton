@@ -10,18 +10,17 @@
 #include "../GUI/Popup.h"
 
 namespace sen {
-	using StatePointer = std::shared_ptr<State>;
-	using StatePointerVector = std::vector<StatePointer>;
+	using StatePointerVector = std::vector<std::unique_ptr<State>>;
 	using PromptPointer = std::shared_ptr<Prompt>;
 	/**
 	 *	Basic state manager. Works with classes 
 	 *	that derive from State class.
-     *
+	 *
 	 *	Updates current state
-     *
+	 *
 	 *	Lets you push new states - it stops updating
 	 *	current state and switches to new one.
-     *
+	 *
 	 *	Lets you pop states - it stops updating
 	 *	current state, delets it and switches to
 	 *	the previous one
@@ -30,13 +29,14 @@ namespace sen {
 	{
 	private:
 		static StatePointerVector m_states;
-		static StatePointer m_currentState;
-		static StatePointer m_awaitState;
+		/*static StatePointer m_currentState;
+		static StatePointer m_awaitState;*/
+		static std::unique_ptr<State> m_currentState, m_awaitState;
 		static PromptPointer m_prompt;
-		static Popup* m_popup; // stos popupow ? 
 		static bool m_wannaPop;
 		static bool m_backButton;
-		static Button* m_back;
+		static std::unique_ptr<Popup> m_popup;
+		static std::unique_ptr<Button> m_back;
 	public:
 		/**
 		 *	Basically updates current state.
@@ -48,10 +48,11 @@ namespace sen {
 		/**
 		 *	Lets you push a new state - it stops updating
 		 *	current state and switches to a new one.
-		 *
+		 *  @note  This moves the StatePointer passed int the
+		 *  parameter and cannot be used any longer
 		 *	@param newState New state to push
 		 */
-		static void pushState(StatePointer& newState);
+		static void pushState(std::unique_ptr<State>& newState);
 		/** 
 		 * @brief  Lets you push a new state if its
 		 * an R-value. 
@@ -59,7 +60,7 @@ namespace sen {
 		 * @param  newState: R-value state shared pointer
 		 * @retval None
 		 */
-		static void pushState(StatePointer&& newState);
+		static void pushState(std::unique_ptr<State>&& newState);
 		/** 
 		 * @brief  Lets you pass all constructor arguments
 		 * of a state, and creates a shared pointer.
@@ -73,7 +74,7 @@ namespace sen {
 		template<typename tState, typename... Args>
 		static void pushState(Args&... args)
 		{
-			m_awaitState = std::make_shared<tState>(args...);
+			m_awaitState = std::make_unique<tState>(args...);
 		}
 		/**
 		 *  Lets you pop states - it stops updating
@@ -94,12 +95,19 @@ namespace sen {
 		/** 
 		 * @brief  Lets you push a new popup which is 
 		 * a simple notification block
-		 * @note   When it's duration passes it's immediately
-		 * removed from memory (hence c-style pointer)
+		 * @note	The popup parameter will be moved
+		 * and won't be available anymore
 		 * @param  popup: new Popup to be displayed
 		 * @retval None
 		 */
-		static void pushPopup(Popup* popup);
+		static void pushPopup(std::unique_ptr<Popup>& popup);
+		/**
+		* @brief  Lets you push a new popup which is
+		* a simple notification block
+		* @param  popup: new Popup to be displayed
+		* @retval None
+		*/
+		static void pushPopup(std::unique_ptr<Popup>&& popup);
 		/** 
 		 * @brief  Checks if there is any popup
 		 * maintained by the manager

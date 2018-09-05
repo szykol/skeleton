@@ -3,6 +3,9 @@
 #include "Application.h"
 #include "Managers/StateManager.h"
 #include "States/FrameworkSplashScreen.h"
+#include "States/TestState.h"
+
+#include <memory>
 
 int main()
 {

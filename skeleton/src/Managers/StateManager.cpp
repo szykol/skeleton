@@ -2,22 +2,22 @@
 
 namespace sen {
     StatePointerVector StateManager::m_states;
-    StatePointer StateManager::m_currentState;
-    StatePointer StateManager::m_awaitState;  
+    std::unique_ptr<State> StateManager::m_currentState;
+    std::unique_ptr<State> StateManager::m_awaitState;  
     PromptPointer StateManager::m_prompt;  
     bool StateManager::m_wannaPop = false;
-    Popup* StateManager::m_popup = nullptr;
-	Button* StateManager::m_back = nullptr;
+    std::unique_ptr<Popup> StateManager::m_popup;
+	std::unique_ptr<Button> StateManager::m_back;
 	bool StateManager::m_backButton = true;
 
-    void StateManager::pushState(StatePointer& newState)
+    void StateManager::pushState(std::unique_ptr<State>& newState)
     {
         // mark the new state as awaiting state
-        m_awaitState = newState;
+        m_awaitState = std::move(newState);
     }
-    void StateManager::pushState(StatePointer&& newState)
+    void StateManager::pushState(std::unique_ptr<State>&& newState)
     {
-        m_awaitState = newState;
+		m_awaitState = std::move(newState);
     }
     void StateManager::popState()
     {
@@ -30,12 +30,12 @@ namespace sen {
         // to the vector
         if (m_awaitState)
         {
-            m_states.push_back(m_currentState);
-            m_currentState = m_awaitState;
+            m_states.push_back(std::move(m_currentState));
+            m_currentState = std::move(m_awaitState);
             m_awaitState = nullptr;
 			if (m_backButton && !m_back && m_states.size() > 1)
 			{
-				m_back = new Button("<-");
+				m_back = std::make_unique<Button>("<-");
 				m_back->setSize(sf::Vector2f(65.f, 30.f));
 				m_back->setPosition(sf::Vector2f(45.f, 40.f));
 				m_back->setOnClickCalback(
@@ -74,10 +74,7 @@ namespace sen {
         if(m_popup)
         {
             if(m_popup->shouldVanish(deltaTime))
-            {
-                delete m_popup;
                 m_popup = nullptr;
-            }
             else
                 m_popup->render(window);
         }
@@ -93,17 +90,14 @@ namespace sen {
                 m_currentState = nullptr;
             else
             {
-                m_currentState = m_states.back();
+                m_currentState = std::move(m_states.back());
                 m_states.pop_back();
             }
             m_wannaPop = false;
         }
 
 		if (!m_backButton || (m_states.size() <= 1 && m_back))
-		{
-			delete m_back;
 			m_back = nullptr;
-		}
     }
     void StateManager::pushPrompt(PromptPointer& Prompt)
     {
@@ -111,11 +105,17 @@ namespace sen {
         
 		m_prompt = Prompt;
     }
-	void StateManager::pushPopup(Popup * popup)
+	void StateManager::pushPopup(std::unique_ptr<Popup>& popup)
 	{
         if(m_popup) return;
         
-        m_popup = popup;
+        m_popup = std::move(popup);
+	}
+	void StateManager::pushPopup(std::unique_ptr<Popup>&& popup)
+	{
+		if (m_popup) return;
+
+		m_popup = std::move(popup);
 	}
 	void StateManager::popPopup()
 	{

@@ -27,7 +27,7 @@ namespace sen {
 			{
 				string.erase(string.getSize() - 1);
 				StateManager::pushPopup(
-					new Popup("Wrong input!")
+					std::make_unique<Popup>("Wrong Input")
 				);
 			}
 			
