@@ -30,7 +30,6 @@ More specific description of parts of my framework
 
 The purpose of this project is not to build a begginer friendly physics engine but to build a begginer friendly app framework. 
 
-### This project uses [nlohmann's json class](https://github.com/nlohmann/json) which introduces json in modern c++.
 ### If you want to use a physics engine I highly recommend using  [BOX2D](https://github.com/erincatto/Box2D)
 ### If you want to use this sort of framework now I highly reccomend checking out [Hopson's SFML-game-framework](https://github.com/Hopson97/SFML-Game-Framework) (as he made his framework for similiar purposes, and it's a great example) 
 
@@ -64,6 +63,5 @@ nie będą używane.
 
 Celem tego projektu jest stworzenie frameworku przyjaznego w tworzeniu szkieletow aplikacji, natomiast nie jest celem stworzenie pełnoprawnego silnika fizycznego.
 
-### Ten projekt korzysta z [klasy json](https://github.com/nlohmann/json) która wprowadza obiekty json znane z javascriptu do nowoczesnego c++.
 ### Jeśli chcesz skorzystać z silnika fizycznego polecam [BOX2D](https://github.com/erincatto/Box2D)
 ### Jeśli chcesz skorzystać z *gotowego* na tę chwilę frameworku, który opiera się na podobnych zasadach co mój - sprawdź [Framework do Gier w SFML Hopson'a](https://github.com/Hopson97/SFML-Game-Framework) (jest dobrym przykładem jak wygląda gotowy framework do aplikacji w sfml) 
