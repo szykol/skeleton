@@ -10,14 +10,10 @@ namespace sen {
 	std::unique_ptr<Button> StateManager::m_back;
 	bool StateManager::m_backButton = true;
 
-    void StateManager::pushState(std::unique_ptr<State>& newState)
+    void StateManager::pushState(std::unique_ptr<State> newState)
     {
         // mark the new state as awaiting state
         m_awaitState = std::move(newState);
-    }
-    void StateManager::pushState(std::unique_ptr<State>&& newState)
-    {
-		m_awaitState = std::move(newState);
     }
     void StateManager::popState()
     {
@@ -105,17 +101,11 @@ namespace sen {
         
 		m_prompt = Prompt;
     }
-	void StateManager::pushPopup(std::unique_ptr<Popup>& popup)
+	void StateManager::pushPopup(std::unique_ptr<Popup> popup)
 	{
         if(m_popup) return;
         
         m_popup = std::move(popup);
-	}
-	void StateManager::pushPopup(std::unique_ptr<Popup>&& popup)
-	{
-		if (m_popup) return;
-
-		m_popup = std::move(popup);
 	}
 	void StateManager::popPopup()
 	{

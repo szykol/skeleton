@@ -45,22 +45,13 @@ namespace sen {
 		 *	       current state
 		 */
 		static void update(float deltaTime, sf::RenderWindow& window);
-		/**
-		 *	Lets you push a new state - it stops updating
-		 *	current state and switches to a new one.
-		 *  @note  This moves the StatePointer passed int the
-		 *  parameter and cannot be used any longer
-		 *	@param newState New state to push
-		 */
-		static void pushState(std::unique_ptr<State>& newState);
 		/** 
-		 * @brief  Lets you push a new state if its
-		 * an R-value. 
-		 * @note   
-		 * @param  newState: R-value state shared pointer
+		 * @brief  Lets you push a new state. Other states are storeed
+		 * to enable popping states
+		 * @param  newState: pointer to the new state
 		 * @retval None
 		 */
-		static void pushState(std::unique_ptr<State>&& newState);
+		static void pushState(std::unique_ptr<State> newState);
 		/** 
 		 * @brief  Lets you pass all constructor arguments
 		 * of a state, and creates a shared pointer.
@@ -92,22 +83,13 @@ namespace sen {
 		 * @retval None
 		 */
 		static void pushPrompt(PromptPointer& Prompt);
-		/** 
-		 * @brief  Lets you push a new popup which is 
-		 * a simple notification block
-		 * @note	The popup parameter will be moved
-		 * and won't be available anymore
-		 * @param  popup: new Popup to be displayed
-		 * @retval None
-		 */
-		static void pushPopup(std::unique_ptr<Popup>& popup);
 		/**
 		* @brief  Lets you push a new popup which is
 		* a simple notification block
 		* @param  popup: new Popup to be displayed
 		* @retval None
 		*/
-		static void pushPopup(std::unique_ptr<Popup>&& popup);
+		static void pushPopup(std::unique_ptr<Popup> popup);
 		/** 
 		 * @brief  Checks if there is any popup
 		 * maintained by the manager

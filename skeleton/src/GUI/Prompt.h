@@ -7,17 +7,21 @@
 #include "InputBox.h"
 #include "../Managers/InputController.h"
 
-#include "../vendor/nlohmann/json.hpp"
-
 #include <SFML/Graphics.hpp>
 
 #include <memory>
 #include <functional>
 
-using json = nlohmann::json;
-
 namespace sen {
-    using OnResponseCallback = std::function<void(const json&)>;
+
+	struct Response
+	{
+		int response = NONE;
+		std::string stringInput = "";
+		enum {NONE = -1, FALSE = 0, TRUE = 1, DISCARD = 2};
+	};
+
+    using OnResponseCallback = std::function<void(const Response&)>;
     enum class PromptStyle {UNARY, BINARY, TERNARY, INPUT, CUSTOM};
     /** 
      * @brief  This class acts like a Prompt (hence its name)
@@ -34,7 +38,7 @@ namespace sen {
     class Prompt : public TextBox, public ButtonController
     {
     protected:
-        json m_response;
+        Response m_response;
         bool m_pausesState, m_blursBG;
         OnResponseCallback m_callback;
         bool m_shouldUpdateButtonPlacing = false;
@@ -76,17 +80,17 @@ namespace sen {
          */
         bool hasResponse() const;
         /** 
-         * @brief  Returns the json response which could 
+         * @brief  Returns the response which could 
          * be true/false (based on which button will be pressed)
          * or for example the input from user
          * @note   It's needed for building standard prompts,
          * but if you want to build a custom one, you should
          * avoid creating responses. Much easier way would be
          * specifying what each button does (there's no need for 
-         * json response then)
+         * the response then)
          * @retval 
          */
-        const json& getResponse() const;
+        const Response& getResponse() const;
         /** 
          * @brief  Returns true if pauses state.
          * @note   Needed for StateManager class.

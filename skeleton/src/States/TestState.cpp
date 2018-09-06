@@ -24,8 +24,8 @@ namespace sen {
 				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 				m_prompt->setOnResponseCallback(
-					[&](const json& j) {
-						if (j["Response"])
+					[&](const Response& r) {
+						if (r.response == Response::TRUE)
 						{
 							window.close();
 						}
@@ -41,12 +41,12 @@ namespace sen {
 				StateManager::pushPrompt(m_prompt);
 
 				m_prompt->setOnResponseCallback(
-					[&](const json& j) {
-						if(j["Response"])
+					[&](const Response& r) {
+						if(r.response == Response::TRUE)
 						{
 							StateManager::pushState<TestState>(window);
 							auto popup = std::make_unique<Popup>("Pushed State");
-							StateManager::pushPopup(popup);
+							StateManager::pushPopup(std::move(popup));
 						}
 					}
 				);
@@ -56,12 +56,12 @@ namespace sen {
 				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
 				m_prompt->setOnResponseCallback(
-					[&](const json& j) {
-						if(j["Response"])
+					[&](const Response& r) {
+						if(r.response == Response::TRUE)
 						{
 							StateManager::popState();
 							auto popup = std::make_unique<Popup>("Popped State");
-							StateManager::pushPopup(popup);
+							StateManager::pushPopup(std::move(popup));
 						}
 					}
 				);

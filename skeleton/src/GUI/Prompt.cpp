@@ -22,19 +22,19 @@ namespace sen {
         // the response will be false
         okButton->setOnClickCalback(
             [this] {
-                m_response["Response"] = true;
+                m_response.response = Response::TRUE;
             }
         );
         auto declButton = std::make_shared<Button>("CANCEL");
         declButton->setOnClickCalback(
             [this] {
-                m_response["Response"] = false;
+               m_response.response = Response::FALSE;
             }
         );
         auto latButton = std::make_shared<Button>("LATER");
          latButton->setOnClickCalback(
              [this] {
-                 m_response["Response"] = "later";
+                 m_response.response = Response::DISCARD;
              }
          );
         if (style == PromptStyle::UNARY)
@@ -66,9 +66,12 @@ namespace sen {
             [this] {
 				std::string tempString = m_input->getTextObject().getString();
 				if (tempString == "" || tempString == m_input->getPlaceholder())
-					m_response["Response"] = false;
-				else 
-					m_response["Response"] = std::string(m_input->getTextObject().getString());
+					m_response.response = Response::FALSE;
+				else
+				{
+					m_response.response = Response::TRUE;
+					m_response.stringInput = std::string(m_input->getTextObject().getString());
+				}
             }
         );
         }
@@ -106,9 +109,9 @@ namespace sen {
     }
     bool Prompt::hasResponse() const
     {
-        return m_response.size();
+        return m_response.response != Response::NONE;
     }
-    const json & Prompt::getResponse() const
+    const Response & Prompt::getResponse() const
     {
         return m_response;
     }

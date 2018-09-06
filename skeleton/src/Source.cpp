@@ -13,7 +13,9 @@ int main()
 	window.setFramerateLimit(0U);
 
 	Application::init(&window);
-	sen::StateManager::pushState<sen::FrameworkSplashScreen>();
+	auto temp = std::make_unique<sen::FrameworkSplashScreen>();
+	sen::StateManager::pushState(std::move(temp));
+	//sen::StateManager::pushState<sen::FrameworkSplashScreen>();
 	Application::run();
     
     return 0;
