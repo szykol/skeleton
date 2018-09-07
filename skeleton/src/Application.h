@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <memory>
 
 /** 
  * @brief  Takes care of updating and rendering the engine.
@@ -19,6 +20,7 @@ private:
 	static sf::Clock s_timer;
 	static sf::Vector2u s_initialWindowSize;
 	static sf::RectangleShape* s_background;
+	static std::shared_ptr<sf::Font> s_defaultFont;
 public:
 	/** 
 	 * @brief  Initializes the engine
@@ -31,6 +33,12 @@ public:
 	 * @note   This method needs to be called after Application::init
 	 */
     static void run();
+	/**
+	 * @brief  Returns the default font of an Application
+	 * @note   This font is kept in the memory
+	 * throughout the whole life of an Application
+	 */
+	static const sf::Font& getDefaultFont() { return *s_defaultFont; }
 	/** 
 	 * @brief  Returns window reference. The goal of this
 	 * method is to make the window easily accessed.

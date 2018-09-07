@@ -12,17 +12,9 @@ namespace sen {
     class SFMLAudioProvider : public AudioProviderInterface 
     {
     private:
-        SFMLCacheSystem& m_cache;
         std::shared_ptr<sf::Music> m_currentMusic;
         std::shared_ptr<sf::Sound> m_currentSound;
     public:
-        /** 
-         * @brief  Basic constructor
-         * @note   
-         * @param  cache: SFMLCacheSystem used to load 
-         * audio from files
-         */
-        SFMLAudioProvider(SFMLCacheSystem& cache);
         /** 
          * @brief  Plays a sound
          * @param  pathFile: path to file

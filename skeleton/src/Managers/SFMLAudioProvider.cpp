@@ -1,13 +1,11 @@
 #include "SFMLAudioProvider.h"
 
+#include "CacheSystem.h"
+
 namespace sen {
-	SFMLAudioProvider::SFMLAudioProvider(SFMLCacheSystem & cache)
-		: m_cache(cache)
-	{
-	}
 	void SFMLAudioProvider::playSound(const std::string & pathFile)
 	{
-		auto sbf = m_cache.get<sf::SoundBuffer>(pathFile);
+		auto sbf = CacheSystem::get<sf::SoundBuffer>(pathFile);
 		if(sbf)
 		{
 			m_currentSound = std::make_shared<sf::Sound>(*sbf);
@@ -19,7 +17,7 @@ namespace sen {
 		if(m_currentMusic && m_currentMusic->getStatus() != sf::Music::Stopped)
 			m_currentMusic->stop();
 		
-		m_currentMusic = m_cache.get<sf::Music>(pathFile);
+		m_currentMusic = CacheSystem::get<sf::Music>(pathFile);
 		if(m_currentMusic)
 		{
 			m_currentMusic->setLoop(looping);

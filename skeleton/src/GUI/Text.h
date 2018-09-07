@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../Managers/ResourceManager.h"
-
+#include "../Application.h"
 namespace sen {
 	/**
 	 *	Lets you choose where to set the origin
@@ -26,7 +26,7 @@ namespace sen {
 		 *	@param font Font used to display the text. Default font is Roboto.
 		 */
 		explicit Text(const sf::String &string, unsigned int fontSize = 30U, 
-			 const sf::Font &font = ResourceManager::getFont("Fonts/Roboto.ttf"));
+			 const sf::Font &font = Application::getDefaultFont());
 		/**
 		 *	Draws the box on the target
 		 *

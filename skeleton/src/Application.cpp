@@ -3,18 +3,21 @@
 #include "Managers/InputController.h"
 #include "Managers/StateManager.h"
 #include "Managers/AnimationController.h"
+#include "Managers/CacheSystem.h"
 
 sf::RenderWindow* Application::s_window;
 unsigned int Application::s_frameRate;
 sf::Clock Application::s_timer;
 sf::Vector2u Application::s_initialWindowSize;
 sf::RectangleShape* Application::s_background = nullptr;
+std::shared_ptr<sf::Font> Application::s_defaultFont = nullptr;
 
 void Application::init(sf::RenderWindow * window)
 {
 	s_window = window;
 	s_timer.restart();
 
+	s_defaultFont = sen::CacheSystem::get<sf::Font>("Fonts/Roboto.ttf");
 	s_initialWindowSize = s_window->getSize();
 }
 

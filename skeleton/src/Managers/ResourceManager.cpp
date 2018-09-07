@@ -4,7 +4,7 @@
 namespace sen {
 	SFMLCacheSystem ResourceManager::m_cache;
 #ifdef DEFAULT_AUDIO_PROVIDER
-	SFMLAudioProvider ResourceManager::m_audioProvider(ResourceManager::m_cache);
+	SFMLAudioProvider ResourceManager::m_audioProvider;
 #else
 	AudioProviderInterface* ResourceManager::m_audioProvider = nullptr;
 #endif

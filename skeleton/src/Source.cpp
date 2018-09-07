@@ -5,6 +5,8 @@
 #include "States/FrameworkSplashScreen.h"
 #include "States/TestState.h"
 
+#include "Managers/CacheSystem.h"
+
 #include <memory>
 
 int main()
