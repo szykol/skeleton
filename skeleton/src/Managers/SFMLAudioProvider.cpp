@@ -6,11 +6,23 @@ namespace sen {
 	void SFMLAudioProvider::playSound(const std::string & pathFile)
 	{
 		auto sbf = CacheSystem::get<sf::SoundBuffer>(pathFile);
-		if(sbf)
+
+		auto shouldInsert = true;
+		for (auto&x : m_buffers)
 		{
-			m_currentSound = std::make_shared<sf::Sound>(*sbf);
-			m_currentSound->play();
+			if (x.get() == sbf.get())
+			{
+				shouldInsert = false;
+				break;
+			}
 		}
+		
+		if (shouldInsert)
+			m_buffers.emplace_back(sbf);
+
+		m_sounds.emplace_back(*sbf);
+		m_sounds.back().play();
+
 	}
 	void SFMLAudioProvider::playMusic(const std::string & pathFile, bool looping)
 	{
@@ -28,5 +40,37 @@ namespace sen {
 	{
 		if(m_currentMusic)
 			m_currentMusic->setVolume(vol);
+	}
+	void SFMLAudioProvider::update(float deltaTime)
+	{
+		m_time += deltaTime;
+
+		if (m_time > m_updateTime)
+		{
+			m_time -= m_updateTime;
+
+			for (auto bf = m_buffers.begin(); bf != m_buffers.end();)
+			{
+				auto shouldDelete = true;
+				for (auto sound = m_sounds.begin(); sound != m_sounds.end(); )
+				{
+					// if sound is playing
+					if (sound->getStatus() == sf::Sound::Playing)
+					{
+						// and it has a buffer we are currently
+						// checking, buffer shouldn't be deleted
+						if (sound->getBuffer() == bf->get())
+							shouldDelete = false;
+						++sound;
+					} // else erase sound
+					else
+						sound = m_sounds.erase(sound);
+				}
+				if (shouldDelete)
+					bf = m_buffers.erase(bf);
+				else
+					++bf;
+			}
+		}
 	}
 }

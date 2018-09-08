@@ -8,12 +8,15 @@
 #include "Managers/CacheSystem.h"
 
 #include <memory>
+#include <thread>
+
+using namespace std::literals::chrono_literals;
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1200, 800), "skeleton v.0.0.6"/*,sf::Style::Fullscreen*/);
 	window.setFramerateLimit(0U);
-
+	
 	Application::init(&window);
 	auto temp = std::make_unique<sen::FrameworkSplashScreen>();
 	sen::StateManager::pushState(std::move(temp));

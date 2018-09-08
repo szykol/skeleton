@@ -3,6 +3,8 @@
 #include "SFMLCacheSystem.h"
 #include "AudioProviderInterface.h"
 
+#include <deque>
+
 namespace sen {
     /** 
      * @brief  Basic audio provided that works
@@ -13,7 +15,11 @@ namespace sen {
     {
     private:
         std::shared_ptr<sf::Music> m_currentMusic;
-        std::shared_ptr<sf::Sound> m_currentSound;
+		//std::vector<sf::Sound> m_sounds;
+		std::deque<sf::Sound> m_sounds;
+		std::deque<std::shared_ptr<sf::SoundBuffer>> m_buffers;
+		float m_updateTime = 5.f;
+		float m_time = 0.f;
     public:
         /** 
          * @brief  Plays a sound
@@ -31,6 +37,7 @@ namespace sen {
          * @retval None
          */
 		virtual void setVolume(int vol)						override;
+		virtual void update(float deltaTime)				override;
 		virtual ~SFMLAudioProvider() = default;
     };
 }

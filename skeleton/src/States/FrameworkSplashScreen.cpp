@@ -9,12 +9,6 @@ namespace sen {
 		: m_mainMessage("SKELETON"),
 		  m_info("Press any key to continue...")
 	{
-		Application::setBackgroundImage(
-			ResourceManager::getTexture(
-				"Images/bg.jpeg"
-			)
-		);
-
 		sf::Vector2f initSize = (sf::Vector2f)Application::getInitialWindowSize();
 		m_mainMessage.setPosition(initSize / 2.f);
 		m_info.setPosition({ initSize.x / 2.f, initSize.y - 100 });

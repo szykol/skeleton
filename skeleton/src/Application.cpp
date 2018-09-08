@@ -4,6 +4,8 @@
 #include "Managers/StateManager.h"
 #include "Managers/AnimationController.h"
 #include "Managers/CacheSystem.h"
+#include "Managers/SFMLAudioProvider.h"
+#include "Managers/AudioProvider.h"
 
 sf::RenderWindow* Application::s_window;
 unsigned int Application::s_frameRate;
@@ -14,6 +16,7 @@ std::shared_ptr<sf::Font> Application::s_defaultFont = nullptr;
 
 void Application::init(sf::RenderWindow * window)
 {
+	sen::AudioProvider::registerProvider(std::make_unique<sen::SFMLAudioProvider>());
 	s_window = window;
 	s_timer.restart();
 
@@ -51,6 +54,10 @@ void Application::run()
 		sen::AnimationController::update(deltaTime);
 		sen::InputController::render(*s_window);
 		sen::StateManager::update(deltaTime, *s_window);
+		
+		
+		if (auto provider = sen::AudioProvider::get())
+			provider->update(deltaTime);
 		
 		s_window->display();
 	}

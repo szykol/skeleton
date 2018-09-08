@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "../Managers/ResourceManager.h"
 #include "../Application.h"
+
 namespace sen {
 	/**
 	 *	Lets you choose where to set the origin

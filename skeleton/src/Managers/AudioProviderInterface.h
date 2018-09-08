@@ -27,5 +27,11 @@ namespace sen {
 		 * @param  vol: music volume
 		 */
 		virtual void setVolume(int vol) = 0;
+		/**
+		* @brief  Updates (if needed)
+		* and deletes not used memory
+		* @param  vol: music volume
+		*/
+		virtual void update(float deltaTime) {}
 	};
 }

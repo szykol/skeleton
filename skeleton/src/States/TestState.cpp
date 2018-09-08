@@ -1,6 +1,5 @@
 #include "TestState.h"
 #include "../Managers/StateManager.h"
-#include "../Managers/ResourceManager.h"
 #include "../GUI/Prompt.h"
 #include "../GUI/Popup.h"
 #include "../Application.h"
