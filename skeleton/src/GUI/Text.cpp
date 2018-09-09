@@ -60,6 +60,32 @@ namespace sen {
 		return m_boundsChanged;
 	}
 
+	void Text::setPosition(float x, float y, float speed)
+	{
+		if (speed > 0.f)
+			sen::Transformable::setPosition(x, y, speed);
+		else
+			sf::Transformable::setPosition(x, y);
+	}
+
+	void Text::setPosition(const sf::Vector2f & pos, float speed)
+	{
+		if (speed > 0.f)
+			sen::Transformable::setPosition(pos, speed);
+		else
+			sf::Transformable::setPosition(pos);
+	}
+
+	void Text::move(float x, float y)
+	{
+		sf::Transformable::move(x, y);
+	}
+
+	void Text::move(const sf::Vector2f & vect)
+	{
+		sf::Transformable::move(vect);
+	}
+
 	Text::~Text()
 	{
 	}

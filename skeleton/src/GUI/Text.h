@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../Application.h"
-
+#include "Transformable.h"
 namespace sen {
 	/**
 	 *	Lets you choose where to set the origin
@@ -11,7 +11,7 @@ namespace sen {
 	 *	Just a basic wrapper for sf::Text class.
 	 *	Lets you easily change origin of the text using OriginMode enum.
 	 */
-	class Text : public sf::Text
+	class Text : public sf::Text, public Transformable
 	{
 	private:
 		OriginMode m_originMode;
@@ -74,6 +74,10 @@ namespace sen {
 		 * @retval 
 		 */
 		bool haveBoundsChanged() const;
+		virtual void setPosition(float x, float y, float speed = 0.f) override;
+		virtual void setPosition(const sf::Vector2f& pos, float speed = 0.f) override;
+		virtual void move(float x, float y) override;
+		virtual void move(const sf::Vector2f& vect) override;
 		virtual ~Text();
 	private:
 		// sets origin in the middle if origin mode is set

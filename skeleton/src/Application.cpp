@@ -51,7 +51,7 @@ void Application::run()
 		float deltaTime = s_timer.restart().asSeconds();
 
 		sen::InputController::update(deltaTime);
-		sen::AnimationController::update(deltaTime);
+		sen::AnimationController::update();
 		sen::InputController::render(*s_window);
 		sen::StateManager::update(deltaTime, *s_window);
 		

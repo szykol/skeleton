@@ -20,8 +20,8 @@ namespace sen {
 			setPosition(sf::Vector2f(Application::getInitialWindowSize().x / 2.f, -getSize().y / 2.f));
 			yPos = getSize().y - 10.f;
 		}
-		AnimationController::add(this, sf::Vector2f(Application::getInitialWindowSize().x / 2.f, yPos), 0.35f);
-		AnimationController::add(&m_message, sf::Vector2f(Application::getInitialWindowSize().x / 2.f, yPos), 0.35f);
+		//AnimationController::add(this, sf::Vector2f(Application::getInitialWindowSize().x / 2.f, yPos), 0.35f);
+		//AnimationController::add(&m_message, sf::Vector2f(Application::getInitialWindowSize().x / 2.f, yPos), 0.35f);
 	}
 	bool Popup::shouldVanish(float deltaTime)
 	{

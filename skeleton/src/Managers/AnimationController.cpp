@@ -4,63 +4,30 @@
 #include <iostream>
 
 namespace sen {
-	float AnimationController::s_stepTime = 0.01f;
-	std::vector<AnimationController::Transformable> AnimationController::s_transformables;
-	float AnimationController::s_time = 0.f;
+	std::vector<Transformable*> AnimationController::m_entities;
 
-	void AnimationController::add(sf::Transformable* address, const sf::Vector2f& goToPosition, float speed)
+	void AnimationController::add(Transformable * entity)
 	{
-		if (isMaintained(address)) return;
-
-		/*sf::Vector2f stepVect = (goToPosition - address->getPosition()) * (s_stepTime / timeNeeded);*/
-
-		sf::Vector2f stepVect = goToPosition - address->getPosition();
-		stepVect *= s_stepTime;
-		stepVect /= speed;
-
-		Transformable temp{ address, goToPosition, stepVect };
-
-		s_transformables.push_back(temp);
-	}
-	void AnimationController::remove(sf::Transformable* address)
-	{
-		if (!isMaintained(address)) return;
-		
-		auto toRemove = std::find_if(s_transformables.begin(), s_transformables.end(),
-			[&address](Transformable t) {
-				return t.address == address;	
+		auto temp = std::find_if(m_entities.begin(), m_entities.end(), [&entity](Transformable* t) {
+			return t == entity;
 		});
 
-		if (toRemove != s_transformables.end());
-			s_transformables.erase(toRemove);
+		if (temp == m_entities.end())
+			m_entities.push_back(entity);
+
 	}
-	bool AnimationController::isMaintained(sf::Transformable* address)
+	void AnimationController::remove(Transformable * entity)
 	{
-		return std::find_if(s_transformables.begin(), s_transformables.end(),
-			[&address](Transformable t) {
-			return t.address == address;
-		}) != s_transformables.end();
+		auto temp = std::find_if(m_entities.begin(), m_entities.end(), [&entity](Transformable* t) {
+			return t == entity;
+		});
+
+		if (temp != m_entities.end())
+			m_entities.erase(temp);
 	}
-	void AnimationController::update(float deltaTime)
+	void AnimationController::update()
 	{
-		s_time += deltaTime;
-		if (s_time > s_stepTime)
-		{
-			s_time = 0.f;
-			for (auto& transformable : s_transformables)
-			{
-				float dist = getInexactDistance(transformable.goToPosition, transformable.address->getPosition());
-				// close to the goal position
-				if (dist < 1.f)
-				{
-					transformable.address->setPosition(transformable.goToPosition);
-					remove(transformable.address);
-				}
-				else
-				{
-					transformable.address->move(transformable.stepVect);
-				}
-			}
-		}
+		for (auto& ent : m_entities)
+			ent->update();
 	}
 }
