@@ -140,20 +140,23 @@ namespace sen {
 		/** 
 		 * @brief  Sets either x/y coordinate (based on ButtonPlacing mode)
 		 * @note   Use it if you want place all buttons x/y coord to a specific
-		 * value (x/y coord now will be set to new position)
+		 * value (x/y coord now will be set to new position).
+		 * If you want an animated movement, use a map function and setPosition
+		 * button method with a specified speed
 		 * @param  coord: Coord new coordinate value
 		 * @retval None
 		 */
 		void setCoord(float coord);
 		/** 
 		 * @brief  Move every button by the offset based on the 
-		 * ButtonPlacing mode
+		 * ButtonPlacing mode. Specify the speed if you want to animate
+		 * the movement
 		 * @note   If ButtonPlacing::Horizontal -> it will move
 		 * buttons by the offset horizontaly and so on
-		 * @param  offset: 
+		 * @param  offset: new offset
 		 * @retval None
 		 */
-		void setOffset(float offset);
+		void setOffset(float offset, float speed = 0.f);
 		/**
 		 *	Sets the same size for all buttons.
          *
@@ -173,7 +176,7 @@ namespace sen {
 		 *	@param function Function that does something with button and
 		 *		   takes a button pointer as a parameter
 		 */
-		void map(const std::function<void(ButtonPointer&)> &function);
+		void map(const std::function<void(Button*)> &function);
 	private:
 		/** 
 		 * @brief  Returns biggest size of all

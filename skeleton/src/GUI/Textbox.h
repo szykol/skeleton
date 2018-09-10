@@ -33,9 +33,14 @@ namespace sen {
 		/**
 		 *	Sets the position of TextBox and centers it.
 		 *	
-		 *	@param pos Position
+		 *	@param x,y new Position
 		 */
 		virtual void setPosition(float x, float y) override;
+		/**
+		 *	Sets the position of TextBox and centers it.
+		 *	
+		 *	@param pos Position
+		 */
 		virtual void setPosition(const sf::Vector2f &pos)  override;
 		/**
 		 *	Returns the text object of the textbox.

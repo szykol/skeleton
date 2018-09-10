@@ -74,8 +74,8 @@ namespace sen {
 		 */
 		void setSize(const sf::Vector2f &size);
 
-		// TRANSFORMABLE
-
+		/* all of those methods are overriden to enable animating the movement
+			of this object */
 		virtual void setPosition(float x, float y, float speed)			override;
 		virtual void setPosition(float x, float y)						override;
 		virtual void setPosition(const sf::Vector2f& pos)				override;
@@ -83,7 +83,6 @@ namespace sen {
 		virtual const sf::Vector2f& getPosition() const					override;
 		virtual void move(float x, float y)								override;
 		virtual void move(const sf::Vector2f& vect)						override;
-
 
 		virtual ~Box() = default;
 		/**

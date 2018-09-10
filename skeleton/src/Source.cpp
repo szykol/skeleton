@@ -18,7 +18,6 @@ int main()
 	Application::init(&window);
 	auto temp = std::make_unique<sen::FrameworkSplashScreen>();
 	sen::StateManager::pushState(std::move(temp));
-	//sen::StateManager::pushState<sen::FrameworkSplashScreen>();
 	Application::run();
     
     return 0;

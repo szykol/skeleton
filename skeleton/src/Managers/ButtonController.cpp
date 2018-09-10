@@ -182,38 +182,52 @@ namespace sen {
 		m_coord = coord;
 		m_nonStandardPosition = true;
 	}
-	void ButtonController::setOffset(float offset)
+	void ButtonController::setOffset(float offset, float speed)
 	{
-		if(m_buttonPlacing == ButtonPlacing::HORIZONTAL)
-			map(
-			[offset](ButtonPointer& button) {
-				button->move(0.f, offset);
+		if (m_buttonPlacing == ButtonPlacing::HORIZONTAL)
+		{
+			if (m_buttons.size() > 0)
+			{
+				auto goToPos = m_buttons[0]->getPosition().y + offset;
+					map(
+						[=](Button* button) {
+					button->setPosition(button->getPosition().x, goToPos, speed);
+				}
+				);
 			}
-		);
+		}
 		else
-			map(
-			[offset](ButtonPointer& button) {
-				button->move(offset, 0.f);
-			}
-		);
+		{
+			if (m_buttons.size() > 0)
+			{
+				auto goToPos = m_buttons[0]->getPosition().x + offset;
 
+			map(
+				[=](Button* button) {
+				button->setPosition(goToPos, button->getPosition().y, speed);
+			}
+			);
+			}
+		}
 	}
 	void ButtonController::setButtonFixedSize(const sf::Vector2f & size)
 	{
-		map([&size](ButtonPointer& button) {
+		map([&size](Button* button) {
 			button->setSize(size);
 		});
 	}
 
-	void ButtonController::map(const std::function<void(ButtonPointer&)>& function)
+	void ButtonController::map(const std::function<void(Button*)>& function)
 	{
-		std::for_each(m_buttons.begin(), m_buttons.end(), function);
+		std::for_each(m_buttons.begin(), m_buttons.end(), [&](const std::shared_ptr<Button>& ptr) {
+			function(ptr.get());
+		});
 	}
 	sf::Vector2f ButtonController::getBiggestSizeOfButton()
 	{
 		sf::Vector2f biggestSize(0.f,0.f);
 		map(
-			[&biggestSize](ButtonPointer& b) {
+			[&biggestSize](Button* b) {
 				if(b->getSize().x * b->getSize().y >
 					biggestSize.x * biggestSize.y)
 					biggestSize = b->getSize();
@@ -228,14 +242,14 @@ namespace sen {
 			if (m_buttonPlacing == ButtonPlacing::VERTICAL)
 			{
 				map(
-					[&biggestSize](ButtonPointer b) {
+					[&biggestSize](Button* b) {
 					b->setSize({ b->getSize().x , biggestSize});
 					}
 				);
 			}
 			else
 				map(
-					[&biggestSize](ButtonPointer b) {
+					[&biggestSize](Button* b) {
 					b->setSize({ biggestSize, b->getSize().y});
 					}
 				);
