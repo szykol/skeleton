@@ -40,6 +40,11 @@ namespace sen {
 		Box::render(target);
 		m_message.render(target);
 	}
+	void TextBox::setPosition(float x, float y)
+	{
+		Box::setPosition(x, y);
+		m_message.setPosition(x + m_textOffset.x, y + m_textOffset.y);
+	}
 	void TextBox::setPosition(const sf::Vector2f & pos)
 	{
 		// set origin and then position of box and text

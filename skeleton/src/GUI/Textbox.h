@@ -17,6 +17,7 @@ namespace sen {
 		bool m_fitTextSize;
 		sf::Vector2f m_textOffset;
 	public:
+		using Box::setPosition;
 		/**
 		 *	Sets the text, and then sets size of the box.
          *
@@ -34,7 +35,8 @@ namespace sen {
 		 *	
 		 *	@param pos Position
 		 */
-		void setPosition(const sf::Vector2f &pos);
+		virtual void setPosition(float x, float y) override;
+		virtual void setPosition(const sf::Vector2f &pos)  override;
 		/**
 		 *	Returns the text object of the textbox.
 		 *	If you want to perform any operations on the text

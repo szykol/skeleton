@@ -16,6 +16,6 @@ namespace sen {
 	public:
 		static void add(Transformable* entity);
 		static void remove(Transformable* entity);
-		static void update();
+		static void update(float deltaTime);
 	};
 }

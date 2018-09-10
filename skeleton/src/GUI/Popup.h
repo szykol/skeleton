@@ -50,6 +50,6 @@ namespace sen {
          */
         using TextBox::setPosition;
         using TextBox::move;
-        using TextBox::update;
+        using sf::Shape::update;
     };
 }

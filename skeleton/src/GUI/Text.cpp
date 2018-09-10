@@ -62,18 +62,27 @@ namespace sen {
 
 	void Text::setPosition(float x, float y, float speed)
 	{
-		if (speed > 0.f)
-			sen::Transformable::setPosition(x, y, speed);
-		else
-			sf::Transformable::setPosition(x, y);
+		sen::Transformable::setPosition(x, y, speed);
+	}
+
+	void Text::setPosition(float x, float y)
+	{
+		sf::Transformable::setPosition(x, y);
+	}
+
+	void Text::setPosition(const sf::Vector2f & pos)
+	{
+		sf::Transformable::setPosition(pos);
 	}
 
 	void Text::setPosition(const sf::Vector2f & pos, float speed)
 	{
-		if (speed > 0.f)
-			sen::Transformable::setPosition(pos, speed);
-		else
-			sf::Transformable::setPosition(pos);
+		sen::Transformable::setPosition(pos, speed);
+	}
+
+	const sf::Vector2f & Text::getPosition() const
+	{
+		return sf::Transformable::getPosition();
 	}
 
 	void Text::move(float x, float y)

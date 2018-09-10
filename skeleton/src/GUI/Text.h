@@ -74,10 +74,13 @@ namespace sen {
 		 * @retval 
 		 */
 		bool haveBoundsChanged() const;
-		virtual void setPosition(float x, float y, float speed = 0.f) override;
-		virtual void setPosition(const sf::Vector2f& pos, float speed = 0.f) override;
-		virtual void move(float x, float y) override;
-		virtual void move(const sf::Vector2f& vect) override;
+		virtual void setPosition(float x, float y, float speed)			override;
+		virtual void setPosition(float x, float y)						override;
+		virtual void setPosition(const sf::Vector2f& pos)				override;
+		virtual void setPosition(const sf::Vector2f& pos, float speed)  override;
+		virtual const sf::Vector2f& getPosition() const					override;
+		virtual void move(float x, float y)								override;
+		virtual void move(const sf::Vector2f& vect)						override;
 		virtual ~Text();
 	private:
 		// sets origin in the middle if origin mode is set

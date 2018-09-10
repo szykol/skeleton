@@ -1,6 +1,10 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
-#include "text.h"
+
+#include "Transformable.h"
+#include "Text.h"
+
 namespace sen {
 	/** 
 	 *	Just a wrapper for a sf::RectangleShape class.
@@ -9,7 +13,7 @@ namespace sen {
 	 *	
 	 *	In the future, it will let you blur it's background.
 	 */
-	class Box : public sf::RectangleShape
+	class Box : public sf::RectangleShape, public Transformable
 	{
 	private:
 		OriginMode m_originMode;
@@ -69,6 +73,18 @@ namespace sen {
 		 *	@param size New size
 		 */
 		void setSize(const sf::Vector2f &size);
+
+		// TRANSFORMABLE
+
+		virtual void setPosition(float x, float y, float speed)			override;
+		virtual void setPosition(float x, float y)						override;
+		virtual void setPosition(const sf::Vector2f& pos)				override;
+		virtual void setPosition(const sf::Vector2f& pos, float speed)  override;
+		virtual const sf::Vector2f& getPosition() const					override;
+		virtual void move(float x, float y)								override;
+		virtual void move(const sf::Vector2f& vect)						override;
+
+
 		virtual ~Box() = default;
 		/**
 		 * ! NOT WORKING

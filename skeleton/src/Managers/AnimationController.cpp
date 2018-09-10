@@ -25,9 +25,9 @@ namespace sen {
 		if (temp != m_entities.end())
 			m_entities.erase(temp);
 	}
-	void AnimationController::update()
+	void AnimationController::update(float deltaTime)
 	{
 		for (auto& ent : m_entities)
-			ent->update();
+			ent->update(deltaTime);
 	}
 }

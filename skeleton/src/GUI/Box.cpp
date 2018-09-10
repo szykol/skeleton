@@ -33,6 +33,42 @@ namespace sen {
 		if (m_originMode == OriginMode::CENTER)
 			setOrigin(getSize() / 2.f);
 	}
+
+	void Box::setPosition(float x, float y, float speed)
+	{
+		sen::Transformable::setPosition(x, y, speed);
+	}
+
+	void Box::setPosition(float x, float y)
+	{
+		sf::Transformable::setPosition(x, y);
+	}
+
+	void Box::setPosition(const sf::Vector2f & pos)
+	{
+		sf::Transformable::setPosition(pos);
+	}
+
+	void Box::setPosition(const sf::Vector2f & pos, float speed)
+	{
+		sen::Transformable::setPosition(pos, speed);
+	}
+
+	const sf::Vector2f & Box::getPosition() const
+	{
+		return sf::Transformable::getPosition();
+	}
+
+	void Box::move(float x, float y)
+	{
+		sf::Transformable::move(x, y);
+	}
+
+	void Box::move(const sf::Vector2f & vect)
+	{
+		sf::Transformable::move(vect);
+	}
+
 	/*void Box::blurBackground(float ammount, sf::RenderWindow &window)
 	{
 		texture = new sf::Texture();
