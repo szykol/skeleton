@@ -87,7 +87,7 @@ namespace sen {
 		// setup button controller
 		//m_buttonController.setButtonPlacing(ButtonPlacing::HORIZONTAL);
 		m_buttonController.pushButtons(popState, pushState, spawnPopup, quit);
-		m_buttonController.placeButtons();
+		m_buttonController.placeButtons(300.f);
 		m_buttonController.setButtonFixedSize(
 			sf::Vector2f(185.f, 50.f)
 		);

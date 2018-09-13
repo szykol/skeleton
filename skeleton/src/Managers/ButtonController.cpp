@@ -19,6 +19,9 @@ namespace sen {
 	}
 	void ButtonController::update(float deltaTime)
 	{
+		enum ButtonMovement { DOWN = -1, NONE = 0, UP = 1};
+		auto movement = int{ ButtonMovement::NONE };
+
 		auto prev = sf::Keyboard::Up;
 		auto next = sf::Keyboard::Down;
 
@@ -43,17 +46,35 @@ namespace sen {
 			if (sf::Keyboard::isKeyPressed(next))
 			{
 				if (m_activeIndex >= m_buttons.size() - 1)
-					m_activeIndex = 0;
+				{
+					if (!m_canScroll)
+						m_activeIndex = 0;
+				}
 				else
+				{
 					m_activeIndex++;
+					if (m_canScroll)
+					{
+						movement = ButtonMovement::DOWN;
+					}
+				}
 				m_time = 0.f;
 			}
 			else if (sf::Keyboard::isKeyPressed(prev))
 			{
 				if (m_activeIndex <= 0)
-					m_activeIndex = m_buttons.size() - 1;
+				{
+					if (!m_canScroll)
+						m_activeIndex = m_buttons.size() - 1;
+				}
 				else
+				{
 					m_activeIndex--;
+					if (m_canScroll)
+					{
+						movement = ButtonMovement::UP;
+					}
+				}
 				m_time = 0.f;
 			}
 			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
@@ -81,6 +102,26 @@ namespace sen {
 					}
 				}
 			}
+		}
+
+		if (movement != ButtonMovement::NONE)
+		{
+			float jump = m_jumpOffset * movement;
+
+			if(m_buttonPlacing == ButtonPlacing::VERTICAL)
+			map(
+				[jump](Button* b)
+				{
+					b->setPosition({ b->getPosition().x, b->getPosition().y + jump }, 6.3f);
+				}
+			);
+			else
+			map(
+				[jump](Button* b)
+				{
+					b->setPosition({b->getPosition().x + jump, b->getPosition().y }, 6.3f);
+				}
+			);
 		}
 
 		for (int i = 0; i < m_buttons.size(); ++i)
@@ -154,6 +195,10 @@ namespace sen {
 		if(m_buttonPlacing == ButtonPlacing::VERTICAL)
 		{
 			startingPos.y -= offset;
+
+			if (startingPos.y - buttonSize / 2.f < bounds.top)
+				m_canScroll = true;
+
 			if(m_baseline == ButtonBaseline::START)
 				startingPos.x = bounds.left + biggestSize.x;
 			else if(m_baseline == ButtonBaseline::END)
@@ -162,12 +207,19 @@ namespace sen {
 		else
 		{
 			startingPos.x -= offset;
+
+			if (startingPos.x - buttonSize / 2.f < bounds.left)
+				m_canScroll = true;
+
 			if(m_baseline == ButtonBaseline::START)
 				startingPos.y = bounds.top + biggestSize.y;
 			else if(m_baseline == ButtonBaseline::END)
 				startingPos.y = bounds.top + bounds.height - biggestSize.y;
 		}	
 
+		if (m_canScroll)
+			m_activeIndex = temp;
+		
 		for (int i = 0; i < m_buttons.size(); i++)
 		{
 			m_buttons[i]->setPosition(startingPos);
@@ -176,6 +228,8 @@ namespace sen {
 			else
 				startingPos.x += buttonSize + gap;
 		}
+
+		m_jumpOffset = buttonSize + gap;
 	}
 	void ButtonController::setCoord(float coord)
 	{

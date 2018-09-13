@@ -33,6 +33,8 @@ namespace sen {
 		int m_activeIndex = 0;
 		float m_time = 0.f;
 		bool m_canClick = false;
+		bool m_canScroll = false;
+		float m_jumpOffset = 0.f;
 		ButtonPlacing m_buttonPlacing = ButtonPlacing::VERTICAL;
 		ButtonBaseline m_baseline = ButtonBaseline::CENTER;
 	public:
