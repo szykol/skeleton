@@ -91,6 +91,7 @@ namespace sen {
 		m_buttonController.setButtonFixedSize(
 			sf::Vector2f(185.f, 50.f)
 		);
+
 	}
 	void TestState::update(float deltaTime, sf::RenderWindow & window)
 	{

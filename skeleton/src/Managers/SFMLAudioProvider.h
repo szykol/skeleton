@@ -1,9 +1,11 @@
 #pragma once
 
-#include "SFMLCacheSystem.h"
 #include "AudioProviderInterface.h"
 
 #include <deque>
+#include <memory>
+
+#include <SFML/Audio.hpp>
 
 namespace sen {
     /** 

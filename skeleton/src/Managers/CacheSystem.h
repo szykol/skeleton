@@ -21,6 +21,10 @@ namespace sen {
 		static CacheMap<sf::SoundBuffer> m_soundBuffers;
 
 		// TODO: Remove all weak ptrs from memory (if they're empty)
+
+		static float s_time;
+		static float s_updateTime;
+
 		/*float s_time = 0.f;
 		float s_updateTime = 10.f;*/
 	public:
@@ -32,14 +36,30 @@ namespace sen {
 			auto ptr = map[pathFile].lock();
 			if (!ptr)
 			{
-				std::cout << "Loading a new instance\n"; 
 				ptr = loadFromFile<T>(pathFile);
 				map[pathFile] = ptr;
 			}
 
 			return ptr;
 		}
+
+		static void update(float deltaTime);
 	private:
+
+		template<typename T>
+		static void updateMap(CacheMap<T>& map)
+		{
+			for (auto weak = map.cbegin(); weak != map.cend();)
+			{
+				if (weak->second.expired())
+				{
+					weak = map.erase(weak);
+				}
+				else
+					++weak;
+			}
+		}
+
 		template<typename T>
 		static CacheMap<T>& getMap()
 		{
@@ -70,6 +90,7 @@ namespace sen {
 			return m_music;
 		}
 
+		
 	};
 
 	template<typename T>

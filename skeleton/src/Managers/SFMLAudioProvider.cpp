@@ -20,8 +20,11 @@ namespace sen {
 		if (shouldInsert)
 			m_buffers.emplace_back(sbf);
 
-		m_sounds.emplace_back(*sbf);
-		m_sounds.back().play();
+		if (sbf)
+		{
+			m_sounds.emplace_back(*sbf);
+			m_sounds.back().play();
+		}
 
 	}
 	void SFMLAudioProvider::playMusic(const std::string & pathFile, bool looping)

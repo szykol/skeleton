@@ -161,11 +161,13 @@ namespace sen {
 		if (m_buttons.empty())	return;
 
 		// middle of the bounding box
-		sf::Vector2f startingPos(
+		sf::Vector2f center(
 			bounds.left + bounds.width / 2.f,
 			bounds.top + bounds.height / 2.f
 		);
 		
+		auto startingPos = center;
+
 		// override the x coord if it was set eariler
 		if (m_buttonPlacing==ButtonPlacing::VERTICAL && m_nonStandardPosition)
 			startingPos.x = m_coord;
@@ -218,7 +220,12 @@ namespace sen {
 		}	
 
 		if (m_canScroll)
-			m_activeIndex = temp;
+		{
+			if (m_buttonPlacing == ButtonPlacing::VERTICAL)
+				startingPos.y = center.y;
+			else
+				startingPos.x = center.x;
+		}
 		
 		for (int i = 0; i < m_buttons.size(); i++)
 		{

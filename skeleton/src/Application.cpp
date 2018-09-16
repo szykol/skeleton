@@ -54,7 +54,7 @@ void Application::run()
 		sen::AnimationController::update(deltaTime);
 		sen::InputController::render(*s_window);
 		sen::StateManager::update(deltaTime, *s_window);
-		
+		sen::CacheSystem::update(deltaTime);
 		
 		if (auto provider = sen::AudioProvider::get())
 			provider->update(deltaTime);
