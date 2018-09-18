@@ -17,7 +17,6 @@ namespace sen {
     {
     private:
         std::shared_ptr<sf::Music> m_currentMusic;
-		//std::vector<sf::Sound> m_sounds;
 		std::deque<sf::Sound> m_sounds;
 		std::deque<std::shared_ptr<sf::SoundBuffer>> m_buffers;
 		float m_updateTime = 5.f;
@@ -39,6 +38,11 @@ namespace sen {
          * @retval None
          */
 		virtual void setVolume(int vol)						override;
+		/**
+		 * @brief  Updates the implementation of soundprovider
+         * checks if there are any weak_ptrs that are empty
+         * to delete memory they are holding
+		 */
 		virtual void update(float deltaTime)				override;
 		virtual ~SFMLAudioProvider() = default;
     };

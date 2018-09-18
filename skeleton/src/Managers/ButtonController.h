@@ -73,11 +73,11 @@ namespace sen {
 		 *	Pass all buttons with single function call
 		 */
 		template<typename... Args>
-		void pushButtons(ButtonPointer& button, Args... args)
+		void pushButtons(ButtonPointer& button, Args&&... args)
 		{
 			m_buttons.push_back(button);
 
-			pushButtons(args...);
+			pushButtons(std::forward<Args>(args)...);
 		}
 		/** 
 		 * @brief  Adds a button at the end. The button is constructed
@@ -91,7 +91,7 @@ namespace sen {
 		template<typename... Args>
 		void emplaceButtons(Args&&... args)
 		{
-			m_buttons.emplace_back(args...);
+			m_buttons.emplace_back(std::forward<Args>(args)...);
 		}
 		/**
 		 *	Removes last added button 

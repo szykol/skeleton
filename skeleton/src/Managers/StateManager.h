@@ -29,8 +29,6 @@ namespace sen {
 	{
 	private:
 		static StatePointerVector m_states;
-		/*static StatePointer m_currentState;
-		static StatePointer m_awaitState;*/
 		static std::unique_ptr<State> m_currentState, m_awaitState;
 		static PromptPointer m_prompt;
 		static bool m_wannaPop;
@@ -63,9 +61,9 @@ namespace sen {
 		 * @retval None
 		 */
 		template<typename tState, typename... Args>
-		static void pushState(Args&... args)
+		static void pushState(Args&&... args)
 		{
-			m_awaitState = std::make_unique<tState>(args...);
+			m_awaitState = std::make_unique<tState>(std::forward<Args>(args)...);
 		}
 		/**
 		 *  Lets you pop states - it stops updating

@@ -20,14 +20,21 @@ namespace sen {
 		static CacheMap<sf::Music> m_music;
 		static CacheMap<sf::SoundBuffer> m_soundBuffers;
 
-		// TODO: Remove all weak ptrs from memory (if they're empty)
-
 		static float s_time;
 		static float s_updateTime;
-
-		/*float s_time = 0.f;
-		float s_updateTime = 10.f;*/
 	public:
+		/**
+		 * @brief  Returns an instance of either
+		 * sf::SoundBuffer, sf::Texture, sf::Font,
+		 * sf::Music loaded from file. Those instances 
+		 * are cached which means you need to keep at least
+		 * one shared_ptr to the object you want to access.
+		 * Otherwise it will be deleted from memory.
+		 * @note   if the object cannot be loaded from file
+		 * it returns nullptr.
+		 * @param  pathFile: a path to file
+		 * @retval 
+		 */
 		template<typename T>
 		static std::shared_ptr<T> get(const std::string& pathFile)
 		{
@@ -43,9 +50,18 @@ namespace sen {
 			return ptr;
 		}
 
+		/**
+		 * @brief  Removes all weak_ptrs to the object that
+		 * are not longer used and frees the memory they were
+		 * holding
+		 */
 		static void update(float deltaTime);
 	private:
 
+		/**
+		 * @brief  Helper method that updates the map 
+		 * and removes all weak_ptrs
+		 */
 		template<typename T>
 		static void updateMap(CacheMap<T>& map)
 		{
@@ -60,6 +76,9 @@ namespace sen {
 			}
 		}
 
+		/**
+		 * @brief  Returns a map according to a type
+		 */
 		template<typename T>
 		static CacheMap<T>& getMap()
 		{
@@ -93,6 +112,11 @@ namespace sen {
 		
 	};
 
+	/**
+	 * @brief  Loads an sfml type from file and 
+	 * returns a shared_ptr to it
+	 * @param  pathFile: path to file 
+	 */
 	template<typename T>
 	inline std::shared_ptr<T> loadFromFile(const std::string& pathFile)
 	{

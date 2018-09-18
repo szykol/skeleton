@@ -8,4 +8,5 @@
 #pragma once
 
 #include "State.h"
+#include "FrameworkSplashScreen.h"
 #include "TestState.h"
