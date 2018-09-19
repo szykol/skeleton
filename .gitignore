@@ -19,7 +19,7 @@ Dependencies/
 skeleton/Sounds/*.wav
 skeleton/Images/zombie.png
 skeleton/Images/bigger.png
-
+build/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
