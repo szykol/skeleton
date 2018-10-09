@@ -9,7 +9,53 @@
 #include <iostream>
 
 namespace sen {
-	
+		/**
+	 * @brief  Loads an sfml type from file and 
+	 * returns a shared_ptr to it
+	 * @param  pathFile: path to file 
+	 */
+	template<typename T>
+	inline std::shared_ptr<T> loadFromFile(const std::string& pathFile)
+	{
+		static_assert(false);
+	}
+
+	template<>
+	inline std::shared_ptr<sf::Font> loadFromFile<sf::Font>(const std::string& pathFile)
+	{
+		auto font = std::make_shared<sf::Font>();
+		if (!font->loadFromFile(pathFile))
+			return nullptr;
+		return font;
+	}
+
+	template<>
+	inline std::shared_ptr<sf::Texture> loadFromFile<sf::Texture>(const std::string& pathFile)
+	{
+		auto tex = std::make_shared<sf::Texture>();
+		if (!tex->loadFromFile(pathFile))
+			return nullptr;
+		return tex;
+	}
+
+	template<>
+	inline std::shared_ptr<sf::SoundBuffer> loadFromFile<sf::SoundBuffer>(const std::string& pathFile)
+	{
+		auto sb = std::make_shared<sf::SoundBuffer>();
+		if (!sb->loadFromFile(pathFile))
+			return nullptr;
+		return sb;
+	}
+
+	template<>
+	inline std::shared_ptr<sf::Music> loadFromFile<sf::Music>(const std::string& pathFile)
+	{
+		auto mus = std::make_shared<sf::Music>();
+		if (!mus->openFromFile(pathFile))
+			return nullptr;
+		return mus;
+	}
+
 	template<typename T>
 	using CacheMap = std::unordered_map<std::string, std::weak_ptr<T>>;
 
@@ -108,54 +154,5 @@ namespace sen {
 		{
 			return m_music;
 		}
-
-		
 	};
-
-	/**
-	 * @brief  Loads an sfml type from file and 
-	 * returns a shared_ptr to it
-	 * @param  pathFile: path to file 
-	 */
-	template<typename T>
-	inline std::shared_ptr<T> loadFromFile(const std::string& pathFile)
-	{
-		static_assert(false);
-	}
-
-	template<>
-	inline std::shared_ptr<sf::Font> loadFromFile<sf::Font>(const std::string& pathFile)
-	{
-		auto font = std::make_shared<sf::Font>();
-		if (!font->loadFromFile(pathFile))
-			return nullptr;
-		return font;
-	}
-
-	template<>
-	inline std::shared_ptr<sf::Texture> loadFromFile<sf::Texture>(const std::string& pathFile)
-	{
-		auto tex = std::make_shared<sf::Texture>();
-		if (!tex->loadFromFile(pathFile))
-			return nullptr;
-		return tex;
-	}
-
-	template<>
-	inline std::shared_ptr<sf::SoundBuffer> loadFromFile<sf::SoundBuffer>(const std::string& pathFile)
-	{
-		auto sb = std::make_shared<sf::SoundBuffer>();
-		if (!sb->loadFromFile(pathFile))
-			return nullptr;
-		return sb;
-	}
-
-	template<>
-	inline std::shared_ptr<sf::Music> loadFromFile<sf::Music>(const std::string& pathFile)
-	{
-		auto mus = std::make_shared<sf::Music>();
-		if (!mus->openFromFile(pathFile))
-			return nullptr;
-		return mus;
-	}
 }
