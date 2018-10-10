@@ -29,7 +29,7 @@ namespace sen {
 		float m_time = 0.f;
 		bool clickable = false;
         OnClickCallback m_clickCallback;
-        CallbackMap* m_callbacks;
+        std::unique_ptr<CallbackMap> m_callbacks;
 		sf::String m_standardString;
 	public:
 		explicit Button(const sf::String &string)
@@ -79,7 +79,6 @@ namespace sen {
 		 * @retval None
 		 */
         void addListener(ButtonEvent state, const Callback& callback, bool preventDefault = false);
-		virtual ~Button();
 
 		Button(const Button&) = default;
 		Button& operator=(const Button&) = default;

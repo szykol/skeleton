@@ -81,18 +81,13 @@ namespace sen {
         const Callback & callback, bool preventDefault)
 	{
         if(!m_callbacks)
-            m_callbacks = new CallbackMap();
+            m_callbacks = std::make_unique<CallbackMap>();
         
         ButtonAction action = std::make_pair(callback, preventDefault);
         // if there is a listener already, delete it
         if(m_callbacks->find(state) != m_callbacks->end())
             m_callbacks->erase(state);
         m_callbacks->insert(std::make_pair(state,action));
-	}
-	Button::~Button()
-	{
-        if(m_callbacks)
-            delete m_callbacks;
 	}
 	const ButtonAction* Button::getCallbackForState(ButtonEvent state) const
 	{
