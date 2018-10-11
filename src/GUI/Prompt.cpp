@@ -20,19 +20,19 @@ namespace sen {
         // if user presses ok/yes the response 
         // will be true, if presses cancel/no
         // the response will be false
-        okButton->setOnClickCalback(
+        okButton->setOnClickCallback(
             [this] {
                 m_response.response = Response::TRUE;
             }
         );
         auto declButton = std::make_shared<Button>("CANCEL");
-        declButton->setOnClickCalback(
+        declButton->setOnClickCallback(
             [this] {
                m_response.response = Response::FALSE;
             }
         );
         auto latButton = std::make_shared<Button>("LATER");
-         latButton->setOnClickCalback(
+         latButton->setOnClickCallback(
              [this] {
                  m_response.response = Response::DISCARD;
              }
@@ -62,7 +62,7 @@ namespace sen {
             // prompt message will act as a placeholder when a input has focus
             setTextOffset({0.f, -50.f});
             // the response will be whatever was placed inside of the input
-            okButton->setOnClickCalback(
+            okButton->setOnClickCallback(
             [this] {
 				std::string tempString = m_input->getTextObject().getString();
 				if (tempString == "" || tempString == m_input->getPlaceholder())

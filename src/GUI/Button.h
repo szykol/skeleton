@@ -28,6 +28,7 @@ namespace sen {
     protected:
 		float m_time = 0.f;
 		bool clickable = false;
+		bool m_active = true;
         OnClickCallback m_clickCallback;
         std::unique_ptr<CallbackMap> m_callbacks;
 		sf::String m_standardString;
@@ -61,7 +62,7 @@ namespace sen {
 		/**
 		 *	Sets a callback function called on mouse click
 		 */
-		void setOnClickCalback(const OnClickCallback &callback) { m_clickCallback = callback; }
+		void setOnClickCallback(const OnClickCallback &callback) { m_clickCallback = callback; }
 		/** 
 		 * @brief  Used for changing the look of a button.
 		 * Sets a callback function and calls it when an event occurs
@@ -79,6 +80,14 @@ namespace sen {
 		 * @retval None
 		 */
         void addListener(ButtonEvent state, const Callback& callback, bool preventDefault = false);
+		/**
+		 * @brief  Check if the button is active
+		 */
+		bool isActive() const { return m_active; }
+		/**
+		 * @brief  Set active state of a button
+		 */
+		void setActive(bool active) { m_active = active; }
 
 		Button(const Button&) = default;
 		Button& operator=(const Button&) = default;

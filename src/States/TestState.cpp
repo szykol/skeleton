@@ -17,7 +17,7 @@ namespace sen {
 
 		//std::shared_ptr<Button> box(new InputBox());
 
-		quit->setOnClickCalback(
+		quit->setOnClickCallback(
 			[this, &window] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
 				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
@@ -34,7 +34,7 @@ namespace sen {
 		);
 
 
-		pushState->setOnClickCalback([&window, this] {
+		pushState->setOnClickCallback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
 				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
@@ -50,7 +50,7 @@ namespace sen {
 					}
 				);
 		});
-		popState->setOnClickCalback([&window, this] {
+		popState->setOnClickCallback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::BINARY, "Are you sure?");
 				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);
@@ -67,7 +67,7 @@ namespace sen {
 				
 		});
 
-		spawnPopup->setOnClickCalback([&window, this] {
+		spawnPopup->setOnClickCallback([&window, this] {
 				m_prompt = std::make_shared<Prompt>(PromptStyle::INPUT, "Type something..");
 				m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
 				StateManager::pushPrompt(m_prompt);

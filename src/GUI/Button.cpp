@@ -49,6 +49,7 @@ namespace sen {
 	}
 	void Button::update(float deltaTime)
 	{
+		if(!m_active) return;
         // create a cooldown to avoid calling the callback function every frame
 		m_time += deltaTime;
 		if (m_time > 0.5f

@@ -34,7 +34,7 @@ namespace sen {
 				m_back = std::make_unique<Button>("<-");
 				m_back->setSize(sf::Vector2f(65.f, 30.f));
 				m_back->setPosition(sf::Vector2f(45.f, 40.f));
-				m_back->setOnClickCalback(
+				m_back->setOnClickCallback(
 					[] {
 					StateManager::popState();
 				}
