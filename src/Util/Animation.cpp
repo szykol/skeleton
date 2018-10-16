@@ -22,25 +22,34 @@ namespace sen {
 		{
 			m_total -= m_delay;
 
-			m_currentFrameX++;
-			if (m_currentFrameX >= m_size.x)
-				m_currentFrameX = 0;
-
-			if (m_flipped)
-			{
-				m_frameRect.left = (m_currentFrameX + 1) * std::abs(m_frameRect.width);
-				m_frameRect.width = -std::abs(m_frameRect.width);
-			}
-			else
-			{
-				m_frameRect.left = m_currentFrameX * m_frameRect.width;
-				m_frameRect.width = std::abs(m_frameRect.width);
-			}
+			nextFrame();
 		}
 	}
 	void Animation::setRow(unsigned int row)
 	{
 		if (row < m_size.y)
 			m_frameRect.top = row * m_frameRect.height;
+	}
+	void Animation::nextFrame()
+	{
+		m_currentFrameX++;
+		if (m_currentFrameX >= m_size.x)
+			m_currentFrameX = 0;
+
+		if (m_flipped)
+		{
+			m_frameRect.left = (m_currentFrameX + 1) * std::abs(m_frameRect.width);
+			m_frameRect.width = -std::abs(m_frameRect.width);
+		}
+		else
+		{
+			m_frameRect.left = m_currentFrameX * m_frameRect.width;
+			m_frameRect.width = std::abs(m_frameRect.width);
+		}
+	}
+	void Animation::reset()
+	{
+		m_currentFrameX = m_size.x;
+		nextFrame();
 	}
 }

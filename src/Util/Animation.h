@@ -52,5 +52,13 @@ namespace sen {
 		 * @param  flipped: set to true if not passed by user
 		 */
 		void setFlippedFrame(bool flipped = true) { m_flipped = flipped; }
+		/**
+		 * @brief  Sets the next frame in the animation
+		 */
+		void nextFrame();
+		/**
+		 * @brief  Sets the first frame in animiation
+		 */
+		void reset();
 	};
 }

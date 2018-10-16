@@ -9,7 +9,7 @@
 
 sf::RenderWindow* Application::s_window;
 unsigned int Application::s_frameRate;
-sf::Clock Application::s_timer;
+sf::Clock Application::s_timer;	
 sf::Vector2u Application::s_initialWindowSize;
 sf::RectangleShape* Application::s_background = nullptr;
 std::shared_ptr<sf::Font> Application::s_defaultFont = nullptr;
