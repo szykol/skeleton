@@ -15,8 +15,9 @@ namespace sen {
 	{
 	private:
 		OriginMode m_originMode;
-		bool m_boundsChanged;
-		bool m_boundsStatusReset;
+		bool m_boundsChanged = false;
+		bool m_boundsStatusReset = false;
+		bool m_updateOnlyXAxis = false;
 	public:
 		/**
 		 *	Lets you specify the string, fontsize and font that will be used in this object.
@@ -66,14 +67,23 @@ namespace sen {
 		void setString(const sf::String &string);
 		/** 
 		 * @brief  This method will return true
-		 * if size of text have changed
+		 * if size of text has changed
 		 * @note   It's used for the implementation
 		 * of textBox and inputText which are able
-		 * to change size of text if used specified
+		 * to change size of text if user specified
 		 * that behaviour
 		 * @retval 
 		 */
 		bool haveBoundsChanged() const;
+		/**
+		 * @brief  When text changes size this makes sure
+		 * it won't move on the Y axis but text will still be
+		 * centered on X axis
+		 * @note   This means the text won't be centered around it's
+		 * position anymore
+		 */
+		void setUpdateOnlyXAxis(bool update) {m_updateOnlyXAxis = update;}
+
 
 		/* all of those methods are overriden to enable animating the movement
 			of this object */

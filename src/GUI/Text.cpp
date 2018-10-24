@@ -3,7 +3,7 @@
 
 namespace sen {
 	Text::Text(const sf::String & string, unsigned int fontSize, const sf::Font & font)
-		: sf::Text(string, font, fontSize), m_boundsChanged(false), m_boundsStatusReset(false)
+		: sf::Text(string, font, fontSize)
 	{
 		setOriginMode(OriginMode::CENTER);
 		originSet();
@@ -100,7 +100,12 @@ namespace sen {
 		if (m_originMode == OriginMode::CENTER)
 		{
 			sf::FloatRect bounds = getLocalBounds();
-			setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f));
+			if(m_updateOnlyXAxis)
+				setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f, 
+					 getOrigin().y));
+			else
+				setOrigin(sf::Vector2f(bounds.left + bounds.width / 2.f,
+					 bounds.top + bounds.height / 2.f));
 		}
 		else
 		{
