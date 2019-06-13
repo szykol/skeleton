@@ -10,6 +10,9 @@
 *.sln.docstates
 
 #moje
+Makefile
+bin-int/
+vendor/SFML*/
 .vscode/
 *.sln
 *.vcxproj

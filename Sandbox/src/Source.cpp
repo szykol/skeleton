@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "Managers/StateManager.h"
-#include "States/FrameworkSplashScreen.h"
+#include "States/TestState.h"
 #include "Managers/CacheSystem.h"
 
 #include <memory>
@@ -13,11 +13,11 @@ int main()
 	window.setFramerateLimit(0U);
 
 	Application::init(&window);
-	auto backgroundImage = sen::CacheSystem::get<sf::Texture>("res/Images/bg.jpeg");
+	auto backgroundImage = sen::CacheSystem::get<sf::Texture>("../res/Images/bg.jpeg");
 	Application::setBackgroundImage(*backgroundImage);
-	auto temp = std::make_unique<sen::FrameworkSplashScreen>();
+	auto temp = std::make_unique<sen::TestState>(window);
 	sen::StateManager::pushState(std::move(temp));
 	Application::run();
 
-    return 0;
+    return 0;	
 }

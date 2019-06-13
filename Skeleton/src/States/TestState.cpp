@@ -26,7 +26,7 @@ namespace sen {
 					[&](const Response& r) {
 						if (r.response == Response::TRUE)
 						{
-							window.close();
+							Application::exit();
 						}
 					}
 				);

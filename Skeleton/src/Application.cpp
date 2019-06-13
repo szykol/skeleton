@@ -7,6 +7,8 @@
 #include "Managers/SFMLAudioProvider.h"
 #include "Managers/AudioProvider.h"
 
+#include <cstdlib>
+
 sf::RenderWindow* Application::s_window;
 unsigned int Application::s_frameRate;
 sf::Clock Application::s_timer;	
@@ -20,7 +22,7 @@ void Application::init(sf::RenderWindow * window)
 	s_window = window;
 	s_timer.restart();
 
-	s_defaultFont = sen::CacheSystem::get<sf::Font>("res/Fonts/Roboto.ttf");
+	s_defaultFont = sen::CacheSystem::get<sf::Font>("../res/Fonts/Roboto.ttf");
 	s_initialWindowSize = s_window->getSize();
 }
 
@@ -32,11 +34,11 @@ void Application::run()
 		while (s_window->pollEvent(evnt))
 		{
 			if (evnt.type == sf::Event::Closed)
-				s_window->close();
+				exit();
 			if (evnt.type == sf::Event::KeyPressed)
 			{
 				if (evnt.key.code == sf::Keyboard::Escape)
-					s_window->close();
+					exit();
 			}
 			if (evnt.type == sf::Event::TextEntered)
 			{
@@ -87,5 +89,12 @@ void Application::disableBackgroundImage()
 		delete s_background;
 		s_background = nullptr;
 	}
+}
+
+void Application::exit(int EXIT_CODE)
+{
+	std::cout << "HALO CO JEST" << std::endl;
+	s_window->close();
+	//std::exit(EXIT_CODE);
 }
 
