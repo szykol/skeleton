@@ -44,7 +44,7 @@ namespace sen {
 		 * @param window Window
 		 */
 		virtual void input(sf::RenderWindow& window) {}
-		inline virtual ~State() = 0 {}
+		virtual ~State() = 0;
 
 		State() = default;
 		State(State&&) = default;
