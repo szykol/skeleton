@@ -131,28 +131,30 @@ namespace sen {
 			static_assert(false);
 		}
 
-		template<>
-		static CacheMap<sf::Font>& getMap<sf::Font>()
-		{
-			return m_fonts;
-		}
-
-		template<>
-		static CacheMap<sf::Texture>& getMap<sf::Texture>()
-		{
-			return m_textures;
-		}
-
-		template<>
-		static CacheMap<sf::SoundBuffer>& getMap<sf::SoundBuffer>()
-		{
-			return m_soundBuffers;
-		}
-
-		template<>
-		static CacheMap<sf::Music>& getMap<sf::Music>()
-		{
-			return m_music;
-		}
+		
 	};
+
+	template<>
+	inline CacheMap<sf::Font>& CacheSystem::getMap()
+	{
+		return m_fonts;
+	}
+
+	template<>
+	inline CacheMap<sf::Texture>& CacheSystem::getMap()
+	{
+		return m_textures;
+	}
+
+	template<>
+	inline CacheMap<sf::SoundBuffer>& CacheSystem::getMap()
+	{
+		return m_soundBuffers;
+	}
+
+	template<>
+	inline CacheMap<sf::Music>& CacheSystem::getMap()
+	{
+		return m_music;
+	}
 }
