@@ -15,10 +15,8 @@ namespace sen {
 	 * @param  pathFile: path to file 
 	 */
 	template<typename T>
-	inline std::shared_ptr<T> loadFromFile(const std::string& pathFile)
-	{
-		static_assert(false);
-	}
+	std::shared_ptr<T> loadFromFile(const std::string& pathFile) = delete;
+	
 
 	template<>
 	inline std::shared_ptr<sf::Font> loadFromFile<sf::Font>(const std::string& pathFile)
@@ -126,11 +124,7 @@ namespace sen {
 		 * @brief  Returns a map according to a type
 		 */
 		template<typename T>
-		static CacheMap<T>& getMap()
-		{
-			static_assert(false);
-		}
-
+		static CacheMap<T>& getMap() = delete;
 		
 	};
 
