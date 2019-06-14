@@ -2,7 +2,6 @@
 
 #include "../Application.h"
 #include "../Managers/StateManager.h"
-#include "TestState.h"
 
 namespace sen {
 	FrameworkSplashScreen::FrameworkSplashScreen()
@@ -20,7 +19,7 @@ namespace sen {
 		m_time += deltaTime;
 		if (m_time > m_delay)
 		{
-			StateManager::pushState<TestState>(Application::getWindow());
+			//StateManager::pushState<TestState>(Application::getWindow());
 			m_time -= m_delay;
 		}
 	}
@@ -28,7 +27,7 @@ namespace sen {
 	{
 		if(evnt.type == sf::Event::KeyPressed)
 		{
-			StateManager::pushState<TestState>(Application::getWindow());
+			//StateManager::pushState<TestState>(Application::getWindow());
 			m_time -= m_delay;
 		}
 	}
