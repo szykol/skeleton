@@ -1,6 +1,38 @@
 # skeleton
 ## Simple 2D application framework written in C++/SFML. 
 
+## How to build
+Download [SFML](https://www.sfml-dev.org/download/sfml/2.5.1/) and extract it to the *vendor/SFML* folder.
+
+Download [premake5](https://premake.github.io/download.html) and remember it's location or add it to path
+
+
+### Example: Generating Visual Studio 2019 solution and project files
+```
+  path/to/premake5.exe vs2019
+  // or if the path to SFML is different than default
+  path/to/premake5.exe --sfmlpath=path/to/SFML vs2019
+```
+Then compile it and run with Visual Studio
+
+### Example: Generating Makefiles
+```
+  path/to/premake5.exe gmake2
+  // or if the path to SFML is different than default
+  path/to/premake5.exe --sfmlpath=path/to/SFML gmake2
+```
+
+After that
+```
+  make
+  // after sucessful compilation
+  cd Sandbox
+  // it needs to be run from the projects root directory for now
+  ..\bin\Debug-windows-x86\Sandbox\Sandbox.exe
+```
+### Other platforms and project files
+For generating other project files or for different platforms head to this [link](https://github.com/premake/premake-core/wiki/Using-Premake)
+
 ### The main purpose of this project is to create a simple, beginner friendly app building framework.
 
 As I like creating new programs in C++/SFML I decided to make an simple framework which will save me some time and help me especially at the beginning of the project. Often when creating a simple game I'm ending up with a problem of creating a simple menu with buttons, simple state managing etc. which led me to creating same classes all over again. This framework will provide me with all tools needed to build a simple sceleton of an app which includes buttons, state managing, popups etc.
