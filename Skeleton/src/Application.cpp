@@ -93,8 +93,6 @@ void Application::disableBackgroundImage()
 
 void Application::exit(int EXIT_CODE)
 {
-	std::cout << "HALO CO JEST" << std::endl;
 	s_window->close();
-	//std::exit(EXIT_CODE);
 }
 
