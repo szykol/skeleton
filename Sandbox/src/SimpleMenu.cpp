@@ -68,6 +68,14 @@ MenuState::MenuState(sf::RenderWindow & window)
 	spawnPopup->setOnClickCallback([&window, this] {
 			m_prompt = std::make_shared<sen::Prompt>(sen::PromptStyle::INPUT, "Type something..");
 			m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
+			m_prompt->setOnResponseCallback([](auto& response) {
+				auto popupInfo = std::string{ "You closed the prompt" };
+				if (response.response == sen::Response::TRUE) {
+					popupInfo = "You typed: " + response.stringInput;
+				}
+				auto popup = std::make_unique<sen::Popup>(popupInfo);
+				sen::StateManager::pushPopup(std::move(popup));
+			});
 			sen::StateManager::pushPrompt(m_prompt);
 	});
 
