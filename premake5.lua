@@ -1,5 +1,5 @@
 workspace "Skeleton"
-    architecture "x32"
+    architecture "x64"
     defines {"SFML_STATIC"}
 
     configurations {
