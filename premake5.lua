@@ -21,17 +21,7 @@ workspace "Skeleton"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-filter "system:linux"
-    debugSFMLlibs = {
-        "sfml-graphics",
-        "sfml-window",
-        "sfml-audio",
-        "sfml-system"
-    }
-
-    releaseSFMLlibs = debugSFMLlibs
-
-filter "system:windows"
+if os.host() == "windows" then
     debugSFMLlibs = {
         "sfml-graphics-s-d",
         "sfml-window-s-d",
@@ -45,7 +35,17 @@ filter "system:windows"
         "sfml-audio-s",
         "sfml-system-s"
     }
-
+end
+if os.host() == "linux" then
+    debugSFMLlibs = {
+        "sfml-graphics",
+        "sfml-window",
+        "sfml-audio",
+        "sfml-system"
+    }
+    
+    releaseSFMLlibs = debugSFMLlibs
+end
 
 project "Skeleton"
     location "Skeleton"
