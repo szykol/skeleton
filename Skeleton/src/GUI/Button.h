@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Textbox.h"
+#include "TextBox.h"
 #include "../Managers/ButtonController.h"
 
 #include <functional>

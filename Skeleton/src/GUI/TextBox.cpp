@@ -1,4 +1,4 @@
-#include "Textbox.h"
+#include "TextBox.h"
 
 namespace sen {
 	TextBox::TextBox(const sf::String & string)
