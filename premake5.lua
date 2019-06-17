@@ -21,6 +21,31 @@ workspace "Skeleton"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+debugSFMLlibs = {
+    "sfml-graphics-s-d",
+    "sfml-window-s-d",
+    "sfml-audio-s-d",
+    "sfml-system-s-d"
+}
+
+releaseSFMLlibs = {
+    "sfml-graphics-s",
+    "sfml-window-s",
+    "sfml-audio-s",
+    "sfml-system-s"
+}
+
+filter "system:linux"
+    debugSFMLlibs = {
+        "sfml-graphics",
+        "sfml-window",
+        "sfml-audio",
+        "sfml-system"
+    }
+
+    releaseSFMLlibs = debugSFMLlibs
+
+
 project "Skeleton"
     location "Skeleton"
     kind "StaticLib"
@@ -44,23 +69,17 @@ project "Skeleton"
         defines {"DEBUG"}
         symbols "On"
         links {
-            "sfml-graphics-s-d",
-            "sfml-window-s-d",
-            "sfml-audio-s-d",
-            "sfml-system-s-d"
+            debugSFMLlibs
         }
 
     filter "configurations:Release"
         defines {"NDEBUG"}
         optimize "On"
         links {
-            "sfml-graphics-s",
-            "sfml-window-s",
-            "sfml-audio-s",
-            "sfml-system-s"
+            releaseSFMLlibs
         }
 
-    filter "configurations:*"
+    filter {"configurations:*", "system:windows"}
         links {
 			"opengl32",
 			"freetype",
@@ -96,29 +115,22 @@ project "Sandbox"
     links {"Skeleton"}
     libdirs {_OPTIONS["sfmlpath"].."/lib"}
 
-    postbuildcommands { "{COPY} ../".._OPTIONS["sfmlpath"].."/bin/openal32.dll ../bin/"..outputdir.."/%{prj.name}/" }
 
     filter "configurations:Debug"
         defines {"DEBUG"}
         symbols "On"
         links {
-            "sfml-graphics-s-d",
-            "sfml-window-s-d",
-            "sfml-audio-s-d",
-            "sfml-system-s-d"
+            debugSFMLlibs
         }
 
     filter "configurations:Release"
         defines {"NDEBUG"}
         optimize "On"
         links {
-            "sfml-graphics-s",
-            "sfml-window-s",
-            "sfml-audio-s",
-            "sfml-system-s"
+            releaseSFMLlibs
         }
     
-    filter "configurations:*"
+    filter {"configurations:*", "system:windows"}
         links {
             "opengl32",
             "freetype",
@@ -132,3 +144,6 @@ project "Sandbox"
             "ws2_32",
             "openal32",
         }
+
+        postbuildcommands { "{COPY} ../".._OPTIONS["sfmlpath"].."/bin/openal32.dll ../bin/"..outputdir.."/%{prj.name}/" }
+
