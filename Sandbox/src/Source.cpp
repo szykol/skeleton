@@ -7,6 +7,8 @@
 
 #include <memory>
 
+#include <Util/FPSCounter.h>
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1200, 800), "skeleton v.0.0.7"/*,sf::Style::Fullscreen*/);

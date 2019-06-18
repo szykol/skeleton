@@ -5,10 +5,10 @@
 #include <memory>
 
 /**
- *	Example state. Shows how you can work with
-	*	buttons callbacks and state manager.
-	*	It simply lets you push states and pop them.
-	*/
+*	Example state. Shows how you can work with
+*	buttons callbacks and state manager.
+*	It simply lets you push states and pop them.
+*/
 class MenuState : public sen::State
 {
 private:
@@ -18,22 +18,22 @@ private:
 	static unsigned int s_pushedStates;
 public:
 	/**
-	 *	Sets up buttons, button controller.
-		*
-		*	@param window Window needed for button controller
-		*/
+	*	Sets up buttons, button controller.
+	*
+	*	@param window Window needed for button controller
+	*/
 	MenuState(sf::RenderWindow &window);
 	/**
-	 *	Updates button controller.
-		*	
-		*	@param window Window needed for button controller
-		*/
+	*	Updates button controller.
+	*	
+	*	@param window Window needed for button controller
+	*/
 	virtual void update(float deltaTime, sf::RenderWindow &window) override;
 	/**
-	 *	Renders the state
-		*
-		*	@target Target you want to draw on.
-		*/
+	*	Renders the state
+	*
+	*	@target Target you want to draw on.
+	*/
 	virtual void render(sf::RenderTarget &target) override;
 	virtual ~MenuState();
 

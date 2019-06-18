@@ -24,16 +24,16 @@ namespace sen {
 		 * the last frame
 		 */
 		virtual void update(float deltaTime, sf::RenderWindow& window) {}
-	    /** 
-          * @brief  Method that handles events that have occured
-		  * in the window
-          * @note   This method needs to be overriden.
-          * @param  &evnt: Event from poll event method 
-          */
+		/** 
+		 * @brief  Method that handles events that have occured
+		 * in the window
+		 * @note   This method needs to be overriden.
+		 * @param  &evnt: Event from poll event method 
+		 */
 		virtual void handleEvents(sf::Event& evnt) {}
 		/**
 		 * Needs to be overriden. Renders all entities.
-	     * 
+		 * 
 		 * @param target Target to draw on
 		 */
 		virtual void render(sf::RenderTarget& target) {}
