@@ -9,6 +9,7 @@
 *.userosscache
 *.sln.docstates
 
+compile_commands.json
 .cache/
 vendor/
 bin-int/
