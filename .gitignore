@@ -9,10 +9,9 @@
 *.userosscache
 *.sln.docstates
 
-#moje
-Makefile
+.cache/
+vendor/
 bin-int/
-vendor/SFML*/
 .vscode/
 *.sln
 *.vcxproj
