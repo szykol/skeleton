@@ -28,18 +28,13 @@ file(GLOB SANDBOX_SRC
     "Sandbox/src/*.cpp"
 )
 
-list(REMOVE_ITEM SANDBOX_SRC "Sandbox/src/Source.cpp")
-
 find_package(SFML 2.5 COMPONENTS graphics window audio network system REQUIRED)
 
-add_executable(Sandbox "Sandbox/src/Source.cpp")
+add_executable(Sandbox ${SANDBOX_SRC})
 
-add_library(SandboxLib STATIC ${SANDBOX_SRC})
 add_library(SkeletonLib STATIC ${SKELETON_SRC})
 
-target_include_directories(SandboxLib PUBLIC "Skeleton/src")
 target_include_directories(Sandbox PUBLIC "Skeleton/src")
 
-target_link_libraries(SkeletonLib sfml-graphics sfml-window sfml-audio sfml-network sfml-system SandboxLib)
-target_link_libraries(SandboxLib SkeletonLib)
-target_link_libraries(Sandbox SandboxLib)
+target_link_libraries(SkeletonLib sfml-graphics sfml-window sfml-audio sfml-network sfml-system)
+target_link_libraries(Sandbox SkeletonLib)
