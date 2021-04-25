@@ -81,5 +81,6 @@ namespace sen {
         if (m_callbacks->find(state) != m_callbacks->end()) {
             return &m_callbacks->at(state);
         }
+        return nullptr;
     }
 } // namespace sen
