@@ -2,4 +2,4 @@
 
 namespace sen {
     State::~State() {}
-}
+} // namespace sen

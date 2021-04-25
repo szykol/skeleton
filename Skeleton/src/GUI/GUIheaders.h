@@ -1,7 +1,7 @@
 /**
-	GUIheaders.h
+        GUIheaders.h
 
-	Includes all GUI classes
+        Includes all GUI classes
 */
 
 #pragma once
