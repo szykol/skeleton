@@ -10,6 +10,7 @@
 *.sln.docstates
 
 compile_commands.json
+.DS_Store
 .cache/
 vendor/
 bin-int/
@@ -220,7 +221,7 @@ _pkginfo.txt
 # files ending in .cache can be ignored
 *.[Cc]ache
 # but keep track of directories ending in .cache
-!*.[Cc]ache/
+#!*.[Cc]ache/
 
 # Others
 ClientBin/
