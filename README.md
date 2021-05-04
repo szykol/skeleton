@@ -27,7 +27,10 @@
   - **Math** - Some basic functions that I found helpful in creating SFML apps
 - **Application** - Handles running the app, updating all managers, changing backgrounds etc.
 
-## Example screenshots:
+## Example App
+Skeleton provides an example `Sandbox` app that creates a simple menu state.
+It shows how the buttons and state managing works. It also uses a background
+using `CacheSystem`.
 Here are example screenshots of the Sandbox app using Skeleton framework
 
 ### Main menu
@@ -49,8 +52,7 @@ to search SFML for.
 ### Example: Linux with defualt parameters
 ```
 make
-cd build/
-./Sandbox
+build/Sandbox
 ```
 
 ### Example: Linux with non default parameters
@@ -58,8 +60,7 @@ This shows `CMAKE_BUILD_TYPE` and `SFML_DIR` passed as parameters. This assumes 
 `vendor` folder.
 ```
 make CMAKE_BUILD_TYPE=Release SFML_DIR=vendor/SFML-2.5.1/lib/cmake/SFML
-cd build/
-./Sandbox
+build/Sandbox
 ```
 
 ## Windows
@@ -69,20 +70,33 @@ CMake should take care of creating the solution files. As this example does not 
 ```
 mkdir build
 cd build
-cmake -DSFML_DIR=vendor\SFML-2.5.1\lib\cmake\SFML ..
+cmake -DSFML_DIR="vendor\SFML-2.5.1\lib\cmake\SFML"  ..
+
+# for 32 bit version:
+# cmake -A Win32 -DSFML_DIR="vendor\SFML-2.5.1\lib\cmake\SFML"  ..
 ```
-After that open generated solution file and hit build.
+After that open generated solution file and hit build. 
+Copy needed dlls to binary location.
+Note: You may need to set Sandbox as the startup project.
 
 ### Example: Windows MinGW Makefiles
 This works similiar to the previous example but uses different generator.
 ```
 mkdir build
 cd build
-cmake -G "MinGW Makefiles" -DSFML_DIR=vendor\SFML-2.5.1\lib\cmake\SFML ..
+cmake -G "MinGW Makefiles" -DSFML_DIR="vendor\SFML-2.5.1\lib\cmake\SFML"  ..
 make
 # run the app after copying dll files
 Sandbox.exe
 ```
+
+## Skeleton resources folder
+Skeleton resources folder is located in `res` folder in the root of the project.
+CMake sets the absolute path to this folder as a `RESOURCES_DIR` macro available in the code.
+This is then used by the `CacheSystem` in order to find the resources.
+
+This lets users to run the app from anywhere as long as the resources folder is in the same place
+as when the app was built.
 
 ### Tested on:
 * Ubuntu using libsfml-dev package. This is also used for CI builds.
@@ -93,42 +107,3 @@ Sandbox.exe
 ## Skeleton used in other projects:
 * [szykol/Tetris](https://github.com/szykol/Tetris) - simple tetris game that uses Skeleton to manage the game state
 and menus.
-
-## Skeleton used to be built with premake5:
-As skeleton supports the CMake build system which goes along SFML, which also uses CMake, I'd encourage to use
-the build options explained above.
-
-#### Anyway, here are notes on building Skeleton with premake5:
-
-Download [SFML](https://www.sfml-dev.org/download/sfml/2.5.1/) and extract it to the *vendor/SFML* folder.
-
-Download [premake5](https://premake.github.io/download.html) and remember it's location or add it to path
-
-### Example: Generating Visual Studio 2019 solution and project files
-```
-path/to/premake5.exe vs2019
-# or if the path to SFML is different than default
-path/to/premake5.exe --sfmlpath=path/to/SFML vs2019
-```
-Then compile it and run with Visual Studio
-
-### Example: Generating Makefiles
-```
-path/to/premake5.exe gmake2
-# or if the path to SFML is different than default
-path/to/premake5.exe --sfmlpath=path/to/SFML gmake2
-```
-
-After that
-```
-make
-# after sucessful compilation
-cd Sandbox
-# it needs to be run from the projects root directory for now
-..\bin\Debug-windows-x86\Sandbox\Sandbox.exe
-```
-
-Keep in mind that path to the downloaded SFML **must be** relative to the premake5.lua script
-
-### Other platforms and project files
-For generating other project files or for different platforms head to this [link](https://github.com/premake/premake-core/wiki/Using-Premake)
