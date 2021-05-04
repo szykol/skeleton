@@ -103,6 +103,7 @@ as when the app was built.
 * Arch using sfml package.
 * Windows using Visual Studio 2019 with SFML for Visual Studio 2015 32-bit version.
 * Windows using MinGW Makefiles with SFML for GCC 7.3.0 32-bit version.
+* MacOS using SFML package from homebrew.
 
 ## Skeleton used in other projects:
 * [szykol/Tetris](https://github.com/szykol/Tetris) - simple tetris game that uses Skeleton to manage the game state
