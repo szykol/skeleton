@@ -59,6 +59,9 @@ namespace sen {
         static float s_time;
         static float s_updateTime;
         static std::string s_resourcesDir;
+        #ifdef CUSTOM_RESOURCES_DIR
+        static std::string s_customResourcesDir;
+        #endif
 
       public:
         /**
@@ -76,16 +79,26 @@ namespace sen {
         template <typename T> static std::shared_ptr<T> get(const std::string &pathFile) {
             auto &map = getMap<T>();
 
-            auto resPath = s_resourcesDir + "/" + pathFile;
-            auto ptr = map[resPath].lock();
+            auto ptr = map[pathFile].lock();
             if (!ptr) {
-                ptr = loadFromFile<T>(resPath);
-                map[resPath] = ptr;
+                ptr = loadFromFile<T>(pathFile);
+                map[pathFile] = ptr;
             }
 
             return ptr;
         }
 
+        template <typename T> static std::shared_ptr<T> getResource(const std::string &pathFile) {
+            auto resPath = s_resourcesDir + "/" + pathFile;
+            return get<T>(resPath);
+        }
+
+        #ifdef CUSTOM_RESOURCES_DIR
+        template <typename T> static std::shared_ptr<T> getCustomResource(const std::string &pathFile) {
+            auto resPath = s_customResourcesDir + "/" + pathFile;
+            return get<T>(resPath);
+        }
+        #endif
         /**
          * @brief  Removes all weak_ptrs to the object that
          * are not longer used and frees the memory they were

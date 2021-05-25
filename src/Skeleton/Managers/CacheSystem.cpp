@@ -8,6 +8,9 @@ namespace sen {
     float CacheSystem::s_time = 0.f;
     float CacheSystem::s_updateTime = 10.f;
     std::string CacheSystem::s_resourcesDir = RESOURCES_DIR;
+    #ifdef CUSTOM_RESOURCES_DIR
+    std::string CacheSystem::s_customResourcesDir = CUSTOM_RESOURCES_DIR;
+    #endif
 
     void CacheSystem::update(float deltaTime) {
         s_time += deltaTime;
