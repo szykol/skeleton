@@ -9,7 +9,7 @@
 #include <iostream>
 
 #ifndef RESOURCES_DIR
-    #define RESOURCES_DIR "./res/"
+#define RESOURCES_DIR "./res/"
 #endif
 
 namespace sen {
@@ -59,9 +59,9 @@ namespace sen {
         static float s_time;
         static float s_updateTime;
         static std::string s_resourcesDir;
-        #ifdef CUSTOM_RESOURCES_DIR
+#ifdef CUSTOM_RESOURCES_DIR
         static std::string s_customResourcesDir;
-        #endif
+#endif
 
       public:
         /**
@@ -93,12 +93,12 @@ namespace sen {
             return get<T>(resPath);
         }
 
-        #ifdef CUSTOM_RESOURCES_DIR
+#ifdef CUSTOM_RESOURCES_DIR
         template <typename T> static std::shared_ptr<T> getCustomResource(const std::string &pathFile) {
             auto resPath = s_customResourcesDir + "/" + pathFile;
             return get<T>(resPath);
         }
-        #endif
+#endif
         /**
          * @brief  Removes all weak_ptrs to the object that
          * are not longer used and frees the memory they were
