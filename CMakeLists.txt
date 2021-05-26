@@ -15,6 +15,11 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
 ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 add_definitions(-DRESOURCES_DIR="${RESOURCES_DIR}") 
 
+IF(CUSTOM_RESOURCES_DIR)
+    message(STATUS "Adding define: CUSTOM_RESOURCES_DIR=${CUSTOM_RESOURCES_DIR}")
+    add_definitions(-DCUSTOM_RESOURCES_DIR="${CUSTOM_RESOURCES_DIR}")
+ENDIF()
+
 find_package(SFML 2.5 COMPONENTS graphics window audio network system REQUIRED)
 
 add_subdirectory(src)
