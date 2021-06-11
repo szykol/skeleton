@@ -29,7 +29,7 @@ namespace sen {
         bool m_sameSize = true;
         float m_coord;
         ButtonPointerVector m_buttons;
-        int m_activeIndex = 0;
+        size_t m_activeIndex = 0;
         float m_time = 0.f;
         bool m_canClick = false;
         bool m_canScroll = false;

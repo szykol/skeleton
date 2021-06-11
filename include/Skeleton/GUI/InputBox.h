@@ -69,8 +69,6 @@ namespace sen {
         const sf::String &getPlaceholder() const { return m_placeholder; }
         virtual ~InputBox();
 
-        InputBox(const InputBox &) = default;
-        InputBox &operator=(const InputBox &) = default;
         InputBox(InputBox &&) = default;
         InputBox &operator=(InputBox &&) = default;
     };

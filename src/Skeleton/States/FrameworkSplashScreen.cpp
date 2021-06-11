@@ -11,16 +11,14 @@ namespace sen {
         m_mainMessage.setCharacterSize(50U);
         m_info.setCharacterSize(34U);
     }
-    void FrameworkSplashScreen::update(float deltaTime, sf::RenderWindow &window) {
+    void FrameworkSplashScreen::update(float deltaTime, sf::RenderWindow &) {
         m_time += deltaTime;
         if (m_time > m_delay) {
-            // StateManager::pushState<TestState>(Application::getWindow());
             m_time -= m_delay;
         }
     }
     void FrameworkSplashScreen::handleEvents(sf::Event &evnt) {
         if (evnt.type == sf::Event::KeyPressed) {
-            // StateManager::pushState<TestState>(Application::getWindow());
             m_time -= m_delay;
         }
     }

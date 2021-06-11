@@ -1,7 +1,7 @@
 #include "GUI/Cursor.h"
 
 namespace sen {
-    Cursor::Cursor(const Text *text) : m_text(text), m_alpha(0), m_delay(0.02f) { setCursor(); }
+    Cursor::Cursor(const Text *text) : m_alpha(0), m_text(text), m_delay(0.02f) { setCursor(); }
     void Cursor::update(float deltaTime) {
         m_time += deltaTime;
         if (m_time > m_delay) {

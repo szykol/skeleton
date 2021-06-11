@@ -80,5 +80,5 @@ class Application {
      */
     static void disableBackgroundImage();
 
-    static void exit(int EXIT_CODE = 0);
+    static void exit();
 };

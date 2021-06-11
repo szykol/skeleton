@@ -19,7 +19,6 @@ namespace sen {
       private:
         float m_duration;
         float m_time = 0.f;
-        bool m_shouldVanish;
 
       public:
         /**

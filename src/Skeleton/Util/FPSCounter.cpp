@@ -1,7 +1,7 @@
 #include "Util/FPSCounter.h"
 
 namespace sen {
-    FPSCounter::FPSCounter() : Text("0.0"), m_fpsAmmount(0.f), m_elapsedTime(0.f), m_updateDelay(0.15f) {
+    FPSCounter::FPSCounter() : Text("0.0"), m_fpsAmmount(0.f), m_updateDelay(0.15f), m_elapsedTime(0.f) {
         Text::setOriginMode(sen::OriginMode::TOPLEFT);
         Text::setPosition({3.f, 3.f});
         Text::setCharacterSize(24U);

@@ -34,7 +34,7 @@ namespace sen {
         sf::String m_standardString;
 
       public:
-        explicit Button(const sf::String &string) : TextBox(string), m_standardString(string), m_callbacks(nullptr) {}
+        explicit Button(const sf::String &string) : TextBox(string), m_callbacks(nullptr), m_standardString(string) {}
         /**
          *	This should change the button on mouse hover
          */
@@ -88,8 +88,6 @@ namespace sen {
          */
         void setActive(bool active) { m_active = active; }
 
-        Button(const Button &) = default;
-        Button &operator=(const Button &) = default;
         Button(Button &&) = default;
         Button &operator=(Button &&) = default;
 

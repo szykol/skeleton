@@ -16,37 +16,37 @@ namespace sen {
          * needed to update the state
          * @param window Window
          */
-        virtual void update(sf::RenderWindow &window) {}
+        virtual void update(sf::RenderWindow &) {}
         /**
          * @brief Update function with deltaTime
-         * @param deltaTime time that has passed since
+         * @param float deltaTime time that has passed since
          * the last frame
          */
-        virtual void update(float deltaTime, sf::RenderWindow &window) {}
+        virtual void update(float, sf::RenderWindow &) {}
         /**
          * @brief  Method that handles events that have occured
          * in the window
          * @note   This method needs to be overriden.
          * @param  &evnt: Event from poll event method
          */
-        virtual void handleEvents(sf::Event &evnt) {}
+        virtual void handleEvents(sf::Event &) {}
         /**
          * Needs to be overriden. Renders all entities.
          *
          * @param target Target to draw on
          */
-        virtual void render(sf::RenderTarget &target) {}
+        virtual void render(sf::RenderTarget &) {}
         /**
          * Needs to be overriden. Contains all logic
          * needed to controll the input
          *
          * @param window Window
          */
-        virtual void input(sf::RenderWindow &window) {}
+        virtual void input(sf::RenderWindow &) {}
         virtual ~State() = 0;
 
         State() = default;
-        State(State &&) = default;
-        State &operator=(State &&) = default;
+        State(State &&) {}
+        State &operator=(State &&) { return *this; }
     };
 } // namespace sen

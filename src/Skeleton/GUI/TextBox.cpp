@@ -2,7 +2,7 @@
 
 namespace sen {
     TextBox::TextBox(const sf::String &string)
-        : m_message(string), Box(), m_fitTextSize(false), m_textOffset({0.f, 0.f}) {
+        : Box(), m_message(string), m_fitTextSize(false), m_textOffset({0.f, 0.f}) {
         // get text bounds and set a box around it
         sf::FloatRect bounds = m_message.getLocalBounds();
         // make the box a little bigger so the text is clear

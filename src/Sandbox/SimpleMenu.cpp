@@ -13,7 +13,7 @@ MenuState::MenuState(sf::RenderWindow &window) : m_info("Amount of states: ") {
     std::shared_ptr<sen::Button> spawnPopup = std::make_shared<sen::Button>("Spawn Prompt");
     std::shared_ptr<sen::Button> quit = std::make_shared<sen::Button>("Quit");
 
-    quit->setOnClickCallback([this, &window] {
+    quit->setOnClickCallback([this] {
         m_prompt = std::make_shared<sen::Prompt>(sen::PromptStyle::BINARY, "Are you sure?");
         m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
         sen::StateManager::pushPrompt(m_prompt);
@@ -37,7 +37,7 @@ MenuState::MenuState(sf::RenderWindow &window) : m_info("Amount of states: ") {
             }
         });
     });
-    popState->setOnClickCallback([&window, this] {
+    popState->setOnClickCallback([this] {
         m_prompt = std::make_shared<sen::Prompt>(sen::PromptStyle::BINARY, "Are you sure?");
         m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
         sen::StateManager::pushPrompt(m_prompt);
@@ -50,7 +50,7 @@ MenuState::MenuState(sf::RenderWindow &window) : m_info("Amount of states: ") {
         });
     });
 
-    spawnPopup->setOnClickCallback([&window, this] {
+    spawnPopup->setOnClickCallback([this] {
         m_prompt = std::make_shared<sen::Prompt>(sen::PromptStyle::INPUT, "Type something..");
         m_prompt->setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
         m_prompt->setOnResponseCallback([](auto &response) {
@@ -79,7 +79,7 @@ MenuState::MenuState(sf::RenderWindow &window) : m_info("Amount of states: ") {
     m_buttonController.placeButtons(100.f);
     m_buttonController.setButtonFixedSize(sf::Vector2f(185.f, 50.f));
 }
-void MenuState::update(float deltaTime, sf::RenderWindow &window) {
+void MenuState::update(float deltaTime, sf::RenderWindow &) {
     m_buttonController.update(deltaTime);
     if (m_prompt && m_prompt->hasResponse()) {
         m_prompt = nullptr;

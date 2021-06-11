@@ -8,6 +8,12 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set (RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/res")
 option(BUILD_SANDBOX "Decide whether to build the Sandbox app alongside Skeleton" ON)
 
+if (MSVC)
+    add_compile_options(/W4 /WX)
+else()
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
+endif()
+
 message(STATUS "Resources directory: ${RESOURCES_DIR}")
 
 IF(CMAKE_BUILD_TYPE MATCHES Debug)

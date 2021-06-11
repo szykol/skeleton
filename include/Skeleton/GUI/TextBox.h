@@ -84,7 +84,7 @@ namespace sen {
          * @param  offsetY: y coord of offset
          * @retval None
          */
-        void move(float offsetX, float offsetY);
+        void move(float offsetX, float offsetY) override;
         /**
          * @brief  Let's you move this object
          * as every other one, it moves the
@@ -92,6 +92,6 @@ namespace sen {
          * @param  offset new offset
          * @retval None
          */
-        void move(const sf::Vector2f &offset);
+        void move(const sf::Vector2f &offset) override;
     };
 } // namespace sen

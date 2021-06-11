@@ -31,7 +31,7 @@ namespace sen {
          * and deletes not used memory
          * @param  vol: music volume
          */
-        virtual void update(float deltaTime) {}
+        virtual void update(float deltaTime) = 0;
 
         virtual ~AudioProviderInterface() = default;
     };

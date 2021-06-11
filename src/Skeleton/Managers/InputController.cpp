@@ -16,8 +16,8 @@ namespace sen {
         sf::String string = s_text->getString();
 
         auto unicode = evnt.text.unicode;
-        if (unicode >= 'A' && unicode <= 'Z' || unicode >= 'a' && unicode <= 'z' || unicode >= '1' && unicode <= '9' ||
-            unicode == ' ')
+        if ((unicode >= 'A' && unicode <= 'Z') || (unicode >= 'a' && unicode <= 'z') ||
+            (unicode >= '1' && unicode <= '9') || unicode == ' ')
 
         {
             string += char(evnt.key.code);

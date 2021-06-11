@@ -80,4 +80,4 @@ void Application::disableBackgroundImage() {
     }
 }
 
-void Application::exit(int EXIT_CODE) { s_window->close(); }
+void Application::exit() { s_window->close(); }

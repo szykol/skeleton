@@ -58,7 +58,7 @@ namespace sen {
             }
         }
 
-        for (int i = 0; i < m_buttons.size(); ++i) {
+        for (size_t i = 0; i < m_buttons.size(); ++i) {
             // if mouse hovers over a button
             if (m_buttons[i]->mouseOver()) {
                 // the button now is active
@@ -83,7 +83,7 @@ namespace sen {
                 map([jump](Button *b) { b->setPosition({b->getPosition().x + jump, b->getPosition().y}, 6.3f); });
         }
 
-        for (int i = 0; i < m_buttons.size(); ++i) {
+        for (size_t i = 0; i < m_buttons.size(); ++i) {
             // for all inactive buttons, make sure they're "turned off"
             if (m_activeIndex != i)
                 m_buttons[i]->onUnhover();
@@ -172,7 +172,7 @@ namespace sen {
                 startingPos.x = center.x;
         }
 
-        for (int i = 0; i < m_buttons.size(); i++) {
+        for (size_t i = 0; i < m_buttons.size(); i++) {
             m_buttons[i]->setPosition(startingPos);
             if (m_buttonPlacing == ButtonPlacing::VERTICAL)
                 startingPos.y += buttonSize + gap;

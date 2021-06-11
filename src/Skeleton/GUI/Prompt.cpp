@@ -2,7 +2,7 @@
 
 namespace sen {
     Prompt::Prompt(PromptStyle style, const sf::String &message, bool pausesState)
-        : m_pausesState(pausesState), TextBox(message) {
+        : TextBox(message), m_pausesState(pausesState) {
         Box::setFillColor(sf::Color(30, 30, 30, 235));
         Box::setOutlineColor(sf::Color(255, 255, 255, 128));
         Box::setOutlineThickness(-5.5);

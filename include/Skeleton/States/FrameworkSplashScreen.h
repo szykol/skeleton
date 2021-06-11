@@ -12,7 +12,7 @@ namespace sen {
 
       public:
         FrameworkSplashScreen();
-        virtual void update(float deltaTime, sf::RenderWindow &window) override;
+        virtual void update(float deltaTime, sf::RenderWindow &) override;
         virtual void handleEvents(sf::Event &evnt) override;
         virtual void render(sf::RenderTarget &target) override;
 

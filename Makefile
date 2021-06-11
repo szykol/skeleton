@@ -1,4 +1,4 @@
-SRC_FILES=$(wildcard Skeleton/src/* Sandbox/src/*)
+SRC_FILES=$(wildcard src/* include/*)
 
 .PHONY: clean
 

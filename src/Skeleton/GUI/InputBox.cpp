@@ -4,7 +4,7 @@
 
 namespace sen {
     InputBox::InputBox(const sf::String &placeholder)
-        : m_placeholder(placeholder), Button(placeholder), m_hasFocus(false) {
+        : Button(placeholder), m_placeholder(placeholder), m_hasFocus(false) {
         Button::setFitTextSize(false);
 
         // default validation function checks if input

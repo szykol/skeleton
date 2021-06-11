@@ -28,7 +28,7 @@ class MenuState : public sen::State {
      *
      *	@param window Window needed for button controller
      */
-    virtual void update(float deltaTime, sf::RenderWindow &window) override;
+    virtual void update(float deltaTime, sf::RenderWindow &) override;
     /**
      *	Renders the state
      *
