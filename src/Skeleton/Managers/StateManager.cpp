@@ -77,7 +77,7 @@ namespace sen {
         if (!m_backButton || (m_states.size() <= 1 && m_back))
             m_back = nullptr;
     }
-    void StateManager::pushPrompt(PromptPointer &Prompt) {
+    void StateManager::pushPrompt(PromptPointer Prompt) {
         if (m_prompt)
             return;
 

@@ -1,4 +1,5 @@
 #include "GUI/Prompt.h"
+#include "Managers/StateManager.h"
 
 namespace sen {
     Prompt::Prompt(PromptStyle style, const sf::String &message, bool pausesState)
@@ -56,6 +57,8 @@ namespace sen {
         setSize(sf::Vector2f(400.f, 300.f));
         setFillColor(sf::Color(25, 25, 25, 245));
         placeButtons();
+
+        setPosition(sf::Vector2f(Application::getInitialWindowSize()) / 2.f);
     }
     void Prompt::render(sf::RenderTarget &target) {
         Box::render(target);

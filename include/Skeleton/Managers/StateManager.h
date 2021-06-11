@@ -78,7 +78,7 @@ namespace sen {
          * @param  Prompt: new Prompt
          * @retval None
          */
-        static void pushPrompt(PromptPointer &Prompt);
+        static void pushPrompt(PromptPointer Prompt);
         /**
          * @brief  Lets you push a new popup which is
          * a simple notification block
